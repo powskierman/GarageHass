@@ -11,7 +11,7 @@ import SwiftUI
 struct GarageNewApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GarageView()
         }
     }
 }
