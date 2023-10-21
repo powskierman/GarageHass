@@ -48,7 +48,7 @@ struct GarageView: View {
                 }
                 .onAppear() {
                     // Establish WebSocket connection
-                    websocketVM.websocket.connect()
+                    websocketVM.websocket.connect(completion: {_ in})
 
                     // Start listening to events to reflect the door status
                     websocketVM.websocket.subscribeToEvents()

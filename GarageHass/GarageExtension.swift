@@ -12,6 +12,14 @@ import HassFramework
 public extension HassWebSocket {
 
     func setEntityState(entityId: String, newState: String) {
+        // First check if the websocket is connected
+        if HassWebSocket.shared.connectionState != .connected {
+            print("WebSocket isn't connected, attempting to reconnect before sending command.")
+            WebSocketManager.shared.connectIfNeeded()
+            // You might want to return early here, and perhaps set up some logic
+            // to resend this command once the connection is re-established.
+            return
+        }
         messageId += 1
         
         print("Setting entity state for entityId:", entityId, ", newState:", newState)
