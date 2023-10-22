@@ -5,12 +5,11 @@ import Combine
 
 struct GarageView: View {
     @ObservedObject public var websocketVM = WebSocketManager.shared
-    
-    @State private var showEventsList: Bool = false
-    @State var leftDoorClosed: Bool = true
-    @State var rightDoorClosed: Bool = false
-    @State var alarmOff: Bool = true
-    
+
+    @State private var leftDoorClosed: Bool = true
+    @State private var rightDoorClosed: Bool = false
+    @State private var alarmOff: Bool = true
+
     var body: some View {
         VStack {
             ConnectionStatusBar(message: "Connection Status", isConnected: websocketVM.websocket.connectionState == .connected)
@@ -26,29 +25,35 @@ struct GarageView: View {
 
             VStack(spacing: 50) {
                 HStack {
-                    
+
                     Button(action: {
                         websocketVM.websocket.setEntityState(entityId: "switch.newgarage_left_garage_door", newState: "toggle")
-                        print("Button pressed!")
-                    })
-{
+                        print("Left door button pressed!")
+                    }) {
                         Image(systemName: leftDoorClosed ? "door.garage.closed" : "door.garage.open")
                             .resizable()
                             .frame(width: 170.0, height: 170.0)
                             .foregroundColor(leftDoorClosed ? .teal : .pink)
                     }
 
-                    Button(action: { }) {
-                        Image(systemName: "door.garage.open")
+                    Button(action: {
+                        // Add logic for right door
+                        print("Right door button pressed!")
+                    }) {
+                        Image(systemName: rightDoorClosed ? "door.garage.closed" : "door.garage.open")
                             .resizable()
                             .frame(width: 170.0, height: 170.0)
-                            .foregroundColor(rightDoorClosed == true ? .teal : .pink)
+                            .foregroundColor(rightDoorClosed ? .teal : .pink)
                     }
                     .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
                 }
                 .onAppear() {
                     // Establish WebSocket connection
-                    websocketVM.websocket.connect(completion: {_ in})
+                    websocketVM.websocket.connect { success in
+                        if success {
+                            websocketVM.websocket.subscribeToEvents()
+                        }
+                    }
 
                     // Start listening to events to reflect the door status
                     websocketVM.websocket.subscribeToEvents()
@@ -60,20 +65,29 @@ struct GarageView: View {
                            let message = jsonObject as? [String: Any],
                            let eventType = message["event_type"] as? String, eventType == "state_changed",
                            let eventData = message["data"] as? [String: Any],
-                           let entityId = eventData["entity_id"] as? String, entityId == "binary_sensor.newgarage_left_door_sensor",
-                           let newStateData = eventData["new_state"] as? [String: Any],
-                           let newState = newStateData["state"] as? String {
-                           
-                            self.leftDoorClosed = (newState == "closed")
+                           let entityId = eventData["entity_id"] as? String {
+
+                            if entityId == "binary_sensor.newgarage_left_door_sensor" {
+                                if let newStateData = eventData["new_state"] as? [String: Any],
+                                   let newState = newStateData["state"] as? String {
+                                    self.leftDoorClosed = (newState == "closed")
+                                }
+                            }
+
+                            // Add similar handling for the right door if necessary
+
                         }
                     }
                 }
 
-                Button(action: { }) {
+                Button(action: {
+                    // Add logic for the alarm
+                    print("Alarm button pressed!")
+                }) {
                     Image(systemName: "alarm.waves.left.and.right")
                         .resizable()
                         .frame(width: 250.0, height: 150.0)
-                        .foregroundColor(alarmOff == true ? .teal : .pink)
+                        .foregroundColor(alarmOff ? .teal : .pink)
                 }
                 .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7))
             }

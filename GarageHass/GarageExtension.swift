@@ -1,10 +1,3 @@
-//
-//  GarageExtension.swift
-//  HassFramework
-//
-//  Created by Michel Lapointe on 2023-10-11.
-//
-
 import Foundation
 import Starscream
 import HassFramework
@@ -12,21 +5,20 @@ import HassFramework
 public extension HassWebSocket {
 
     func setEntityState(entityId: String, newState: String) {
-        // First check if the websocket is connected
-        if HassWebSocket.shared.connectionState != .connected {
+        guard self.connectionState == .connected else {
             print("WebSocket isn't connected, attempting to reconnect before sending command.")
             WebSocketManager.shared.connectIfNeeded()
-            // You might want to return early here, and perhaps set up some logic
-            // to resend this command once the connection is re-established.
+            // Logic to resend command after reconnect can be added here
             return
         }
+
         messageId += 1
-        
+
         print("Setting entity state for entityId:", entityId, ", newState:", newState)
-        
+
         var domain: String
         var service: String
-        
+
         if entityId.starts(with: "switch.") {
             domain = "switch"
             service = newState  // newState would be 'toggle' for a switch
@@ -35,7 +27,7 @@ public extension HassWebSocket {
             domain = "homeassistant"
             service = "turn_\(newState)"
         }
-        
+
         let command: [String: Any] = [
             "id": messageId,
             "type": "call_service",
@@ -45,7 +37,7 @@ public extension HassWebSocket {
                 "entity_id": entityId
             ]
         ]
-        
+
         print("Constructed command:", command)
 
         do {
@@ -60,7 +52,4 @@ public extension HassWebSocket {
             print("Failed to encode message:", error)
         }
     }
-
-    // ... Add any other methods specific to the garage functionality here ...
-
 }
