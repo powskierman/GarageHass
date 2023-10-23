@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import HassFramework
 
 struct ConnectionStatusBar: View {
     var message: String
-    var isConnected: Bool
+    @Binding var connectionState: ConnectionState
+    
+    // Computed property to check if the connection state represents a connected state.
+    var isConnected: Bool {
+        connectionState == .connected
+    }
 
     var body: some View {
         HStack(spacing: 10) {
@@ -18,7 +24,6 @@ struct ConnectionStatusBar: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20)
                 .foregroundColor(isConnected ? Color.teal : Color.pink)
-
             Text(message)
                 .font(.footnote)
                 .foregroundColor(isConnected ? Color.teal : Color.pink)
@@ -27,7 +32,10 @@ struct ConnectionStatusBar: View {
 }
 
 struct ConnectionStatusBar_Previews: PreviewProvider {
+    @State static var sampleConnectionState: ConnectionState = .connected
+    
     static var previews: some View {
-        ConnectionStatusBar(message: "Connection Status", isConnected: true)
+        ConnectionStatusBar(message: "Connection Status", connectionState: $sampleConnectionState)
     }
 }
+
