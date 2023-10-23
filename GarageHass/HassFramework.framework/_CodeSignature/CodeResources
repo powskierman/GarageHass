@@ -22,7 +22,7 @@
 		</data>
 		<key>Modules/HassFramework.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		0IvyDh7aHyk6La3UebD8ZI4obfA=
+		kVemKnVrC0JnXh7hW2eXxqklQOw=
 		</data>
 		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		1VKNO4Mf/z9jhhRubrN0utbtz6o=
+		6wydDQvj3ReAPXxNCvanAy/GMGE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -84,11 +84,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0IvyDh7aHyk6La3UebD8ZI4obfA=
+			kVemKnVrC0JnXh7hW2eXxqklQOw=
 			</data>
 			<key>hash2</key>
 			<data>
-			sQGvXkUfHzybUq15lkd8oAqzpsQtMKqlzKV+Lc6OK3A=
+			lA6+BhrR+yKI7749mOfUut4iRvwXU93L5fTBGHF7JdA=
 			</data>
 		</dict>
 		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -117,11 +117,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1VKNO4Mf/z9jhhRubrN0utbtz6o=
+			6wydDQvj3ReAPXxNCvanAy/GMGE=
 			</data>
 			<key>hash2</key>
 			<data>
-			vRghVP9k7aoYC9Fy3mprF1cvLN5DdKAXKk9Ph9oA0EI=
+			NQEnVcgw2rrQoVu6g9E7CYYKeiV2579QmLxn3+1LlvM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

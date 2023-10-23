@@ -5,27 +5,47 @@
 //  Created by Michel Lapointe on 2023-10-23.
 //
 
+import SwiftUI
 import Foundation
 import HassFramework
+import Combine
 
 class GarageViewModel: ObservableObject {
     @Published var leftDoorClosed: Bool = true
-    @Published var rightDoorClosed: Bool = true
+    @Published var rightDoorClosed: Bool = false
     @Published var alarmOff: Bool = true
-    
+    @Published var connectionState: ConnectionState = .disconnected  // Assuming WebSocketConnectionState is an enum or type that describes the connection state
+    var connectionStateBinding: Binding<ConnectionState> {
+        Binding(
+            get: { self.connectionState },
+            set: { self.connectionState = $0 }
+        )
+    }
     private var websocket: HassWebSocket
+    private var cancellables = Set<AnyCancellable>() // 1. Create a Cancellable set
+
     
     init(websocket: HassWebSocket = WebSocketManager.shared.websocket) {
         self.websocket = websocket
         setupWebSocketEvents()
+        
+        // Update connectionState based on websocket's state
+          self.connectionState = websocket.connectionState  // Assuming websocket has a connectionState property
     }
 
     // Setup WebSocket event handlers
     private func setupWebSocketEvents() {
-        websocket.onEventReceived = { [weak self] event in
-            self?.handleWebSocketEvent(event: event)
-        }
-    }
+          websocket.onEventReceived = { [weak self] event in
+              self?.handleWebSocketEvent(event: event)
+          }
+          
+          // 2. Subscribe to changes in websocket's connectionState
+          websocket.$connectionState
+              .sink { [weak self] newState in
+                  self?.connectionState = newState
+              }
+              .store(in: &cancellables)
+      }
     
     // Handle WebSocket events
     private func handleWebSocketEvent(event: String) {
