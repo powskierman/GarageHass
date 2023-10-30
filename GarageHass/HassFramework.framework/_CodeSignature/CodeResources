@@ -18,23 +18,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		iQ6wPF7SNiu8cYmhe4kBJyEO42E=
+		3vkGWtiVsBlM5hoaS/1f4gUUTq0=
 		</data>
-		<key>Modules/HassFramework.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
+		<key>Modules/HassFramework.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		kVemKnVrC0JnXh7hW2eXxqklQOw=
+		AZInD/DAwoGh/FfnfNb8IbNXS7M=
 		</data>
-		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
+		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
 		FSPnLbho3G+LL9smI3XgVOqBIQ4=
 		</data>
-		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
+		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		lIfSLIh0div1fKlx5Z+K39wUDaM=
+		tw46KTtgmQ//epLuU6rEtHJlyE8=
 		</data>
-		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
+		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		6wydDQvj3ReAPXxNCvanAy/GMGE=
+		XWlmW8e0+1XOkWmsNc8l98OtY8Y=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -80,18 +80,18 @@
 			BsrbXO3XnYmHYY7LFoP94eoRBZGq31Yfbzfv1chLiLQ=
 			</data>
 		</dict>
-		<key>Modules/HassFramework.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
+		<key>Modules/HassFramework.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kVemKnVrC0JnXh7hW2eXxqklQOw=
+			AZInD/DAwoGh/FfnfNb8IbNXS7M=
 			</data>
 			<key>hash2</key>
 			<data>
-			lA6+BhrR+yKI7749mOfUut4iRvwXU93L5fTBGHF7JdA=
+			T0P0hS39LLmpI4Ta7N2W+staHe0GaJ5VDa34Ts7dMlI=
 			</data>
 		</dict>
-		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
+		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -102,26 +102,26 @@
 			KnRdWE4y6t4QM5zi5JDptPdHFgJy1Tku+7GLkZS2aNM=
 			</data>
 		</dict>
-		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
+		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			lIfSLIh0div1fKlx5Z+K39wUDaM=
+			tw46KTtgmQ//epLuU6rEtHJlyE8=
 			</data>
 			<key>hash2</key>
 			<data>
-			lE5pA+NOC1xHMCOGE0phXEJIeX9ajDF7eGN8na4FgcI=
+			wzzM081PBx93nj35I64z56Dx7GmX/woXYmq2VBTvLt4=
 			</data>
 		</dict>
-		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
+		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			6wydDQvj3ReAPXxNCvanAy/GMGE=
+			XWlmW8e0+1XOkWmsNc8l98OtY8Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			NQEnVcgw2rrQoVu6g9E7CYYKeiV2579QmLxn3+1LlvM=
+			PB/NkI33OA9qre+zCss4ZWtWaCKBGnGhBP/j5Or+XGk=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -14,11 +14,11 @@ struct GarageView: View {
             VStack(spacing: 50) {
                 HStack {
                     GarageDoorButton(isClosed: $viewModel.leftDoorClosed, action: {
-                        viewModel.handleDoorAction(entityId: "switch.newgarage_left_garage_door")
+                        viewModel.handleDoorAction(entityId: "switch.left_garage_door")
                     })
 
                     GarageDoorButton(isClosed: $viewModel.rightDoorClosed, action: {
-                        viewModel.handleDoorAction(entityId: "switch.newgarage_right_garage_door")
+                        viewModel.handleDoorAction(entityId: "switch.right_garage_door")
                     })
                     .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
                 }
