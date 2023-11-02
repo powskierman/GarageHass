@@ -22,7 +22,7 @@
 		</data>
 		<key>Modules/HassFramework.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		AZInD/DAwoGh/FfnfNb8IbNXS7M=
+		RRKkBfZeMNP7N+4DFKnaOERd558=
 		</data>
 		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		XWlmW8e0+1XOkWmsNc8l98OtY8Y=
+		GDbS8ZNbMIKYajDkNdz9rwOlCAk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Secrets.plist</key>
 		<data>
-		0XFtNLnv/e2o8v2BRtEnK606uUk=
+		Nm1QuBQMmPqMLY1uuO9pz9PoJ4I=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -84,11 +84,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AZInD/DAwoGh/FfnfNb8IbNXS7M=
+			RRKkBfZeMNP7N+4DFKnaOERd558=
 			</data>
 			<key>hash2</key>
 			<data>
-			T0P0hS39LLmpI4Ta7N2W+staHe0GaJ5VDa34Ts7dMlI=
+			ryuYc4IROaqJFpf7GdWVTMptQ7mRHXalpUlmxX4agZc=
 			</data>
 		</dict>
 		<key>Modules/HassFramework.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -117,11 +117,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			XWlmW8e0+1XOkWmsNc8l98OtY8Y=
+			GDbS8ZNbMIKYajDkNdz9rwOlCAk=
 			</data>
 			<key>hash2</key>
 			<data>
-			PB/NkI33OA9qre+zCss4ZWtWaCKBGnGhBP/j5Or+XGk=
+			u98LB+ged3a141u/ZreNqg+nnl3AxF9X/MxRkpw+Yc0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -139,11 +139,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0XFtNLnv/e2o8v2BRtEnK606uUk=
+			Nm1QuBQMmPqMLY1uuO9pz9PoJ4I=
 			</data>
 			<key>hash2</key>
 			<data>
-			hH2NC18TSuQSeegOEU8v87Zrlq6jmxnFvfz9NzJMGfk=
+			6Ow72h3zV+1jaTPeTucbX/6R3E7UE6z1xIc95TymuOw=
 			</data>
 		</dict>
 	</dict>
