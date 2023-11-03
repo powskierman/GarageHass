@@ -32,6 +32,7 @@ class GarageViewModel: ObservableObject {
     }
 
     private func setupWebSocketEvents() {
+        print("At setupWebSocketEvents")
         websocket.onEventReceived = { [weak self] event in
             self?.handleWebSocketEvent(event: event)
         }
@@ -45,6 +46,7 @@ class GarageViewModel: ObservableObject {
     }
 
     private func handleWebSocketEvent(event: String) {
+        print("At handleWebSocketEvent")
         guard let data = event.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
               let message = jsonObject as? [String: Any],
@@ -59,13 +61,12 @@ class GarageViewModel: ObservableObject {
     }
 
     private func processStateChange(entityId: String, newState: String) {
-        if entityId == "binary_sensor.left_door_sensor" {
-            DispatchQueue.main.async {
-                self.leftDoorClosed = (newState == "closed")
-            }
-        } else if entityId == "binary_sensor.right_door_sensor" {
-            DispatchQueue.main.async {
-                self.rightDoorClosed = (newState == "closed")
+        print("At processStateChange")
+        DispatchQueue.main.async {
+            if entityId == "binary_sensor.left_door_sensor" {
+                self.leftDoorClosed = (newState == "off") // Assuming "off" means closed
+            } else if entityId == "binary_sensor.right_door_sensor" {
+                self.rightDoorClosed = (newState == "off") // Assuming "off" means closed
             }
         }
     }
