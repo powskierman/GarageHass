@@ -21,16 +21,16 @@ class GarageViewModel: ObservableObject {
             set: { self.connectionState = $0 }
         )
     }
-
+    
     private var websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
-
+    
     init(websocket: HassWebSocket = WebSocketManager.shared.websocket) {
         self.websocket = websocket
         setupWebSocketEvents()
         self.connectionState = websocket.connectionState
     }
-
+    
     private func setupWebSocketEvents() {
         print("At setupWebSocketEvents")
         websocket.onEventReceived = { [weak self] event in
@@ -44,7 +44,7 @@ class GarageViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-
+    
     private func handleWebSocketEvent(event: String) {
         print("At handleWebSocketEvent")
         guard let data = event.data(using: .utf8),
@@ -59,30 +59,52 @@ class GarageViewModel: ObservableObject {
         
         processStateChange(entityId: entityId, newState: newState)
     }
-
+    
     private func processStateChange(entityId: String, newState: String) {
-        print("At processStateChange")
+        print("At processStateChange for entityId: \(entityId) with newState: \(newState)")
         DispatchQueue.main.async {
-            if entityId == "binary_sensor.left_door_sensor" {
+            switch entityId {
+            case "binary_sensor.left_door_sensor":
                 self.leftDoorClosed = (newState == "off") // Assuming "off" means closed
-            } else if entityId == "binary_sensor.right_door_sensor" {
+            case "binary_sensor.right_door_sensor":
                 self.rightDoorClosed = (newState == "off") // Assuming "off" means closed
+            case "binary_sensor.alarm_sensor":
+                self.alarmOff = (newState == "off") // Assuming "off" means alarm is not triggered
+            default:
+                print("Received state change for unknown sensor: \(entityId)")
             }
         }
     }
-
-    func handleDoorAction(entityId: String) {
-        if websocket.isConnected() {
-            websocket.setEntityState(entityId: entityId, newState: "toggle")
-        } else {
-            websocket.connect { success in
-                if success {
-                    self.websocket.setEntityState(entityId: entityId, newState: "toggle")
-                } else {
-                    print("Failed to reconnect to WebSocket.")
+    
+    func handleEntityAction(entityId: String, requiresConfirmation: Bool = false, newState: String? = nil) {
+        let action = {
+            // If newState is provided, use it, otherwise toggle
+            let stateToSet = newState ?? "toggle"
+            if self.websocket.isConnected() {
+                self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
+            } else {
+                self.websocket.connect { success in
+                    if success {
+                        self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
+                    } else {
+                        print("Failed to reconnect to WebSocket.")
+                    }
                 }
             }
         }
+        
+        if requiresConfirmation {
+            // Show confirmation dialog to the user and proceed if confirmed
+            // The actual implementation of the confirmation dialog depends on the UI framework being used
+            // For SwiftUI, this could involve a State variable to trigger an alert
+        } else {
+            action()
+        }
+    }
+    
+    // This function should only be called after user confirmation to toggle the alarm state
+    func handleAlarmToggleConfirmed() {
+        handleEntityAction(entityId: "binary_sensor.alarm_sensor", requiresConfirmation: true)
     }
 }
 
