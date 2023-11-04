@@ -12,7 +12,7 @@ import Combine
 
 class GarageViewModel: ObservableObject {
     @Published var leftDoorClosed: Bool = true
-    @Published var rightDoorClosed: Bool = false
+    @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
     @Published var connectionState: ConnectionState = .disconnected
     var connectionStateBinding: Binding<ConnectionState> {
