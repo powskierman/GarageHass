@@ -9,41 +9,35 @@ struct GarageView: View {
         VStack {
             ConnectionStatusBar(message: "Connection Status", connectionState: $viewModel.connectionState)
                 .id(viewModel.connectionState)
-
+            
             VStack(spacing: 50) {
                 HStack {
                     GarageDoorButton(isClosed: $viewModel.leftDoorClosed, action: {
                         viewModel.handleEntityAction(entityId: "switch.left_garage_door")
                     })
-
+                    
                     GarageDoorButton(isClosed: $viewModel.rightDoorClosed, action: {
                         viewModel.handleEntityAction(entityId: "switch.right_garage_door")
                     })
                     .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
                 }
-
+                
                 Button(action: {
-                     self.showingAlarmConfirmation = true
-                 }) {
-                     Image(systemName: viewModel.alarmOff ? "alarm" : "alarm.waves.left.and.right.fill")
-                         .resizable()
-                         .frame(width: 250.0, height: 150.0)
-                         .foregroundColor(viewModel.alarmOff ? .teal : .pink)
-                 }
-                 .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7))
-                 .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
-                     Button("Confirm", role: .destructive) {
-                         viewModel.handleAlarmToggleConfirmed()
-                     }
-                 }
-             }
-         }
-//                AlarmButton(isAlarmOn: $viewModel.alarmOff, action: {
-//                    viewModel.handleAlarmAction()
-//                })
-//                .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7))
-//            }
-//        }
+                    self.showingAlarmConfirmation = true
+                }) {
+                    Image(systemName: viewModel.alarmOff ? "alarm" : "alarm.waves.left.and.right.fill")
+                        .resizable()
+                        .frame(width: viewModel.alarmOff ? 150.0 : 250.0, height: viewModel.alarmOff ? 150.0 : 150.0)
+                        .foregroundColor(viewModel.alarmOff ? .teal : .pink)
+                }
+                .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7))
+                .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
+                    Button("Confirm", role: .destructive) {
+                        viewModel.handleAlarmActionConfirmed()
+                    }
+                }
+            }
+        }
         .onAppear() {
             viewModel.establishConnectionIfNeeded()
         }

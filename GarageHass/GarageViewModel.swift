@@ -106,6 +106,33 @@ class GarageViewModel: ObservableObject {
     func handleAlarmToggleConfirmed() {
         handleEntityAction(entityId: "binary_sensor.alarm_sensor", requiresConfirmation: true)
     }
+    
+    // Call this method when the alarm button is pressed and confirmed
+    func handleAlarmActionConfirmed() {
+        let entityIdToToggle = self.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
+        triggerSwitch(entityId: entityIdToToggle)
+    }
+
+    // Helper method to trigger a switch for 500ms
+    private func triggerSwitch(entityId: String) {
+        if self.websocket.isConnected() {
+            self.websocket.setEntityState(entityId: entityId, newState: "toggle")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.websocket.setEntityState(entityId: entityId, newState: "toggle")
+            }
+        } else {
+            self.websocket.connect { success in
+                if success {
+                    self.websocket.setEntityState(entityId: entityId, newState: "on")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.websocket.setEntityState(entityId: entityId, newState: "off")
+                    }
+                } else {
+                    print("Failed to reconnect to WebSocket.")
+                }
+            }
+        }
+    }
 }
 
 extension GarageViewModel {
