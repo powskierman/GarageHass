@@ -16,7 +16,7 @@
 		D0B813C42AD319B500B3FB70 /* GarageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813BB2AD319B500B3FB70 /* GarageView.swift */; };
 		D0BEB7A22AD32D5A0068CA1C /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D0BEB7A12AD32D5A0068CA1C /* Starscream */; };
 		D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0BEB7A32AD32D730068CA1C /* Secrets.plist */; };
-		D0EA3F672AE6D2D8001154D1 /* GarageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EA3F662AE6D2D8001154D1 /* GarageViewModel.swift */; };
+		D0BED5642AFDAEBF00270C9B /* GarageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BED5632AFDAEBF00270C9B /* GarageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,7 +42,7 @@
 		D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D0B813BB2AD319B500B3FB70 /* GarageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarageView.swift; sourceTree = "<group>"; };
 		D0BEB7A32AD32D730068CA1C /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
-		D0EA3F662AE6D2D8001154D1 /* GarageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageViewModel.swift; sourceTree = "<group>"; };
+		D0BED5632AFDAEBF00270C9B /* GarageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,13 +87,13 @@
 		D0B813B12AD319B500B3FB70 /* GarageHass */ = {
 			isa = PBXGroup;
 			children = (
+				D0BED5632AFDAEBF00270C9B /* GarageViewModel.swift */,
 				D0B813B22AD319B500B3FB70 /* ConnectionStatusBar.swift */,
 				D0B813B32AD319B500B3FB70 /* GarageHass.swift */,
 				D09E26FE2AD98AF60012A82C /* GarageExtension.swift */,
 				D0B813BB2AD319B500B3FB70 /* GarageView.swift */,
 				D0B813B52AD319B500B3FB70 /* Assets.xcassets */,
 				D0B813B62AD319B500B3FB70 /* Preview Content */,
-				D0EA3F662AE6D2D8001154D1 /* GarageViewModel.swift */,
 			);
 			path = GarageHass;
 			sourceTree = "<group>";
@@ -184,7 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0EA3F672AE6D2D8001154D1 /* GarageViewModel.swift in Sources */,
+				D0BED5642AFDAEBF00270C9B /* GarageViewModel.swift in Sources */,
 				D09E26FF2AD98AF60012A82C /* GarageExtension.swift in Sources */,
 				D0B813BD2AD319B500B3FB70 /* GarageHass.swift in Sources */,
 				D0B813BC2AD319B500B3FB70 /* ConnectionStatusBar.swift in Sources */,

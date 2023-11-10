@@ -180,4 +180,3 @@ extension GarageViewModel: EventMessageHandler {
         processStateChange(entityId: message.entity_id, newState: newState)
     }
 }
-
