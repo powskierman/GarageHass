@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct WatchGarageHassApp: App {
+    @StateObject var garageDoorViewModel = GarageDoorViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WatchGarageView()
         }
     }
 }

@@ -10,6 +10,10 @@ import WatchConnectivity
 
 // This class conforms to WCSessionDelegate and processes Watch Connectivity events.
 class SessionDelegator: NSObject, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    print("Activation state: \(activationState)")
+    }
+    
     let entityStateSubject: PassthroughSubject<EntityStateChange, Never>
 
     // Define a struct to encapsulate entity state changes.
@@ -24,11 +28,6 @@ class SessionDelegator: NSObject, WCSessionDelegate {
         super.init()
     }
     
-    // Called when the Watch Connectivity session has completed activation.
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        // No implementation needed here for the purpose of this demo.
-    }
-    
     // Called when a message is received. It sends the received entity state change to the subject.
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
         DispatchQueue.main.async {
@@ -38,6 +37,18 @@ class SessionDelegator: NSObject, WCSessionDelegate {
             } else {
                 print("There was an error processing the message")
             }
+        }
+    }
+    
+    func fetchStateAndUpdateWatch() {
+        // Fetch the latest state from Home Assistant
+        // ...
+
+        // Then, send this state back to the watch
+        let validSession = WCSession.default
+        if validSession.isReachable {
+            let updateMessage = ["entityId": "entity_id_here", "newState": "new_state_here"]
+            validSession.sendMessage(updateMessage, replyHandler: nil, errorHandler: nil)
         }
     }
     
