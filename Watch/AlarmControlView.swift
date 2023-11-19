@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AlarmControlView: View {
     @State private var alarmOff: Bool = true // This state can be modified based on actual alarm state if needed
-    var viewModel: GarageDoorViewModel
+    var viewModel: WatchViewModel
     
     var body: some View {
         Button(action: {

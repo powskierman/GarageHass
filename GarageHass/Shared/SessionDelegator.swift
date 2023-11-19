@@ -10,10 +10,6 @@ import WatchConnectivity
 
 // This class conforms to WCSessionDelegate and processes Watch Connectivity events.
 class SessionDelegator: NSObject, WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-    print("Activation state: \(activationState)")
-    }
-    
     let entityStateSubject: PassthroughSubject<EntityStateChange, Never>
 
     // Define a struct to encapsulate entity state changes.
@@ -26,6 +22,10 @@ class SessionDelegator: NSObject, WCSessionDelegate {
     init(entityStateSubject: PassthroughSubject<EntityStateChange, Never>) {
         self.entityStateSubject = entityStateSubject
         super.init()
+    }
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    print("Activation state: \(activationState)")
     }
     
     // Called when a message is received. It sends the received entity state change to the subject.

@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct WatchGarageHassApp: App {
-    @StateObject var garageDoorViewModel = GarageDoorViewModel()
+    @StateObject var watchViewModel = WatchViewModel()
     var body: some Scene {
         WindowGroup {
             WatchGarageView()

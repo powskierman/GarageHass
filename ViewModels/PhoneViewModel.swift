@@ -4,7 +4,11 @@ import Combine
 import HassFramework
 import WatchConnectivity
 
-class GarageViewModel: NSObject, ObservableObject, WCSessionDelegate {
+class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
@@ -139,10 +143,11 @@ class GarageViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("WCSession activation completed with state: \(activationState)")
-        if let error = error {
-            print("Error activating WCSession: \(error)")
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        print("Received message from Watch: \(message)")
+        if let entityId = message["entityId"] as? String,
+           let newState = message["newState"] as? String {
+            handleEntityAction(entityId: entityId, newState: newState)
         }
     }
     
@@ -153,13 +158,8 @@ class GarageViewModel: NSObject, ObservableObject, WCSessionDelegate {
     func sessionDidDeactivate(_ session: WCSession) {
         print("WCSession deactivated.")
     }
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("Received message from Watch: \(message)")
-    }
 }
-
-extension GarageViewModel: EventMessageHandler {
+extension PhoneViewModel: EventMessageHandler {
     func handleEventMessage(_ message: HAEventData) {
         guard let newState = message.new_state?.state else {
             return
@@ -168,7 +168,7 @@ extension GarageViewModel: EventMessageHandler {
     }
 }
 // Extension of the ViewModel to manage WebSocket connection.
-extension GarageViewModel {
+extension PhoneViewModel {
     // Establish a WebSocket connection if it's not already connected.
     func establishConnectionIfNeeded() {
         print("Checking and establishing a WebSocket connection if needed.")

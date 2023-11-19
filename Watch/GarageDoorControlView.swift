@@ -12,7 +12,7 @@ struct GarageDoorControlView: View {
         case left
         case right
     }
-    var viewModel: GarageDoorViewModel
+    var viewModel: WatchViewModel
 
     var door: Door
     @State private var isClosed: Bool = true // This state can be modified based on actual door state if needed
@@ -35,6 +35,8 @@ struct GarageDoorControlView: View {
     private func toggleDoor() {
         let entityId = door == .left ? "switch.left_garage_door" : "switch.right_garage_door"
         viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
-        isClosed.toggle() // Update local state
+        print("Sent command to phone: \(entityId)")
+        //isClosed.toggle() // Update local state
+ //       viewModel.handleEntityAction(entityId: "switch.left_garage_door")
     }
 }

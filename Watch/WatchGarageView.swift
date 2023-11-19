@@ -9,7 +9,7 @@ import SwiftUI
 import WatchConnectivity
 
 struct WatchGarageView: View {
-    @ObservedObject var watchViewModel = GarageDoorViewModel()
+    @ObservedObject var watchViewModel = WatchViewModel()
 
     var body: some View {
         TabView {
