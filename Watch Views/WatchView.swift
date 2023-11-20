@@ -14,19 +14,19 @@ struct WatchView: View {
     var body: some View {
         TabView {
             // Pass watchViewModel to GarageDoorControlView for the left door
-            GarageDoorControlView(viewModel: watchViewModel, door: .left)
+            WatchDoorView(viewModel: watchViewModel, door: .left)
                 .tabItem {
                     Label("Left Door", systemImage: "garage")
                 }
 
             // Pass watchViewModel to GarageDoorControlView for the right door
-            GarageDoorControlView(viewModel: watchViewModel, door: .right)
+            WatchDoorView(viewModel: watchViewModel, door: .right)
                 .tabItem {
                     Label("Right Door", systemImage: "garage")
                 }
 
             // Pass watchViewModel to AlarmControlView
-            AlarmControlView(viewModel: watchViewModel)
+            WatchAlarmView(viewModel: watchViewModel)
                 .tabItem {
                     Label("Alarm", systemImage: "alarm")
                 }

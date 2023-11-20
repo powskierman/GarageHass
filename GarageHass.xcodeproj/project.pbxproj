@@ -494,7 +494,7 @@
 					"$(PROJECT_DIR)/GarageHass",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GarageHass/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -531,7 +531,7 @@
 					"$(PROJECT_DIR)/GarageHass",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GarageHass/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -559,7 +559,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchGarageHass Watch App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Watch/Preview Content\"";
 				DEVELOPMENT_TEAM = G3337N7QRS;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -594,7 +594,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchGarageHass Watch App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Watch/Preview Content\"";
 				DEVELOPMENT_TEAM = G3337N7QRS;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
