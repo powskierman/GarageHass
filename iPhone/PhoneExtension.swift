@@ -7,14 +7,32 @@ public extension HassWebSocket {
 
     // Function to set the state of an entity in Home Assistant.
     func setEntityState(entityId: String, newState: String) {
-        // Check if the WebSocket is currently connected before trying to send a command.
         guard self.connectionState == .connected else {
             print("WebSocket isn't connected, attempting to reconnect before sending command.")
-            // If not connected, attempt to reconnect using a shared WebSocket manager.
-            WebSocketManager.shared.connectIfNeeded()
-            // Additional logic to retry sending the command after reconnecting can be implemented here.
+            WebSocketManager.shared.connectIfNeeded { [weak self] success in
+                if success {
+                    print("Reconnection successful, attempting to send command again.")
+                    self?.setEntityState(entityId: entityId, newState: newState)
+                } else {
+                    print("Failed to reconnect.")
+                }
+            }
             return
-        }
+        
+        // Code to send the command if already connected
+        // ...
+    }
+
+    
+//    func setEntityState(entityId: String, newState: String) {
+//        // Check if the WebSocket is currently connected before trying to send a command.
+//        guard self.connectionState == .connected else {
+//            print("WebSocket isn't connected, attempting to reconnect before sending command.")
+//            // If not connected, attempt to reconnect using a shared WebSocket manager.
+//            WebSocketManager.shared.connectIfNeeded()
+//            // Additional logic to retry sending the command after reconnecting can be implemented here.
+//            return
+//        }
 
         // Increment the message ID for every new command sent.
         messageId += 1

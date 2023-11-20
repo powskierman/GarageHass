@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D09894DE2B07CE92002F273F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09894DD2B07CE92002F273F /* AppDelegate.swift */; };
 		D09894E52B07D632002F273F /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09894E42B07D632002F273F /* WatchKit.framework */; };
-		D09E26FD2AD760010012A82C /* HassFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E26FC2AD760010012A82C /* HassFramework.framework */; };
 		D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */; };
 		D0B813BC2AD319B500B3FB70 /* ConnectionStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B22AD319B500B3FB70 /* ConnectionStatusBar.swift */; };
 		D0B813BD2AD319B500B3FB70 /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
@@ -20,6 +19,8 @@
 		D0BEB7A22AD32D5A0068CA1C /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D0BEB7A12AD32D5A0068CA1C /* Starscream */; };
 		D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0BEB7A32AD32D730068CA1C /* Secrets.plist */; };
 		D0BED5642AFDAEBF00270C9B /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BED5632AFDAEBF00270C9B /* PhoneViewModel.swift */; };
+		D0D83C2B2B0C1DB200A583E5 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
+		D0D83C2C2B0C1DB200A583E5 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0E410752B06D49900F7C128 /* SessionDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410742B06D49900F7C128 /* SessionDelegator.swift */; };
 		D0E410BB2B06DE0C00F7C128 /* WatchGarageHass Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */; };
@@ -46,6 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D0D83C2C2B0C1DB200A583E5 /* HassFramework.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,6 +80,7 @@
 		D0B813BB2AD319B500B3FB70 /* PhoneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		D0BEB7A32AD32D730068CA1C /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		D0BED5632AFDAEBF00270C9B /* PhoneViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
+		D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HassFramework.xcframework; path = ../Frameworks/HassFramework/HassFramework.xcframework; sourceTree = "<group>"; };
 		D0E410742B06D49900F7C128 /* SessionDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegator.swift; sourceTree = "<group>"; };
 		D0E410772B06D5F300F7C128 /* WatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
 		D0E410792B06D63300F7C128 /* WatchDoorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDoorView.swift; sourceTree = "<group>"; };
@@ -95,7 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0BEB7A22AD32D5A0068CA1C /* Starscream in Frameworks */,
-				D09E26FD2AD760010012A82C /* HassFramework.framework in Frameworks */,
+				D0D83C2B2B0C1DB200A583E5 /* HassFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +116,7 @@
 		64FD5292DC945FC6B106BCF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */,
 				D09894E42B07D632002F273F /* WatchKit.framework */,
 				D09E26FC2AD760010012A82C /* HassFramework.framework */,
 			);
