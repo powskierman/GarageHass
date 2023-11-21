@@ -35,7 +35,7 @@ struct WatchDoorView: View {
     private func toggleDoor() {
         let entityId = door == .left ? "switch.left_garage_door" : "switch.right_garage_door"
         viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
-        print("Sent command to phone: \(entityId)")
+        print("Sent door command to phone: \(entityId)")
         //isClosed.toggle() // Update local state
  //       viewModel.handleEntityAction(entityId: "switch.left_garage_door")
     }
