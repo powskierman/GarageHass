@@ -2,6 +2,10 @@ import Foundation
 import WatchConnectivity
 
 class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
+    @Published var leftDoorClosed: Bool = true
+    @Published var rightDoorClosed: Bool = true
+    @Published var alarmOff: Bool = true
+
     override init() {
         super.init()
         if WCSession.isSupported() {
@@ -21,6 +25,22 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
             }
         }
     }
+    
+    // This method is called when a message is received from the phone
+     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+         DispatchQueue.main.async {
+             // Extract and use the values from the message to update the state
+             if let leftDoorClosedValue = message["leftDoorClosed"] as? Bool {
+                 self.leftDoorClosed = leftDoorClosedValue
+             }
+             if let rightDoorClosedValue = message["rightDoorClosed"] as? Bool {
+                 self.rightDoorClosed = rightDoorClosedValue
+             }
+             if let alarmOffValue = message["alarmOff"] as? Bool {
+                 self.alarmOff = alarmOffValue
+             }
+         }
+     }
 
     // WCSessionDelegate method
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {

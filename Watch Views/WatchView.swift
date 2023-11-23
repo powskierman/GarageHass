@@ -10,26 +10,29 @@ import WatchConnectivity
 
 struct WatchView: View {
     @ObservedObject var watchViewModel = WatchViewModel()
-
+    
     var body: some View {
         TabView {
-            // Pass watchViewModel to GarageDoorControlView for the left door
-            WatchEntityView(viewModel: watchViewModel, entityType: .door(.left)) // For left door
+            // Pass watchViewModel to WatchEntityView for the left door
+            WatchEntityView(viewModel: watchViewModel, entityType: .door(.left))
                 .tabItem {
-                    Label("Left Door", systemImage: "garage")
+                    Image(systemName: watchViewModel.leftDoorClosed ? "door.open" : "door.closed")
+                        .foregroundColor(watchViewModel.leftDoorClosed ? .blue : .red)
+                    Text("Left Door")
                 }
-
-            // Pass watchViewModel to GarageDoorControlView for the right door
-            WatchEntityView(viewModel: watchViewModel, entityType: .door(.right)) // For right door
-
+            
+            WatchEntityView(viewModel: watchViewModel, entityType: .door(.right))
                 .tabItem {
-                    Label("Right Door", systemImage: "garage")
+                    Image(systemName: watchViewModel.rightDoorClosed ? "door.closed" : "door.open")
+                        .foregroundColor(watchViewModel.rightDoorClosed ? .blue : .red)
+                    Text("Right Door")
                 }
-
-            // Pass watchViewModel to AlarmControlView
-            WatchEntityView(viewModel: watchViewModel, entityType: .alarm) // For alarm
+            
+            WatchEntityView(viewModel: watchViewModel, entityType: .alarm)
                 .tabItem {
-                    Label("Alarm", systemImage: "alarm")
+                    Image(systemName: watchViewModel.alarmOff ? "alarm" : "alarm.fill")
+                        .foregroundColor(watchViewModel.alarmOff ? .blue : .red)
+                    Text("Alarm")
                 }
         }
     }

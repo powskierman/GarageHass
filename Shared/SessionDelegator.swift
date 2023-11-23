@@ -1,4 +1,3 @@
-//
 //  SessionDelegator.swift
 //  GarageHass
 //
@@ -10,6 +9,10 @@ import WatchConnectivity
 
 // This class conforms to WCSessionDelegate and processes Watch Connectivity events.
 class SessionDelegator: NSObject, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    print("Activation state: \(activationState)")
+    }
+    
     let entityStateSubject: PassthroughSubject<EntityStateChange, Never>
 
     // Define a struct to encapsulate entity state changes.
@@ -24,21 +27,33 @@ class SessionDelegator: NSObject, WCSessionDelegate {
         super.init()
     }
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-    print("Activation state: \(activationState)")
-    }
-    
     // Called when a message is received. It sends the received entity state change to the subject.
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+
+        print("Received state update from phone:", message)
+
         DispatchQueue.main.async {
-            // Extracts the 'entityId' and 'newState' from the message and sends it to the subject.
-            if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
-                self.entityStateSubject.send(EntityStateChange(entityId: entityId, newState: newState))
-            } else {
-                print("There was an error processing the message")
+            if let leftDoorClosed = message["leftDoorClosed"] as? Bool {
+                print("Updating left door state to:", leftDoorClosed)
+        
+                let newState = leftDoorClosed ? "on" : "off"
+                self.entityStateSubject.send(EntityStateChange(entityId: "left_door", newState: newState))
+            }
+            if let rightDoorClosed = message["rightDoorClosed"] as? Bool {
+                print("Updating right door state to:", rightDoorClosed)
+        
+                let newState = rightDoorClosed ? "on" : "off"
+                self.entityStateSubject.send(EntityStateChange(entityId: "left_door", newState: newState))
+            }
+            if let alarmOff = message["alarmOff"] as? Bool {
+                print("Updating alarm state to:", alarmOff)
+        
+                let newState = alarmOff ? "on" : "off"
+                self.entityStateSubject.send(EntityStateChange(entityId: "alrmOff", newState: newState))
             }
         }
     }
+
     
     func fetchStateAndUpdateWatch() {
         // Fetch the latest state from Home Assistant
@@ -68,4 +83,3 @@ class SessionDelegator: NSObject, WCSessionDelegate {
     }
     #endif
 }
-

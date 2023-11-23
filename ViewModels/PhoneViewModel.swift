@@ -6,7 +6,6 @@ import WatchConnectivity
 
 class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
     }
     
     @Published var leftDoorClosed: Bool = true
@@ -39,6 +38,29 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
             print("WCSession is not supported on this device.")
         }
     }
+    
+    private func ensureWebSocketConnection(completion: @escaping (Bool) -> Void) {
+         if websocket.isConnected() {
+             completion(true)
+         } else {
+             websocket.connect { success in
+                 completion(success)
+             }
+         }
+     }
+
+     func handleEntityActionWithConnectionCheck(entityId: String, requiresConfirmation: Bool = false, newState: String? = nil) {
+         ensureWebSocketConnection { [weak self] isConnected in
+             guard isConnected else {
+                 print("WebSocket connection could not be established.")
+                 // Handle connection failure, e.g., by notifying the user
+                 return
+             }
+             
+             // Your existing logic to handle entity action
+             self?.handleEntityAction(entityId: entityId, requiresConfirmation: requiresConfirmation, newState: newState)
+         }
+     }
     
     var connectionStateBinding: Binding<ConnectionState> {
         Binding(
@@ -89,6 +111,7 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 print("Received state change for unknown sensor: \(entityId)")
             }
         }
+        self.updateWatchState()
     }
     
     func handleEntityAction(entityId: String, requiresConfirmation: Bool = false, newState: String? = nil) {
@@ -142,6 +165,21 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
             }
         }
     }
+    
+    func updateWatchState() {
+        let state = [
+            "leftDoorClosed": leftDoorClosed,
+            "rightDoorClosed": rightDoorClosed,
+            "alarmOff": alarmOff
+        ]
+        
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(state, replyHandler: nil) { error in
+                print("Error sending state update to watch: \(error.localizedDescription)")
+            }
+        }
+    }
+
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("Received message from Watch: \(message)")

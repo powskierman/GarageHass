@@ -1,17 +1,8 @@
-//
-//  WatchEntity.swift
-//  WatchGarageHass Watch App
-//
-//  Created by Michel Lapointe on 2023-11-21.
-//
-
 import SwiftUI
 
 struct WatchEntityView: View {
     @ObservedObject var viewModel: WatchViewModel
     let entityType: EntityType
-    @State private var isEntityActive: Bool = false // Represents the current state of the entity
-    @State private var showingConfirmation = false
 
     var body: some View {
         Button(action: {
@@ -23,59 +14,46 @@ struct WatchEntityView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(isEntityActive ? Color.pink : Color.teal)
-        .confirmationDialog("Confirm Action", isPresented: $showingConfirmation) {
-            Button("Confirm", role: .destructive) {
-                toggleEntity()
-            }
-        }
-        .onAppear() {
-            $viewModel.establishConnectionIfNeeded
-        }
+        .background(entityBackgroundColor)
+        // ... other view modifiers or UI elements
     }
 
     private var entityImage: some View {
         switch entityType {
-        case .door:
-            return Image(systemName: isEntityActive ? "door.garage.open" : "door.garage.closed")
-                      .resizable()
-                      .scaledToFit()
+        case .door(let doorType):
+            let isClosed = doorType == .left ? viewModel.leftDoorClosed : viewModel.rightDoorClosed
+            return Image(systemName: isClosed ? "door.garage.closed" : "door.garage.open")
+                .resizable()
+                .scaledToFit()
         case .alarm:
-            return Image(systemName: isEntityActive ? "alarm.waves.left.and.right.fill" : "alarm")
-                      .resizable()
-                      .scaledToFit()
+            return Image(systemName: viewModel.alarmOff ? "alarm" : "alarm.waves.left.and.right.fill")
+                .resizable()
+                .scaledToFit()
         }
     }
 
     private var entityLabel: String {
         switch entityType {
-        case .door(let door):
-            return door == .left ? "Left Door" : "Right Door"
+        case .door(let doorType):
+            return doorType == .left ? "Left Door" : "Right Door"
         case .alarm:
             return "Alarm"
         }
     }
 
-    private func handleButtonPress() {
+    private var entityBackgroundColor: Color {
         switch entityType {
+        case .door(let doorType):
+            let isClosed = doorType == .left ? viewModel.leftDoorClosed : viewModel.rightDoorClosed
+            return isClosed ? Color.teal : Color.pink
         case .alarm:
-            showingConfirmation = true
-        default:
-            toggleEntity()
+            return viewModel.alarmOff ? Color.teal : Color.pink
         }
     }
 
-    private func toggleEntity() {
-        let entityId: String
-        switch entityType {
-        case .door(let door):
-            entityId = door == .left ? "switch.left_garage_door" : "switch.right_garage_door"
-        case .alarm:
-            entityId = "switch.alarm_sensor"
-        }
-
-        viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
-        print("Sent command to phone: \(entityId)")
-        isEntityActive.toggle() // Update local state
+    private func handleButtonPress() {
+        // Implementation for handling button press
+        // Likely involves calling `viewModel.sendCommandToPhone`
+        // with appropriate entityId and newState
     }
 }
