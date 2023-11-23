@@ -2,73 +2,25 @@ import SwiftUI
 import Foundation
 import Combine
 import HassFramework
-import WatchConnectivity
 
-class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-    }
-    
+class PhoneViewModel: NSObject, ObservableObject {
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
     @Published var connectionState: ConnectionState = .disconnected
-    
+
     private var websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
-    
-    // Watch Connectivity properties
-    var session: WCSession
-    
+
     override init() {
-        print("Initializing GarageViewModel...")
+        print("Initializing PhoneViewModel...")
         self.websocket = WebSocketManager.shared.websocket
-        self.session = WCSession.default
-        
         super.init()
         
         setupWebSocketEvents()
         self.connectionState = websocket.connectionState
-        
-        // Setup WCSession
-        if WCSession.isSupported() {
-            print("WCSession is supported. Setting delegate and activating...")
-            self.session.delegate = self
-            self.session.activate()
-        } else {
-            print("WCSession is not supported on this device.")
-        }
     }
-    
-    private func ensureWebSocketConnection(completion: @escaping (Bool) -> Void) {
-         if websocket.isConnected() {
-             completion(true)
-         } else {
-             websocket.connect { success in
-                 completion(success)
-             }
-         }
-     }
 
-     func handleEntityActionWithConnectionCheck(entityId: String, requiresConfirmation: Bool = false, newState: String? = nil) {
-         ensureWebSocketConnection { [weak self] isConnected in
-             guard isConnected else {
-                 print("WebSocket connection could not be established.")
-                 // Handle connection failure, e.g., by notifying the user
-                 return
-             }
-             
-             // Your existing logic to handle entity action
-             self?.handleEntityAction(entityId: entityId, requiresConfirmation: requiresConfirmation, newState: newState)
-         }
-     }
-    
-    var connectionStateBinding: Binding<ConnectionState> {
-        Binding(
-            get: { self.connectionState },
-            set: { self.connectionState = $0 }
-        )
-    }
-    
     private func setupWebSocketEvents() {
         print("Setting up WebSocket events...")
         websocket.onEventReceived = { [weak self] event in
@@ -82,7 +34,7 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
             }
             .store(in: &cancellables)
     }
-    
+
     private func handleWebSocketEvent(event: String) {
         print("WebSocket event received: \(event)")
         guard let data = event.data(using: .utf8),
@@ -94,10 +46,10 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
               let newState = newStateData["state"] as? String,
               let entityId = eventData["entity_id"] as? String
         else { return }
-        
+
         processStateChange(entityId: entityId, newState: newState)
     }
-    
+
     private func processStateChange(entityId: String, newState: String) {
         DispatchQueue.main.async {
             switch entityId {
@@ -111,9 +63,8 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 print("Received state change for unknown sensor: \(entityId)")
             }
         }
-        self.updateWatchState()
     }
-    
+
     func handleEntityAction(entityId: String, requiresConfirmation: Bool = false, newState: String? = nil) {
         let action = {
             let stateToSet = newState ?? "toggle"
@@ -131,12 +82,12 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
         
         if requiresConfirmation {
-            // Confirmation handling
+            // Confirmation handling logic here
         } else {
             action()
         }
     }
-    
+
     func handleAlarmToggleConfirmed() {
         handleEntityAction(entityId: "binary_sensor.alarm_sensor", requiresConfirmation: true)
     }
@@ -145,7 +96,7 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
         let entityIdToToggle = self.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
         triggerSwitch(entityId: entityIdToToggle)
     }
-    
+
     private func triggerSwitch(entityId: String) {
         if self.websocket.isConnected() {
             self.websocket.setEntityState(entityId: entityId, newState: "toggle")
@@ -165,60 +116,26 @@ class PhoneViewModel: NSObject, ObservableObject, WCSessionDelegate {
             }
         }
     }
-    
-    func updateWatchState() {
-        let state = [
-            "leftDoorClosed": leftDoorClosed,
-            "rightDoorClosed": rightDoorClosed,
-            "alarmOff": alarmOff
-        ]
-        
-        if WCSession.default.isReachable {
-            WCSession.default.sendMessage(state, replyHandler: nil) { error in
-                print("Error sending state update to watch: \(error.localizedDescription)")
-            }
-        }
-    }
 
-    
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("Received message from Watch: \(message)")
-        if let entityId = message["entityId"] as? String,
-           let newState = message["newState"] as? String {
-            handleEntityAction(entityId: entityId, newState: newState)
-        }
-    }
-    
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        print("WCSession became inactive.")
-    }
-    
-    func sessionDidDeactivate(_ session: WCSession) {
-        print("WCSession deactivated.")
-    }
-}
-extension PhoneViewModel: EventMessageHandler {
-    func handleEventMessage(_ message: HAEventData) {
-        guard let newState = message.new_state?.state else {
-            return
-        }
-        processStateChange(entityId: message.entity_id, newState: newState)
-    }
-}
-// Extension of the ViewModel to manage WebSocket connection.
-extension PhoneViewModel {
-    // Establish a WebSocket connection if it's not already connected.
     func establishConnectionIfNeeded() {
         print("Checking and establishing a WebSocket connection if needed.")
         if !websocket.isConnected() {
             websocket.connect { success in
                 if success {
-                    // Upon successful connection, subscribe to events.
                     self.websocket.subscribeToEvents()
                 } else {
                     print("Failed to connect to WebSocket.")
                 }
             }
         }
+    }
+}
+
+extension PhoneViewModel: EventMessageHandler {
+    func handleEventMessage(_ message: HAEventData) {
+        guard let newState = message.new_state?.state else {
+            return
+        }
+        processStateChange(entityId: message.entity_id, newState: newState)
     }
 }

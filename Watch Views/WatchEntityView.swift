@@ -5,9 +5,7 @@ struct WatchEntityView: View {
     let entityType: EntityType
 
     var body: some View {
-        Button(action: {
-            handleButtonPress()
-        }) {
+        Button(action: handleButtonPress) {
             VStack {
                 entityImage
                 Text(entityLabel)
@@ -15,7 +13,6 @@ struct WatchEntityView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(entityBackgroundColor)
-        // ... other view modifiers or UI elements
     }
 
     private var entityImage: some View {
@@ -52,8 +49,14 @@ struct WatchEntityView: View {
     }
 
     private func handleButtonPress() {
-        // Implementation for handling button press
-        // Likely involves calling `viewModel.sendCommandToPhone`
-        // with appropriate entityId and newState
+        switch entityType {
+        case .door(let doorType):
+            let entityId = doorType == .left ? "switch.left_garage_door" : "switch.right_garage_door"
+            viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
+        case .alarm:
+            let entityId = "switch.alarm"
+            let newState = viewModel.alarmOff ? "on" : "off"
+            viewModel.sendCommandToPhone(entityId: entityId, newState: newState)
+        }
     }
 }

@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  GarageHass
-//
-//  Created by Michel Lapointe on 2023-11-17.
-//
-
 import SwiftUI
 import Combine
 import WatchConnectivity

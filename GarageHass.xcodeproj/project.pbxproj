@@ -28,8 +28,6 @@
 		D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */; };
 		D0E410C22B06DF0100F7C128 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410772B06D5F300F7C128 /* WatchView.swift */; };
 		D0E410C42B06DF3000F7C128 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410802B06D7E500F7C128 /* WatchViewModel.swift */; };
-		D0E410C52B06DF4300F7C128 /* WatchDoorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410792B06D63300F7C128 /* WatchDoorView.swift */; };
-		D0E410C62B06DF4900F7C128 /* WatchAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E4107B2B06D69400F7C128 /* WatchAlarmView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,8 +84,6 @@
 		D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchEntityView.swift; sourceTree = "<group>"; };
 		D0E410742B06D49900F7C128 /* SessionDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegator.swift; sourceTree = "<group>"; };
 		D0E410772B06D5F300F7C128 /* WatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
-		D0E410792B06D63300F7C128 /* WatchDoorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDoorView.swift; sourceTree = "<group>"; };
-		D0E4107B2B06D69400F7C128 /* WatchAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAlarmView.swift; sourceTree = "<group>"; };
 		D0E410802B06D7E500F7C128 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
 		D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGarageHassApp.swift; sourceTree = "<group>"; };
 		D0E4108C2B06DD0400F7C128 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -183,8 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				D0E410772B06D5F300F7C128 /* WatchView.swift */,
-				D0E410792B06D63300F7C128 /* WatchDoorView.swift */,
-				D0E4107B2B06D69400F7C128 /* WatchAlarmView.swift */,
 				D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */,
 			);
 			path = "Watch Views";
@@ -351,9 +345,7 @@
 			files = (
 				D0D83C342B0D2D6100A583E5 /* WatchEntityView.swift in Sources */,
 				D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */,
-				D0E410C52B06DF4300F7C128 /* WatchDoorView.swift in Sources */,
 				D0BDEC492B07E3EC00F418AD /* SessionDelegator.swift in Sources */,
-				D0E410C62B06DF4900F7C128 /* WatchAlarmView.swift in Sources */,
 				D0D83C322B0D2D2900A583E5 /* Enums.swift in Sources */,
 				D0E410C22B06DF0100F7C128 /* WatchView.swift in Sources */,
 				D0E410C42B06DF3000F7C128 /* WatchViewModel.swift in Sources */,
