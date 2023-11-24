@@ -13,25 +13,30 @@ class SessionDelegator: NSObject, WCSessionDelegate {
         self.entityStateSubject = entityStateSubject
         super.init()
 
-        // Activate WCSession if supported
         if WCSession.isSupported() {
             let session = WCSession.default
             session.delegate = self
             session.activate()
+            print("SessionDelegator: WCSession default session set and activated")
+        } else {
+            print("SessionDelegator: WCSession not supported on this device")
         }
     }
 
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        print("WCSession Activation State: \(activationState)")
+        print("SessionDelegator: WCSession activation did complete with state: \(activationState), error: \(String(describing: error))")
         if let error = error {
             print("WCSession activation error: \(error.localizedDescription)")
         }
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("Received state update from phone:", message)
+        print("SessionDelegator: Received message from watch:", message)
 
         DispatchQueue.main.async {
+            if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
+                print("Processing command - Entity ID: \(entityId), New State: \(newState)")
+            }
             if let leftDoorClosed = message["leftDoorClosed"] as? Bool {
                 let newState = leftDoorClosed ? "off" : "on"
                 self.entityStateSubject.send(EntityStateChange(entityId: "left_door", newState: newState))

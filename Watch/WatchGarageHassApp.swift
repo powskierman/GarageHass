@@ -12,7 +12,7 @@ struct WatchGarageHassApp: App {
     @StateObject var watchViewModel = WatchViewModel()
     var body: some Scene {
         WindowGroup {
-            WatchView()
+            WatchView(watchViewModel: watchViewModel)
         }
     }
 }

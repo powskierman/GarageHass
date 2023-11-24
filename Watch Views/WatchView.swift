@@ -2,7 +2,7 @@ import SwiftUI
 import WatchConnectivity
 
 struct WatchView: View {
-    @ObservedObject var watchViewModel = WatchViewModel()
+    @ObservedObject var watchViewModel: WatchViewModel
 
     var body: some View {
         TabView {

@@ -1,16 +1,20 @@
-import SwiftUI
-import Combine
+import UIKit
 import WatchConnectivity
+import Combine
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
     var sessionDelegator: SessionDelegator!
-
+    var entityStateSubject = PassthroughSubject<SessionDelegator.EntityStateChange, Never>()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        print("AppDelegate: didFinishLaunchingWithOptions called")
+        
         if WCSession.isSupported() {
-            let entityStateSubject = PassthroughSubject<SessionDelegator.EntityStateChange, Never>()
+            print("AppDelegate: WCSession is supported")
             sessionDelegator = SessionDelegator(entityStateSubject: entityStateSubject)
-            WCSession.default.delegate = sessionDelegator
-            WCSession.default.activate()
+            print("AppDelegate: WCSession default session set up via SessionDelegator")
+        } else {
+            print("AppDelegate: WCSession is not supported on this device")
         }
         return true
     }

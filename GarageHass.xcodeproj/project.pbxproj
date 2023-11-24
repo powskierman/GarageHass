@@ -129,10 +129,10 @@
 				D0BEB7A32AD32D730068CA1C /* Secrets.plist */,
 				D0E410732B06D46900F7C128 /* Shared */,
 				D0DB5D0D2B0AD94E00FA7F4D /* Phone Views */,
+				D0DB5D0C2B0AD86000FA7F4D /* Phone */,
 				D0DB5D0E2B0AD9A800FA7F4D /* Watch Views */,
-				D0E4107F2B06D7AE00F7C128 /* ViewModels */,
-				D0DB5D0C2B0AD86000FA7F4D /* iPhone */,
 				D0E410872B06DD0200F7C128 /* Watch */,
+				D0E4107F2B06D7AE00F7C128 /* ViewModels */,
 				D02198EB290479C1006CB906 /* Products */,
 				64FD5292DC945FC6B106BCF9 /* Frameworks */,
 			);
@@ -155,7 +155,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D0DB5D0C2B0AD86000FA7F4D /* iPhone */ = {
+		D0DB5D0C2B0AD86000FA7F4D /* Phone */ = {
 			isa = PBXGroup;
 			children = (
 				D0B813B32AD319B500B3FB70 /* GarageHass.swift */,
@@ -163,7 +163,7 @@
 				D0B813B52AD319B500B3FB70 /* Assets.xcassets */,
 				D0B813B62AD319B500B3FB70 /* Preview Content */,
 			);
-			path = iPhone;
+			path = Phone;
 			sourceTree = "<group>";
 		};
 		D0DB5D0D2B0AD94E00FA7F4D /* Phone Views */ = {
@@ -206,9 +206,9 @@
 		D0E410872B06DD0200F7C128 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
-				D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */,
 				D0E4108C2B06DD0400F7C128 /* Assets.xcassets */,
 				D0E4108E2B06DD0400F7C128 /* Preview Content */,
+				D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */,
 			);
 			path = Watch;
 			sourceTree = "<group>";
