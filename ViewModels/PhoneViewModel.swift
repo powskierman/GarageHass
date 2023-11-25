@@ -3,7 +3,7 @@ import Foundation
 import Combine
 import HassFramework
 
-class PhoneViewModel: NSObject, ObservableObject {
+class PhoneViewModel: ObservableObject {
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
@@ -11,32 +11,35 @@ class PhoneViewModel: NSObject, ObservableObject {
 
     private var websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
+    private var entityStateSubscription: AnyCancellable?  // Ensure this is declared
 
-    override init() {
-        print("Initializing PhoneViewModel...")
-        self.websocket = WebSocketManager.shared.websocket
-        super.init()
+    init(websocket: HassWebSocket) {
+        print("PhoneViewModel: Initializing...")
+        self.websocket = websocket
         
         setupWebSocketEvents()
         self.connectionState = websocket.connectionState
-    }
 
+        subscribeToEntityStateChanges()
+    }
+    
     private func setupWebSocketEvents() {
-        print("Setting up WebSocket events...")
+        print("PhoneViewModel: Setting up WebSocket events...")
         websocket.onEventReceived = { [weak self] event in
+            print("PhoneViewModel: WebSocket event received: \(event)")
             self?.handleWebSocketEvent(event: event)
         }
         websocket.addEventMessageHandler(self)
         websocket.$connectionState
             .sink { [weak self] newState in
-                print("WebSocket connection state changed: \(newState)")
+                print("PhoneViewModel: WebSocket connection state changed: \(newState)")
                 self?.connectionState = newState
             }
             .store(in: &cancellables)
     }
 
     private func handleWebSocketEvent(event: String) {
-        print("WebSocket event received: \(event)")
+        print("PhoneViewModel: Handling WebSocket event: \(event)")
         guard let data = event.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
               let message = jsonObject as? [String: Any],
@@ -45,12 +48,31 @@ class PhoneViewModel: NSObject, ObservableObject {
               let newStateData = eventData["new_state"] as? [String: Any],
               let newState = newStateData["state"] as? String,
               let entityId = eventData["entity_id"] as? String
-        else { return }
+        else {
+            print("PhoneViewModel: Unable to parse WebSocket event")
+            return
+        }
 
         processStateChange(entityId: entityId, newState: newState)
     }
 
+    private func subscribeToEntityStateChanges() {
+        print("PhoneViewModel: Subscribing to entity state changes")
+        if let appDelegate = AppDelegate.shared {
+            entityStateSubscription = appDelegate.entityStateSubject
+                .sink { [weak self] change in
+                    print("PhoneViewModel: Received entity state change: \(change)")
+   //                 self?.processStateChange(entityId: change.entityId, newState: change.newState)
+                    self?.handleEntityAction(entityId: change.entityId, newState: change.newState)
+        
+                }
+        } else {
+            print("PhoneViewModel: Error - AppDelegate shared instance is not available.")
+        }
+    }
+    
     private func processStateChange(entityId: String, newState: String) {
+        print("PhoneViewModel: Processing state change - Entity ID: \(entityId), New State: \(newState)")
         DispatchQueue.main.async {
             switch entityId {
             case "binary_sensor.left_door_sensor":
@@ -60,11 +82,10 @@ class PhoneViewModel: NSObject, ObservableObject {
             case "binary_sensor.alarm_sensor":
                 self.alarmOff = (newState == "off")
             default:
-                print("Received state change for unknown sensor: \(entityId)")
+                print("PhoneViewModel: Received state change for unknown sensor: \(entityId)")
             }
         }
     }
-
     func handleEntityAction(entityId: String, requiresConfirmation: Bool = false, newState: String? = nil) {
         let action = {
             let stateToSet = newState ?? "toggle"

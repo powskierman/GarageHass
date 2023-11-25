@@ -3,8 +3,15 @@ import HassFramework  // Import the SwiftUI for UI components and HassFramework 
 
 // Define a view representing the Garage interface.
 struct PhoneView: View {
-    // Observe changes in the GarageViewModel to update the UI accordingly.
-    @ObservedObject var viewModel = PhoneViewModel()
+//    // Observe changes in the GarageViewModel to update the UI accordingly.
+//    @ObservedObject var viewModel = PhoneViewModel(websocket: WebSocketManager.shared.websocket)
+    @ObservedObject var viewModel: PhoneViewModel
+
+     // Ensure viewModel is initialized correctly
+     init() {
+         _viewModel = ObservedObject(initialValue: PhoneViewModel(websocket: WebSocketManager.shared.websocket))
+     }
+    
     // A state variable to control the display of the alarm confirmation dialog.
     @State private var showingAlarmConfirmation = false
 
