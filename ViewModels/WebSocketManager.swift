@@ -81,35 +81,32 @@ class WebSocketManager: ObservableObject {
          }
      }
  
+    // This function establishes a WebSocket connection if not already connected.
+     func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void = { _ in }) {
+         guard !websocket.isConnected() else {
+             completion(true)
+             return
+         }
 
-    func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void = { _ in }) {
-        if !websocket.isConnected() {
-            websocket.connect { success in
-                if success {
-                    self.websocket.subscribeToEvents()
-                }
-                completion(success)
-            }
-        } else {
-            completion(true)
-        }
-    }
-    
+         websocket.connect { success in
+             if success {
+                 self.websocket.subscribeToEvents()
+             }
+             completion(success)
+         }
+     }
 
-    func handleEntityAction(entityId: String, newState: String? = nil) {
-        let stateToSet = newState ?? "toggle"
-        if websocket.isConnected() {
-            websocket.setEntityState(entityId: entityId, newState: stateToSet)
-        } else {
-            websocket.connect { success in
-                if success {
-                    self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
-                } else {
-                    print("Failed to reconnect to WebSocket.")
-                }
-            }
-        }
-    }
+     // Handles actions on entities.
+     func handleEntityAction(entityId: String, newState: String? = nil) {
+         let stateToSet = newState ?? "toggle"
+         establishConnectionIfNeeded { success in
+             if success {
+                 self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
+             } else {
+                 print("Failed to reconnect to WebSocket.")
+             }
+         }
+     }
 }
 
 extension WebSocketManager: EventMessageHandler {
