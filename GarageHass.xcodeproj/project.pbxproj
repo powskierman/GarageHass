@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
 		D09894E52B07D632002F273F /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09894E42B07D632002F273F /* WatchKit.framework */; };
 		D0990C992B127D3B00858A65 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C982B127D3B00858A65 /* WebSocketManager.swift */; };
 		D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */; };
@@ -14,7 +15,6 @@
 		D0990CA42B12933200858A65 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990CA22B1292FD00858A65 /* Enums.swift */; };
 		D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */; };
 		D0B813BC2AD319B500B3FB70 /* ConnectionStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B22AD319B500B3FB70 /* ConnectionStatusBar.swift */; };
-		D0B813BD2AD319B500B3FB70 /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
 		D0B813BF2AD319B500B3FB70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B52AD319B500B3FB70 /* Assets.xcassets */; };
 		D0B813C02AD319B500B3FB70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */; };
 		D0B813C42AD319B500B3FB70 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813BB2AD319B500B3FB70 /* PhoneView.swift */; };
@@ -120,17 +120,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D00142E62B15055800AC22DC /* Main apps */ = {
+			isa = PBXGroup;
+			children = (
+				D0B813B32AD319B500B3FB70 /* GarageHass.swift */,
+				D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */,
+			);
+			path = "Main apps";
+			sourceTree = "<group>";
+		};
 		D02198E1290479C1006CB906 = {
 			isa = PBXGroup;
 			children = (
 				D09894E22B07D03A002F273F /* Info.plist */,
 				D0BEB7A32AD32D730068CA1C /* Secrets.plist */,
+				D00142E62B15055800AC22DC /* Main apps */,
 				D0E410732B06D46900F7C128 /* Shared */,
 				D0DB5D0D2B0AD94E00FA7F4D /* Phone Views */,
-				D0DB5D0C2B0AD86000FA7F4D /* Phone */,
 				D0DB5D0E2B0AD9A800FA7F4D /* Watch Views */,
-				D0E410872B06DD0200F7C128 /* Watch */,
 				D0E4107F2B06D7AE00F7C128 /* ViewModels */,
+				D0DB5D0C2B0AD86000FA7F4D /* Phone */,
+				D0E410872B06DD0200F7C128 /* Watch */,
 				D02198EB290479C1006CB906 /* Products */,
 				64FD5292DC945FC6B106BCF9 /* Frameworks */,
 			);
@@ -156,8 +166,6 @@
 		D0DB5D0C2B0AD86000FA7F4D /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				D0B813B32AD319B500B3FB70 /* GarageHass.swift */,
-				D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */,
 				D0B813B52AD319B500B3FB70 /* Assets.xcassets */,
 				D0B813B62AD319B500B3FB70 /* Preview Content */,
 			);
@@ -193,8 +201,9 @@
 		D0E4107F2B06D7AE00F7C128 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				D0E410802B06D7E500F7C128 /* WatchViewModel.swift */,
 				D0990C982B127D3B00858A65 /* WebSocketManager.swift */,
+				D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */,
+				D0E410802B06D7E500F7C128 /* WatchViewModel.swift */,
 				D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */,
 			);
 			path = ViewModels;
@@ -205,7 +214,6 @@
 			children = (
 				D0E4108C2B06DD0400F7C128 /* Assets.xcassets */,
 				D0E4108E2B06DD0400F7C128 /* Preview Content */,
-				D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */,
 			);
 			path = Watch;
 			sourceTree = "<group>";
@@ -329,8 +337,8 @@
 				D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */,
 				D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */,
 				D0990C992B127D3B00858A65 /* WebSocketManager.swift in Sources */,
-				D0B813BD2AD319B500B3FB70 /* GarageHass.swift in Sources */,
 				D0990CA32B1292FD00858A65 /* Enums.swift in Sources */,
+				D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */,
 				D0B813BC2AD319B500B3FB70 /* ConnectionStatusBar.swift in Sources */,
 				D0B813C42AD319B500B3FB70 /* PhoneView.swift in Sources */,
 			);

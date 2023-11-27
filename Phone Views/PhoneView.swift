@@ -18,17 +18,12 @@ struct PhoneView: View {
                 // Horizontal stack for garage door buttons.
                 HStack {
                     // Garage door button for the left door.
-                    GarageDoorButton(isClosed: $webSocketManager.leftDoorClosed, action: {
-                        // Triggers an action in the view model to handle the left door state change.
-                        webSocketManager.handleEntityAction(entityId: "switch.left_garage_door")
-                    })
+                    GarageDoorButton(door: .left)
+                        .environmentObject(webSocketManager)
                     
                     // Garage door button for the right door.
-                    GarageDoorButton(isClosed: $webSocketManager.rightDoorClosed, action: {
-                        // Triggers an action in the view model to handle the right door state change.
-                        webSocketManager.handleEntityAction(entityId: "switch.right_garage_door")
-                    })
-                    .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0)) // Add padding to the right button for visual separation.
+                    GarageDoorButton(door: .right)
+                        .environmentObject(webSocketManager)
                 }
                 
                 // Button to toggle the alarm.
@@ -59,32 +54,59 @@ struct PhoneView: View {
 
 // Define a view for the garage door button.
 struct GarageDoorButton: View {
-    @Binding var isClosed: Bool
-    let action: () -> Void
+    @EnvironmentObject var webSocketManager: WebSocketManager
+    var door: Door
 
     var body: some View {
-        Button(action: action) {
-            Image(systemName: isClosed ? "door.garage.closed" : "door.garage.open")
+        Button(action: {
+            switch door {
+            case .left:
+                webSocketManager.handleEntityAction(entityId: "switch.left_garage_door")
+            case .right:
+                webSocketManager.handleEntityAction(entityId: "switch.right_garage_door")
+            }
+        }) {
+            Image(systemName: doorStateImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .foregroundColor(isClosed ? .teal : .pink)
+                .foregroundColor(doorStateColor)
         }
         .frame(width: 170.0, height: 170.0)
     }
+
+    private var doorStateImage: String {
+        switch door {
+        case .left:
+            return webSocketManager.leftDoorClosed ? "door.garage.closed" : "door.garage.open"
+        case .right:
+            return webSocketManager.rightDoorClosed ? "door.garage.closed" : "door.garage.open"
+        }
+    }
+
+    private var doorStateColor: Color {
+        switch door {
+        case .left:
+            return webSocketManager.leftDoorClosed ? .teal : .pink
+        case .right:
+            return webSocketManager.rightDoorClosed ? .teal : .pink
+        }
+    }
 }
+
 
 // Define a view for the alarm button.
 struct AlarmButton: View {
-    @Binding var isAlarmOn: Bool
-    let action: () -> Void
+    @EnvironmentObject var webSocketManager: WebSocketManager
     @State private var showingConfirmation = false
 
     var body: some View {
-        Button(action: { showingConfirmation = true }) {
-            Image(systemName: isAlarmOn ? "alarm.waves.left.and.right.fill" : "alarm")
+        Button(action: {
+            showingConfirmation = true
+        }) {
+            Image(systemName: webSocketManager.alarmOff ? "alarm" : "alarm.waves.left.and.right.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .foregroundColor(isAlarmOn ? .pink : .teal)
+                .foregroundColor(webSocketManager.alarmOff ? .teal : .pink)
         }
         .frame(width: 250.0, height: 150.0)
         .confirmationDialog(
@@ -92,7 +114,10 @@ struct AlarmButton: View {
             isPresented: $showingConfirmation,
             titleVisibility: .visible
         ) {
-            Button("Confirm", role: .destructive, action: action)
+            Button("Confirm", role: .destructive) {
+                let entityIdToToggle = webSocketManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
+                webSocketManager.handleEntityAction(entityId: entityIdToToggle)
+            }
             Button("Cancel", role: .cancel) {}
         }
     }
@@ -101,6 +126,6 @@ struct AlarmButton: View {
 // Provide a preview of the GarageView.
 struct GarageView_Previews: PreviewProvider {
     static var previews: some View {
-        PhoneView().environmentObject(WebSocketManager(websocket: WebSocketManager.shared.websocket))
+        PhoneView().environmentObject(WebSocketManager.shared)
     }
 }

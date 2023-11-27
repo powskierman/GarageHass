@@ -10,9 +10,10 @@ import Foundation
 enum EntityType {
     case door(Door)
     case alarm
+}
 
-    enum Door {
+enum Door {
         case left
         case right
-    }
 }
+
