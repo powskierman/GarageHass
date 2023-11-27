@@ -17,6 +17,8 @@ class WebSocketManager: ObservableObject {
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
     @Published var connectionState: ConnectionState = .disconnected
+    @Published var error: Error?
+    @Published var hasErrorOccurred: Bool = false
 
     var websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
@@ -82,19 +84,25 @@ class WebSocketManager: ObservableObject {
      }
  
     // This function establishes a WebSocket connection if not already connected.
-     func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void = { _ in }) {
-         guard !websocket.isConnected() else {
-             completion(true)
-             return
-         }
+    func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void = { _ in }) {
+            guard !websocket.isConnected() else {
+                completion(true)
+                return
+            }
 
-         websocket.connect { success in
-             if success {
-                 self.websocket.subscribeToEvents()
-             }
-             completion(success)
-         }
-     }
+            websocket.connect { success in
+                DispatchQueue.main.async {
+                    if success {
+                        self.websocket.subscribeToEvents()
+                        self.error = nil
+                    } else {
+                        self.error = NSError(domain: "WebSocket", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to establish WebSocket connection."])
+                    }
+                    completion(success)
+                }
+            }
+        }
+
 
      // Handles actions on entities.
      func handleEntityAction(entityId: String, newState: String? = nil) {

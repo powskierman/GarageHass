@@ -6,6 +6,7 @@ struct PhoneView: View {
 
     // A state variable to control the display of the alarm confirmation dialog.
     @State private var showingAlarmConfirmation = false
+    @State private var showingErrorAlert = false
 
     var body: some View {
         VStack {
@@ -45,12 +46,30 @@ struct PhoneView: View {
                     }
                 }
             }
+            if let error = webSocketManager.error {
+                  Text("Error: \(error.localizedDescription)")
+                      .foregroundColor(.red)
+                      .padding()
+              }
         }
-        .onAppear() {
-            webSocketManager.establishConnectionIfNeeded()
+        .alert("Connection Error", isPresented: $showingErrorAlert, actions: {
+               Button("Retry") {
+                   webSocketManager.establishConnectionIfNeeded()
+               }
+           }, message: {
+               if let error = webSocketManager.error {
+                   Text(error.localizedDescription)
+               }
+           })
+        .onChange(of: webSocketManager.hasErrorOccurred) { _, _ in
+             showingErrorAlert = webSocketManager.hasErrorOccurred
+         }
+         .onAppear() {
+             webSocketManager.establishConnectionIfNeeded()
+         }
         }
     }
-}
+
 
 // Define a view for the garage door button.
 struct GarageDoorButton: View {
