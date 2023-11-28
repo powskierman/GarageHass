@@ -105,16 +105,30 @@ class WebSocketManager: ObservableObject {
 
 
      // Handles actions on entities.
-     func handleEntityAction(entityId: String, newState: String? = nil) {
-         let stateToSet = newState ?? "toggle"
-         establishConnectionIfNeeded { success in
-             if success {
-                 self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
-             } else {
-                 print("Failed to reconnect to WebSocket.")
-             }
-         }
-     }
+    func handleEntityAction(entityId: String, newState: String? = nil) {
+        // First, check if the WebSocket connection is active.
+        if !websocket.isConnected() {
+            // If the connection is not active, try to re-establish it.
+            establishConnectionIfNeeded { [weak self] success in
+                if success {
+                    // If the connection is successfully re-established, proceed with the action.
+                    self?.sendEntityAction(entityId: entityId, newState: newState)
+                } else {
+                    // Handle the case where the connection could not be re-established.
+                    print("Failed to reconnect to WebSocket.")
+                }
+            }
+        } else {
+            // If the connection is already active, proceed with the action.
+            sendEntityAction(entityId: entityId, newState: newState)
+        }
+    }
+
+    // Helper method to send entity action.
+    private func sendEntityAction(entityId: String, newState: String?) {
+        let stateToSet = newState ?? "toggle"
+        self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
+    }
 }
 
 extension WebSocketManager: EventMessageHandler {
