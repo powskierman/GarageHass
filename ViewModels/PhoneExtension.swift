@@ -21,7 +21,6 @@ public extension HassWebSocket {
         // Construct and send the command.
         sendCommand(domain: domain, service: service, entityId: entityId)
     }
-    
 
     private func determineDomainAndService(entityId: String, newState: String) -> (String, String) {
         if entityId.starts(with: "switch.") {
@@ -44,7 +43,7 @@ public extension HassWebSocket {
             let data = try JSONSerialization.data(withJSONObject: command, options: [])
             if let jsonString = String(data: data, encoding: .utf8) {
                 print("Sending JSON command:", jsonString)
-                self.sendTextMessage(jsonString)
+                sendTextMessage(jsonString)
             } else {
                 print("Failed to convert data to string.")
             }

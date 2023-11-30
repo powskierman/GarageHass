@@ -3,10 +3,40 @@ import WatchConnectivity
 
 class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        
-    }
-    
- 
+          // When the session is activated, fetch the initial state
+          if activationState == .activated {
+              requestInitialState()
+          }
+      }
+
+      private func requestInitialState() {
+          // Check if the session is reachable before sending a message
+          if WCSession.default.isReachable {
+              print("Requesting initial state from iPhone app")
+              let message = ["request": "initialState"]
+              WCSession.default.sendMessage(message, replyHandler: { response in
+                  // Process the response here
+                  self.processInitialStateResponse(response)
+              }, errorHandler: { error in
+                  print("Error requesting initial state: \(error.localizedDescription)")
+              })
+          }
+      }
+
+      private func processInitialStateResponse(_ response: [String: Any]) {
+          DispatchQueue.main.async {
+              if let leftDoorClosedValue = response["leftDoorClosed"] as? Bool {
+                  self.leftDoorClosed = leftDoorClosedValue
+              }
+              if let rightDoorClosedValue = response["rightDoorClosed"] as? Bool {
+                  self.rightDoorClosed = rightDoorClosedValue
+              }
+              if let alarmOffValue = response["alarmOff"] as? Bool {
+                  self.alarmOff = alarmOffValue
+              }
+          }
+      }
+
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
@@ -41,8 +71,6 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
-    // ... Existing WCSessionDelegate methods ...
-
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("Received message from phone:", message)
         DispatchQueue.main.async {
@@ -58,36 +86,22 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
         DispatchQueue.main.async {
             switch entityId {
             case "binary_sensor.left_door_sensor":
-                print("LeftDoor Sensor State activated")
-                // Toggling the state of the left garage door
-                self.leftDoorClosed.toggle() // Toggle the current state
+                print("Updating Left Door Sensor State")
+                // Set the state of the left garage door
+                self.leftDoorClosed = (newState == "closed") // Set based on the received state
             case "binary_sensor.right_door_sensor":
-                // Toggling the state of the right garage door
-                self.rightDoorClosed.toggle() // Toggle the current state
+                print("Updating Right Door Sensor State")
+                // Set the state of the right garage door
+                self.rightDoorClosed = (newState == "closed") // Set based on the received state
             case "binary_sensor.alarm_sensor":
-                // Toggling the alarm state
-                self.alarmOff.toggle() // Toggle the current state
+                print("Updating Alarm Sensor State")
+                // Set the alarm state
+                self.alarmOff = (newState == "off") // Set based on the received state
             default:
                 print("Unknown entity ID: \(entityId)")
             }
         }
     }
-
-//    private func updateStateBasedOnMessage(_ message: [String: Any]) {
-//        if let leftDoorClosedValue = message["leftDoorClosed"] as? Bool {
-//            self.leftDoorClosed = leftDoorClosedValue
-//            print("Updated left door state to: \(leftDoorClosedValue)")
-//        }
-//        if let rightDoorClosedValue = message["rightDoorClosed"] as? Bool {
-//            self.rightDoorClosed = rightDoorClosedValue
-//            print("Updated right door state to: \(rightDoorClosedValue)")
-//        }
-//        if let alarmOffValue = message["alarmOff"] as? Bool {
-//            self.alarmOff = alarmOffValue
-//            print("Updated alarm state to: \(alarmOffValue)")
-//        }
-//    }
-
 
     func sessionReachabilityDidChange(_ session: WCSession) {
         print("SessionDelegator: WCSession reachability changed. Is now reachable: \(session.isReachable)")

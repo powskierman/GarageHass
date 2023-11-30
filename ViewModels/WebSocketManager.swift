@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import HassFramework
 
-class WebSocketManager: ObservableObject {
+class WebSocketManager: ObservableObject, EventMessageHandler {
 
     static let shared = WebSocketManager(websocket: HassWebSocket())
 
@@ -19,42 +19,58 @@ class WebSocketManager: ObservableObject {
     @Published var connectionState: ConnectionState = .disconnected
     @Published var error: Error?
     @Published var hasErrorOccurred: Bool = false
-
+    
     var websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
     var onStateChange: ((String, String) -> Void)?
 
     init(websocket: HassWebSocket) {
         self.websocket = websocket
+        print("WebSocketManager initialized")
+        self.websocket.addEventMessageHandler(self)  // Register as event message handler
+        print("WebSocketManager registered as EventMessageHandler")
         setupWebSocketEvents()
-        self.connectionState = websocket.connectionState
     }
     
     private func setupWebSocketEvents() {
+        print("Setting up WebSocket events")
         websocket.onEventReceived = { [weak self] event in
+            print("WebSocket event received: \(event)")
             self?.handleWebSocketEvent(event: event)
         }
-        websocket.addEventMessageHandler(self)
         websocket.$connectionState
             .sink { [weak self] newState in
+                print("Connection state changed to: \(newState)")
                 self?.connectionState = newState
             }
             .store(in: &cancellables)
     }
 
     private func handleWebSocketEvent(event: String) {
-        guard let data = event.data(using: .utf8),
-              let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-              let message = jsonObject as? [String: Any],
-              let eventType = message["event_type"] as? String, eventType == "state_changed",
-              let eventData = message["data"] as? [String: Any],
-              let newStateData = eventData["new_state"] as? [String: Any],
-              let newState = newStateData["state"] as? String,
-              let entityId = eventData["entity_id"] as? String
-        else { return }
+        print("Handling WebSocket event: \(event)")
+        guard let data = event.data(using: .utf8) else {
+            print("Error converting event string to Data")
+            return
+        }
 
-        processStateChange(entityId: entityId, newState: newState)
+        do {
+            let eventData = try JSONDecoder().decode(HassFramework.HAEventData.self, from: data)
+            handleEventMessage(eventData)
+        } catch {
+            print("Error decoding HAEventData: \(error)")
+        }
     }
+
+//    private func handleEventMessage(_ message: HassFramework.HAEventData) {
+//        guard let newState = message.data.newState.state,
+//              let entityId = message.data.entityId else {
+//            print("Error accessing state change data")
+//            return
+//        }
+//        print("State change detected: Entity ID \(entityId), New State: \(newState)")
+//        processStateChange(entityId: entityId, newState: newState)
+//    }
+
 
     private func processStateChange(entityId: String, newState: String) {
          print("Processing state change - Entity ID: \(entityId), New State: \(newState)")
@@ -74,10 +90,10 @@ class WebSocketManager: ObservableObject {
                  print("Unknown sensor: \(entityId)")
                  return
              }
-             // Notify if the state changed
              if (entityId == "binary_sensor.left_door_sensor" && previousState != self.leftDoorClosed) ||
                 (entityId == "binary_sensor.right_door_sensor" && previousState != self.rightDoorClosed) ||
                 (entityId == "binary_sensor.alarm_sensor" && previousState != self.alarmOff) {
+                 print("State changed for \(entityId), calling onStateChange")
                  self.onStateChange?(entityId, newState)
              }
          }
@@ -131,12 +147,23 @@ class WebSocketManager: ObservableObject {
     }
 }
 
-extension WebSocketManager: EventMessageHandler {
-    func handleEventMessage(_ message: HAEventData) {
-        guard let newState = message.new_state?.state else {
+extension WebSocketManager {
+    public func handleEventMessage(_ message: HassFramework.HAEventData) {
+        print("At handleEventMessage!")
+
+        // Try to convert HAEventData to JSON
+        guard let messageData = try? JSONEncoder().encode(message),
+              let messageJSON = try? JSONSerialization.jsonObject(with: messageData, options: []) as? [String: Any],
+              let eventData = messageJSON["data"] as? [String: Any],
+              let entityId = eventData["entity_id"] as? String,
+              let newStateData = eventData["new_state"] as? [String: Any],
+              let newState = newStateData["state"] as? String else {
+            print("Error parsing HAEventData")
             return
         }
-        processStateChange(entityId: message.entity_id, newState: newState)
+
+        print("Received event message - Entity ID: \(entityId), New State: \(newState)")
+        processStateChange(entityId: entityId, newState: newState)
     }
 }
 

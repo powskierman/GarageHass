@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
+		D02511042B19156800F93198 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D02511032B19156800F93198 /* Starscream */; };
+		D02511052B19157E00F93198 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
+		D02511062B19157E00F93198 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D09894E52B07D632002F273F /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09894E42B07D632002F273F /* WatchKit.framework */; };
 		D0990C992B127D3B00858A65 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C982B127D3B00858A65 /* WebSocketManager.swift */; };
 		D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */; };
@@ -18,10 +21,7 @@
 		D0B813BF2AD319B500B3FB70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B52AD319B500B3FB70 /* Assets.xcassets */; };
 		D0B813C02AD319B500B3FB70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */; };
 		D0B813C42AD319B500B3FB70 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813BB2AD319B500B3FB70 /* PhoneView.swift */; };
-		D0BEB7A22AD32D5A0068CA1C /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D0BEB7A12AD32D5A0068CA1C /* Starscream */; };
 		D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0BEB7A32AD32D730068CA1C /* Secrets.plist */; };
-		D0D83C2B2B0C1DB200A583E5 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
-		D0D83C2C2B0C1DB200A583E5 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0D83C342B0D2D6100A583E5 /* WatchEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */; };
 		D0E410BB2B06DE0C00F7C128 /* WatchGarageHass Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */; };
@@ -40,13 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D0BEB79F2AD32C870068CA1C /* Embed Frameworks */ = {
+		D02511072B19157E00F93198 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D0D83C2C2B0C1DB200A583E5 /* HassFramework.xcframework in Embed Frameworks */,
+				D02511062B19157E00F93198 /* HassFramework.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,8 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0BEB7A22AD32D5A0068CA1C /* Starscream in Frameworks */,
-				D0D83C2B2B0C1DB200A583E5 /* HassFramework.xcframework in Frameworks */,
+				D02511042B19156800F93198 /* Starscream in Frameworks */,
+				D02511052B19157E00F93198 /* HassFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,8 +236,8 @@
 				D02198E6290479C1006CB906 /* Sources */,
 				D02198E8290479C1006CB906 /* Resources */,
 				D0BEB79E2AD32C870068CA1C /* Frameworks */,
-				D0BEB79F2AD32C870068CA1C /* Embed Frameworks */,
 				D0E410BF2B06DE0C00F7C128 /* Embed Watch Content */,
+				D02511072B19157E00F93198 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,7 +246,7 @@
 			);
 			name = GarageHass;
 			packageProductDependencies = (
-				D0BEB7A12AD32D5A0068CA1C /* Starscream */,
+				D02511032B19156800F93198 /* Starscream */,
 			);
 			productName = GarageNew;
 			productReference = D02198EA290479C1006CB906 /* GarageHass.app */;
@@ -265,6 +265,8 @@
 			dependencies = (
 			);
 			name = "WatchGarageHass Watch App";
+			packageProductDependencies = (
+			);
 			productName = "WatchGarageHass Watch App";
 			productReference = D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -670,7 +672,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D0BEB7A12AD32D5A0068CA1C /* Starscream */ = {
+		D02511032B19156800F93198 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0BEB7A02AD32D5A0068CA1C /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
