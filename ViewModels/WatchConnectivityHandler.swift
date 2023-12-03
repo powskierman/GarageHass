@@ -3,7 +3,7 @@ import WatchConnectivity
 
 class WatchConnectivityHandler: NSObject, WCSessionDelegate {
     private var session: WCSession?
-    let webSocketManager = WebSocketManager.shared
+    let webSocketManager = GarageSocketManager.shared
 
     override init() {
         super.init()
@@ -12,7 +12,7 @@ class WatchConnectivityHandler: NSObject, WCSessionDelegate {
     }
     
     private func setupWebSocketManagerListener() {
-        WebSocketManager.shared.onStateChange = { [weak self] entityId, newState in
+        GarageSocketManager.shared.onStateChange = { [weak self] entityId, newState in
             self?.updateStateAndNotifyWatch(entityId: entityId, newState: newState)
         }
     }

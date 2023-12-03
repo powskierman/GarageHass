@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
 		D02511042B19156800F93198 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D02511032B19156800F93198 /* Starscream */; };
-		D02511052B19157E00F93198 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
-		D02511062B19157E00F93198 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D09894E52B07D632002F273F /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09894E42B07D632002F273F /* WatchKit.framework */; };
-		D0990C992B127D3B00858A65 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C982B127D3B00858A65 /* WebSocketManager.swift */; };
+		D0990C992B127D3B00858A65 /* GarageSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C982B127D3B00858A65 /* GarageSocketManager.swift */; };
 		D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */; };
 		D0990CA32B1292FD00858A65 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990CA22B1292FD00858A65 /* Enums.swift */; };
 		D0990CA42B12933200858A65 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990CA22B1292FD00858A65 /* Enums.swift */; };
@@ -22,6 +20,8 @@
 		D0B813C02AD319B500B3FB70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */; };
 		D0B813C42AD319B500B3FB70 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813BB2AD319B500B3FB70 /* PhoneView.swift */; };
 		D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0BEB7A32AD32D730068CA1C /* Secrets.plist */; };
+		D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
+		D0CD57742B1B9F11006946C4 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0D83C342B0D2D6100A583E5 /* WatchEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */; };
 		D0E410BB2B06DE0C00F7C128 /* WatchGarageHass Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */; };
@@ -40,13 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D02511072B19157E00F93198 /* Embed Frameworks */ = {
+		D0CD57752B1B9F11006946C4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D02511062B19157E00F93198 /* HassFramework.xcframework in Embed Frameworks */,
+				D0CD57742B1B9F11006946C4 /* HassFramework.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,7 +68,7 @@
 		D02198EA290479C1006CB906 /* GarageHass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarageHass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09894E22B07D03A002F273F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D09894E42B07D632002F273F /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.0.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
-		D0990C982B127D3B00858A65 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		D0990C982B127D3B00858A65 /* GarageSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageSocketManager.swift; sourceTree = "<group>"; };
 		D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityHandler.swift; sourceTree = "<group>"; };
 		D0990CA22B1292FD00858A65 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		D09E26FC2AD760010012A82C /* HassFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HassFramework.framework; path = GarageHass/HassFramework.framework; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D02511042B19156800F93198 /* Starscream in Frameworks */,
-				D02511052B19157E00F93198 /* HassFramework.xcframework in Frameworks */,
+				D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +201,7 @@
 		D0E4107F2B06D7AE00F7C128 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				D0990C982B127D3B00858A65 /* WebSocketManager.swift */,
+				D0990C982B127D3B00858A65 /* GarageSocketManager.swift */,
 				D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */,
 				D0E410802B06D7E500F7C128 /* WatchViewModel.swift */,
 				D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */,
@@ -237,7 +237,7 @@
 				D02198E8290479C1006CB906 /* Resources */,
 				D0BEB79E2AD32C870068CA1C /* Frameworks */,
 				D0E410BF2B06DE0C00F7C128 /* Embed Watch Content */,
-				D02511072B19157E00F93198 /* Embed Frameworks */,
+				D0CD57752B1B9F11006946C4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -338,7 +338,7 @@
 			files = (
 				D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */,
 				D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */,
-				D0990C992B127D3B00858A65 /* WebSocketManager.swift in Sources */,
+				D0990C992B127D3B00858A65 /* GarageSocketManager.swift in Sources */,
 				D0990CA32B1292FD00858A65 /* Enums.swift in Sources */,
 				D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */,
 				D0B813BC2AD319B500B3FB70 /* ConnectionStatusBar.swift in Sources */,

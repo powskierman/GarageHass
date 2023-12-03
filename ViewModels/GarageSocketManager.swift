@@ -1,5 +1,5 @@
 //
-//  WebSocketManager.swift
+//  GarageSocketManager.swift
 //  GarageHass
 //
 //  Created by Michel Lapointe on 2023-11-25.
@@ -8,10 +8,11 @@
 import Foundation
 import Combine
 import HassFramework
+import Starscream
 
-class WebSocketManager: ObservableObject, EventMessageHandler {
+class GarageSocketManager: ObservableObject, EventMessageHandler, HassWebSocketDelegate {
 
-    static let shared = WebSocketManager(websocket: HassWebSocket())
+    static let shared = GarageSocketManager(websocket: HassWebSocket.shared)
 
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
@@ -31,6 +32,58 @@ class WebSocketManager: ObservableObject, EventMessageHandler {
         print("WebSocketManager registered as EventMessageHandler")
         setupWebSocketEvents()
     }
+    
+    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
+        print("WebSocket event received: \(event)")
+
+        switch event {
+        case .connected(let headers):
+            print("WebSocket connected with headers: \(headers)")
+            // Handle connection established logic here
+            self.websocket.connectionState = .connected
+
+        case .disconnected(let reason, let code):
+            print("WebSocket disconnected with reason: \(reason), code: \(code)")
+            // Handle disconnection logic here
+            self.websocket.connectionState = .disconnected
+
+        case .text(let text):
+            print("Received text: \(text)")
+            // Handle text message received logic here
+            // This might involve parsing JSON data, handling specific events, etc.
+
+        // Handle other cases like .binary, .ping, .pong, etc. as needed
+        // ...
+
+        default:
+            break
+        }
+    }
+    
+    
+    func connectSendCommand(command: String, completion: @escaping (Bool) -> Void) {
+        establishConnectionIfNeeded { [weak self] isConnected in
+            guard isConnected else {
+                print("Failed to establish WebSocket connection.")
+                completion(false)
+                return
+            }
+
+            if let strongSelf = self {
+                if strongSelf.websocket.isAuthenticated {
+                    strongSelf.websocket.sendTextMessage(command)
+                    completion(true)
+                } else {
+                    print("Authentication failed or not completed.")
+                    completion(false)
+                }
+            } else {
+                print("Self is nil, cannot proceed.")
+                completion(false)
+            }
+        }
+    }
+
     
     private func setupWebSocketEvents() {
         print("Setting up WebSocket events")
@@ -61,17 +114,6 @@ class WebSocketManager: ObservableObject, EventMessageHandler {
         }
     }
 
-//    private func handleEventMessage(_ message: HassFramework.HAEventData) {
-//        guard let newState = message.data.newState.state,
-//              let entityId = message.data.entityId else {
-//            print("Error accessing state change data")
-//            return
-//        }
-//        print("State change detected: Entity ID \(entityId), New State: \(newState)")
-//        processStateChange(entityId: entityId, newState: newState)
-//    }
-
-
     private func processStateChange(entityId: String, newState: String) {
          print("Processing state change - Entity ID: \(entityId), New State: \(newState)")
          DispatchQueue.main.async {
@@ -101,42 +143,59 @@ class WebSocketManager: ObservableObject, EventMessageHandler {
  
     // This function establishes a WebSocket connection if not already connected.
     func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void = { _ in }) {
-            guard !websocket.isConnected() else {
-                completion(true)
-                return
-            }
+        guard !websocket.isConnected() else {
+            completion(true)
+            return
+        }
 
-            websocket.connect { success in
-                DispatchQueue.main.async {
-                    if success {
-                        self.websocket.subscribeToEvents()
-                        self.error = nil
-                    } else {
-                        self.error = NSError(domain: "WebSocket", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to establish WebSocket connection."])
-                    }
-                    completion(success)
+        websocket.connect { [weak self] success in
+            DispatchQueue.main.async {
+                if success {
+                    self?.websocket.subscribeToEvents()
+                    self?.error = nil
+                    completion(true)
+                } else {
+                    self?.error = NSError(domain: "WebSocket", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to establish WebSocket connection."])
+                    completion(false)
                 }
             }
         }
+    }
 
-
+    func forceReconnect() {
+        if isConnected() {
+            disconnect()
+        }
+        establishConnectionIfNeeded()
+    }
+    
+    
      // Handles actions on entities.
     func handleEntityAction(entityId: String, newState: String? = nil) {
-        // First, check if the WebSocket connection is active.
-        if !websocket.isConnected() {
-            // If the connection is not active, try to re-establish it.
-            establishConnectionIfNeeded { [weak self] success in
+        let service = newState ?? "toggle"
+        let messageId = websocket.getNextMessageId() // Get next message ID
+
+        let serviceData: [String: Any] = ["entity_id": entityId]
+        let callServiceMessage: [String: Any] = [
+            "id": messageId,
+            "type": "call_service",
+            "domain": "switch",
+            "service": service,
+            "service_data": serviceData
+        ]
+
+        // Serialize to JSON string
+        if let jsonData = try? JSONSerialization.data(withJSONObject: callServiceMessage, options: []),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            connectSendCommand(command: jsonString) { success in
                 if success {
-                    // If the connection is successfully re-established, proceed with the action.
-                    self?.sendEntityAction(entityId: entityId, newState: newState)
+                    print("Command for \(entityId) sent successfully.")
                 } else {
-                    // Handle the case where the connection could not be re-established.
-                    print("Failed to reconnect to WebSocket.")
+                    print("Failed to send command for \(entityId).")
                 }
             }
         } else {
-            // If the connection is already active, proceed with the action.
-            sendEntityAction(entityId: entityId, newState: newState)
+            print("Failed to serialize command.")
         }
     }
 
@@ -145,9 +204,25 @@ class WebSocketManager: ObservableObject, EventMessageHandler {
         let stateToSet = newState ?? "toggle"
         self.websocket.setEntityState(entityId: entityId, newState: stateToSet)
     }
+    
+    // Implement didReceiveText from HassWebSocketDelegate
+      func didReceiveText(_ text: String, from websocket: HassWebSocket) {
+          guard let data = text.data(using: .utf8) else {
+              print("Error converting text to Data")
+              return
+          }
+
+          do {
+              let eventData = try JSONDecoder().decode(HAEventData.self, from: data)
+              handleEventMessage(eventData)
+          } catch {
+              print("Error decoding HAEventData: \(error)")
+          }
+      }
 }
 
-extension WebSocketManager {
+
+extension GarageSocketManager {
     public func handleEventMessage(_ message: HassFramework.HAEventData) {
         print("At handleEventMessage!")
 

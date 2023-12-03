@@ -11,7 +11,7 @@ import HassFramework
 @main
 struct GarageHassApp: App {
     // Initialize WebSocketManager
-    let webSocketManager = WebSocketManager(websocket: HassWebSocket())
+    let webSocketManager = GarageSocketManager(websocket: HassWebSocket())
 
     // Initialize WatchConnectivityHandler if needed
      let watchConnectivityHandler = WatchConnectivityHandler()

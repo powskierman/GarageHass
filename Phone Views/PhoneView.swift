@@ -2,12 +2,13 @@ import SwiftUI
 import HassFramework  // Import the SwiftUI for UI components and HassFramework for Home Assistant support.
 
 struct PhoneView: View {
-    @EnvironmentObject var webSocketManager: WebSocketManager
-
+    @EnvironmentObject var webSocketManager: GarageSocketManager
+    @Environment(\.scenePhase) private var scenePhase
+    
     // A state variable to control the display of the alarm confirmation dialog.
     @State private var showingAlarmConfirmation = false
     @State private var showingErrorAlert = false
-
+    
     var body: some View {
         VStack {
             // Display the connection status bar at the top of the view.
@@ -39,41 +40,55 @@ struct PhoneView: View {
                         .foregroundColor(webSocketManager.alarmOff ? .teal : .pink)
                 }
                 .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7)) // Add padding around the alarm button.
-                .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
-                    Button("Confirm", role: .destructive) {
-                        let entityIdToToggle = webSocketManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
-                        webSocketManager.handleEntityAction(entityId: entityIdToToggle)
-                    }
+            }
+            .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
+                Button("Confirm", role: .destructive) {
+                    let entityIdToToggle = webSocketManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
+                    let command = "{\"entity_id\": \"\(entityIdToToggle)\"}" // Construct your command string
+                    webSocketManager.handleEntityAction(entityId: entityIdToToggle)
+                    print("Alarm toggle command sent!")
                 }
             }
+            
             if let error = webSocketManager.error {
-                  Text("Error: \(error.localizedDescription)")
-                      .foregroundColor(.red)
-                      .padding()
-              }
+                Text("Error: \(error.localizedDescription)")
+                    .foregroundColor(.red)
+                    .padding()
+            }
         }
         .alert("Connection Error", isPresented: $showingErrorAlert, actions: {
-               Button("Retry") {
-                   webSocketManager.establishConnectionIfNeeded()
-               }
-           }, message: {
-               if let error = webSocketManager.error {
-                   Text(error.localizedDescription)
-               }
-           })
+            Button("Retry") {
+                webSocketManager.establishConnectionIfNeeded()
+            }
+        }, message: {
+            if let error = webSocketManager.error {
+                Text(error.localizedDescription)
+            }
+        })
         .onChange(of: webSocketManager.hasErrorOccurred) { _, _ in
-             showingErrorAlert = webSocketManager.hasErrorOccurred
-         }
-         .onAppear() {
-             webSocketManager.establishConnectionIfNeeded()
-         }
+            showingErrorAlert = webSocketManager.hasErrorOccurred
+        }
+        .onAppear() {
+            webSocketManager.establishConnectionIfNeeded()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .active:
+                print("App is active. Attempting to force reconnect...")
+                webSocketManager.forceReconnect()
+            case .background:
+                print("App is in background")
+                webSocketManager.disconnectIfNeeded()
+            default:
+                break
+            }
         }
     }
-
+}
 
 // Define a view for the garage door button.
 struct GarageDoorButton: View {
-    @EnvironmentObject var webSocketManager: WebSocketManager
+    @EnvironmentObject var webSocketManager: GarageSocketManager
     var door: Door
 
     var body: some View {
@@ -115,7 +130,7 @@ struct GarageDoorButton: View {
 
 // Define a view for the alarm button.
 struct AlarmButton: View {
-    @EnvironmentObject var webSocketManager: WebSocketManager
+    @EnvironmentObject var webSocketManager: GarageSocketManager
     @State private var showingConfirmation = false
 
     var body: some View {
@@ -145,6 +160,6 @@ struct AlarmButton: View {
 // Provide a preview of the GarageView.
 struct GarageView_Previews: PreviewProvider {
     static var previews: some View {
-        PhoneView().environmentObject(WebSocketManager.shared)
+        PhoneView().environmentObject(GarageSocketManager.shared)
     }
 }
