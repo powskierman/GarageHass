@@ -11,7 +11,7 @@ import HassFramework
 @main
 struct GarageHassApp: App {
     // Initialize WebSocketManager
-    let webSocketManager = GarageSocketManager(websocket: HassWebSocket())
+    let garageSocketManager = GarageSocketManager(websocket: HassWebSocket())
 
     // Initialize WatchConnectivityHandler if needed
      let watchConnectivityHandler = WatchConnectivityHandler()
@@ -19,7 +19,7 @@ struct GarageHassApp: App {
     var body: some Scene {
         WindowGroup {
             PhoneView()
-                .environmentObject(webSocketManager)
+                .environmentObject(garageSocketManager)
                 // If you use WatchConnectivityHandler, provide it as an environment object as well
                 // .environmentObject(watchConnectivityHandler)
         }

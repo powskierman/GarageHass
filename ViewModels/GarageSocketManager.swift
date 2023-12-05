@@ -10,29 +10,26 @@ import Combine
 import HassFramework
 import Starscream
 
-class GarageSocketManager: ObservableObject, EventMessageHandler, HassWebSocketDelegate {
-
+class GarageSocketManager: ObservableObject, EventMessageHandler {
     static let shared = GarageSocketManager(websocket: HassWebSocket.shared)
 
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
-    @Published var connectionState: ConnectionState = .disconnected
+    @Published var connectionState: HassFramework.ConnectionState = .disconnected
     @Published var error: Error?
     @Published var hasErrorOccurred: Bool = false
-    
+
     var websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
     var onStateChange: ((String, String) -> Void)?
 
     init(websocket: HassWebSocket) {
         self.websocket = websocket
-        print("WebSocketManager initialized")
-        self.websocket.addEventMessageHandler(self)  // Register as event message handler
-        print("WebSocketManager registered as EventMessageHandler")
+        websocket.addEventMessageHandler(self)
         setupWebSocketEvents()
     }
-    
+
     func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         print("WebSocket event received: \(event)")
 
@@ -106,13 +103,19 @@ class GarageSocketManager: ObservableObject, EventMessageHandler, HassWebSocketD
             return
         }
 
+        // Print the raw JSON string for debugging
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("Raw JSON received: \(jsonString)")
+        }
+
         do {
-            let eventData = try JSONDecoder().decode(HassFramework.HAEventData.self, from: data)
-            handleEventMessage(eventData)
+            let eventData = try JSONDecoder().decode(HAEventData.self, from: data)
+            handleEventMessage(eventData.event)
         } catch {
             print("Error decoding HAEventData: \(error)")
         }
     }
+
 
     private func processStateChange(entityId: String, newState: String) {
          print("Processing state change - Entity ID: \(entityId), New State: \(newState)")
@@ -163,8 +166,8 @@ class GarageSocketManager: ObservableObject, EventMessageHandler, HassWebSocketD
     }
 
     func forceReconnect() {
-        if isConnected() {
-            disconnect()
+        if HassWebSocket.shared.isConnected() {
+            HassWebSocket.shared.disconnect()
         }
         establishConnectionIfNeeded()
     }
@@ -214,7 +217,7 @@ class GarageSocketManager: ObservableObject, EventMessageHandler, HassWebSocketD
 
           do {
               let eventData = try JSONDecoder().decode(HAEventData.self, from: data)
-              handleEventMessage(eventData)
+              handleEventMessage(eventData.event)
           } catch {
               print("Error decoding HAEventData: \(error)")
           }
@@ -223,11 +226,11 @@ class GarageSocketManager: ObservableObject, EventMessageHandler, HassWebSocketD
 
 
 extension GarageSocketManager {
-    public func handleEventMessage(_ message: HassFramework.HAEventData) {
+    public func handleEventMessage(_ eventDetail: EventDetail) {
         print("At handleEventMessage!")
 
-        // Try to convert HAEventData to JSON
-        guard let messageData = try? JSONEncoder().encode(message),
+        // Encoding the eventDetail
+        guard let messageData = try? JSONEncoder().encode(eventDetail),
               let messageJSON = try? JSONSerialization.jsonObject(with: messageData, options: []) as? [String: Any],
               let eventData = messageJSON["data"] as? [String: Any],
               let entityId = eventData["entity_id"] as? String,
@@ -241,4 +244,5 @@ extension GarageSocketManager {
         processStateChange(entityId: entityId, newState: newState)
     }
 }
+
 
