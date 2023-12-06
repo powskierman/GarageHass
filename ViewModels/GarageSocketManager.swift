@@ -226,7 +226,7 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
 
 
 extension GarageSocketManager {
-    public func handleEventMessage(_ eventDetail: EventDetail) {
+    public func handleEventMessage(_ eventDetail: HAEventData.EventDetail) {
         print("At handleEventMessage!")
 
         // Encoding the eventDetail
