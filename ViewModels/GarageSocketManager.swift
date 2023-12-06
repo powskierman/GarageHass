@@ -132,7 +132,6 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
                  previousState = self.alarmOff
                  self.alarmOff = (newState == "off")
              default:
-                 print("Unknown sensor: \(entityId)")
                  return
              }
              if (entityId == "binary_sensor.left_door_sensor" && previousState != self.leftDoorClosed) ||
