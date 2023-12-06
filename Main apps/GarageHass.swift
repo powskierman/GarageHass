@@ -7,14 +7,26 @@
 
 import SwiftUI
 import HassFramework
+import Combine
 
 @main
 struct GarageHassApp: App {
     // Initialize WebSocketManager
     let garageSocketManager = GarageSocketManager(websocket: HassWebSocket())
-
+    var cancellables = Set<AnyCancellable>()
+    
     // Initialize WatchConnectivityHandler if needed
      let watchConnectivityHandler = WatchConnectivityHandler()
+    
+    init() {
+         // Listen for the app becoming active and call attemptReconnection
+         NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+             .sink { [weak self] _ in
+                 self?.webSocketManager.attemptReconnection()
+             }
+             .store(in: &cancellables)
+     }
+
 
     var body: some Scene {
         WindowGroup {
