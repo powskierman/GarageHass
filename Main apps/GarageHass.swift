@@ -18,15 +18,28 @@ struct GarageHassApp: App {
     // Initialize WatchConnectivityHandler if needed
      let watchConnectivityHandler = WatchConnectivityHandler()
     
-    init() {
-         // Listen for the app becoming active and call attemptReconnection
-         NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
-             .sink { [weak self] _ in
-                 self?.webSocketManager.attemptReconnection()
-             }
-             .store(in: &cancellables)
-     }
+init() {
+    // Listen for the app becoming active and call attemptReconnection
+    NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+        .sink { _ in
+            HassWebSocket.shared.attemptReconnection()
+            print("Reconnecting...")
+        }
+        .store(in: &cancellables)
 
+    // Listen for the app going to background and call disconnect
+    NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
+        .sink { _ in
+            HassWebSocket.shared.disconnect()
+            print("At Notification Center in GarageHass")
+        }
+        .store(in: &cancellables)
+    if garageSocketManager.websocket.isConnected() {
+        print("WebSocket is currently connected.")
+    } else {
+        print("WebSocket is currently disconnected.")
+    }
+}
 
     var body: some Scene {
         WindowGroup {

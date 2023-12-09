@@ -71,18 +71,24 @@ struct PhoneView: View {
         .onAppear() {
             garageSocketManager.establishConnectionIfNeeded()
         }
-        .onChange(of: scenePhase) { newPhase in
-            switch newPhase {
-            case .active:
-                print("App is active. Attempting to force reconnect...")
-                garageSocketManager.forceReconnect()
-            case .background:
-                print("App is in background")
-                WebSocketManager.shared.disconnectIfNeeded()
-            default:
-                break
-            }
-        }
+//        .onChange(of: scenePhase) { newScenePhase in
+//               switch newScenePhase {
+//               case .active:
+//                   print("App is in active state.")
+//                   HassWebSocket.shared.connect(completion: { success in
+//                       if success {
+//                           HassWebSocket.shared.subscribeToEvents()
+//                       }
+//                   })
+//               case .background:
+//                   print("App is in background state in PhoneView.")
+//                   HassWebSocket.shared.disconnect()
+//               case .inactive:
+//                   print("App is in inactive state.")
+//               @unknown default:
+//                   print("Unknown scene phase.")
+//               }
+//           }
     }
 }
 

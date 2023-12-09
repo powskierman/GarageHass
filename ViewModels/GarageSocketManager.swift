@@ -40,7 +40,7 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
             self.websocket.connectionState = .connected
 
         case .disconnected(let reason, let code):
-            print("WebSocket disconnected with reason: \(reason), code: \(code)")
+            print("WebSocket disconnected in GarageWebSocket with reason: \(reason), code: \(code)")
             // Handle disconnection logic here
             self.websocket.connectionState = .disconnected
 
@@ -167,8 +167,10 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
     func forceReconnect() {
         if HassWebSocket.shared.isConnected() {
             HassWebSocket.shared.disconnect()
+            print("At forceReconnect/Disconnect")
         }
         establishConnectionIfNeeded()
+        print("At forceReconnect/Reconnect")
     }
     
     
