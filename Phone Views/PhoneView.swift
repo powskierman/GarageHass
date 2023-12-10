@@ -3,7 +3,6 @@ import HassFramework  // Import the SwiftUI for UI components and HassFramework 
 
 struct PhoneView: View {
     @EnvironmentObject var garageSocketManager: GarageSocketManager
-    @Environment(\.scenePhase) private var scenePhase
     
     // A state variable to control the display of the alarm confirmation dialog.
     @State private var showingAlarmConfirmation = false
@@ -71,24 +70,6 @@ struct PhoneView: View {
         .onAppear() {
             garageSocketManager.establishConnectionIfNeeded()
         }
-//        .onChange(of: scenePhase) { newScenePhase in
-//               switch newScenePhase {
-//               case .active:
-//                   print("App is in active state.")
-//                   HassWebSocket.shared.connect(completion: { success in
-//                       if success {
-//                           HassWebSocket.shared.subscribeToEvents()
-//                       }
-//                   })
-//               case .background:
-//                   print("App is in background state in PhoneView.")
-//                   HassWebSocket.shared.disconnect()
-//               case .inactive:
-//                   print("App is in inactive state.")
-//               @unknown default:
-//                   print("Unknown scene phase.")
-//               }
-//           }
     }
 }
 
@@ -138,6 +119,8 @@ struct GarageDoorButton: View {
 struct AlarmButton: View {
     @EnvironmentObject var webSocketManager: GarageSocketManager
     @State private var showingConfirmation = false
+    @StateObject private var appState = AppState() // StateObject for lifecycle management
+
 
     var body: some View {
         Button(action: {
@@ -160,8 +143,27 @@ struct AlarmButton: View {
             }
             Button("Cancel", role: .cancel) {}
         }
+        .onAppear {
+            setupNotificationCenterObservers(
+            )
+
+        }
+    }
+    private func setupNotificationCenterObservers() {
+        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+            .sink {  _ in
+                HassWebSocket.shared.attemptReconnection()
+                HassWebSocket.shared.updateConnectionStatus()
+
+                // Use appState for logging
+                self.appState.logger.debug("App became active, attempting WebSocket reconnection")
+
+                print("Reconnecting...")
+            }
+            .store(in: &appState.cancellables)
     }
 }
+
 
 // Provide a preview of the GarageView.
 struct GarageView_Previews: PreviewProvider {

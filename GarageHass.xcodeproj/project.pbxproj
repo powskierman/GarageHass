@@ -23,6 +23,7 @@
 		D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
 		D0CD57742B1B9F11006946C4 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0D83C342B0D2D6100A583E5 /* WatchEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */; };
+		D0DA56032B252A0F0035980B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA56022B252A0F0035980B /* AppState.swift */; };
 		D0E410BB2B06DE0C00F7C128 /* WatchGarageHass Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */; };
 		D0E410C22B06DF0100F7C128 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410772B06D5F300F7C128 /* WatchView.swift */; };
@@ -81,6 +82,7 @@
 		D0BEB7A32AD32D730068CA1C /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HassFramework.xcframework; path = ../Frameworks/HassFramework/HassFramework.xcframework; sourceTree = "<group>"; };
 		D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchEntityView.swift; sourceTree = "<group>"; };
+		D0DA56022B252A0F0035980B /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D0E410772B06D5F300F7C128 /* WatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
 		D0E410802B06D7E500F7C128 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
 		D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGarageHassApp.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */,
 				D0E410802B06D7E500F7C128 /* WatchViewModel.swift */,
 				D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */,
+				D0DA56022B252A0F0035980B /* AppState.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */,
 				D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */,
 				D0990C992B127D3B00858A65 /* GarageSocketManager.swift in Sources */,
+				D0DA56032B252A0F0035980B /* AppState.swift in Sources */,
 				D0990CA32B1292FD00858A65 /* Enums.swift in Sources */,
 				D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */,
 				D0B813BC2AD319B500B3FB70 /* ConnectionStatusBar.swift in Sources */,

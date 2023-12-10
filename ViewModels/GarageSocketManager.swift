@@ -175,31 +175,40 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
     
     
      // Handles actions on entities.
+    // Handles actions on entities.
     func handleEntityAction(entityId: String, newState: String? = nil) {
-        let service = newState ?? "toggle"
-        let messageId = websocket.getNextMessageId() // Get next message ID
-
-        let serviceData: [String: Any] = ["entity_id": entityId]
-        let callServiceMessage: [String: Any] = [
-            "id": messageId,
-            "type": "call_service",
-            "domain": "switch",
-            "service": service,
-            "service_data": serviceData
-        ]
-
-        // Serialize to JSON string
-        if let jsonData = try? JSONSerialization.data(withJSONObject: callServiceMessage, options: []),
-           let jsonString = String(data: jsonData, encoding: .utf8) {
-            connectSendCommand(command: jsonString) { success in
-                if success {
-                    print("Command for \(entityId) sent successfully.")
-                } else {
-                    print("Failed to send command for \(entityId).")
-                }
+        establishConnectionIfNeeded { [weak self] success in
+            guard success else {
+                print("Failed to establish WebSocket connection.")
+                return
             }
-        } else {
-            print("Failed to serialize command.")
+
+            // Continue with sending the command if the connection is established
+            let service = newState ?? "toggle"
+            let messageId = self?.websocket.getNextMessageId() // Get next message ID
+
+            let serviceData: [String: Any] = ["entity_id": entityId]
+            let callServiceMessage: [String: Any] = [
+                "id": messageId as Any,
+                "type": "call_service",
+                "domain": "switch",
+                "service": service,
+                "service_data": serviceData
+            ]
+
+            // Serialize to JSON string
+            if let jsonData = try? JSONSerialization.data(withJSONObject: callServiceMessage, options: []),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                self?.connectSendCommand(command: jsonString) { success in
+                    if success {
+                        print("Command for \(entityId) sent successfully.")
+                    } else {
+                        print("Failed to send command for \(entityId).")
+                    }
+                }
+            } else {
+                print("Failed to serialize command.")
+            }
         }
     }
 
@@ -245,5 +254,3 @@ extension GarageSocketManager {
         processStateChange(entityId: entityId, newState: newState)
     }
 }
-
-
