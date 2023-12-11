@@ -9,67 +9,57 @@ import SwiftUI
 import HassFramework
 import Combine
 import os
+import SwiftUI
 
 @main
 struct GarageHassApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    let garageSocketManager = GarageSocketManager(websocket: HassWebSocket.shared)
     let watchConnectivityHandler = WatchConnectivityHandler()
-//    private lazy var cancellables = Set<AnyCancellable>()
-    private let logger = Logger(subsystem: "com.yourdomain.GarageHassApp", category: "Network")
+    let garageSocketManager = GarageSocketManager.shared // Ensure this instance is created
 
     init() {
-//        setupWebSocketEventHandlers()
-//        setupNotificationCenterObservers()
+        watchConnectivityHandler.stateDelegate = self
+        print("GarageHassApp initialized")
     }
 
     var body: some Scene {
         WindowGroup {
             PhoneView()
-                .environmentObject(garageSocketManager)
-                // .environmentObject(watchConnectivityHandler) // Uncomment if used
-                //.onAppear(perform: setupNotificationCenterObservers)
-                    .onChange(of: scenePhase) { newScenePhase in
-                           switch newScenePhase {
-                           case .active:
-                               print("App is in active state.")
-                               HassWebSocket.shared.connect(completion: { success in
-                                   if success {
-                                       print("Subscribing to events")
-                                       HassWebSocket.shared.subscribeToEvents()
-                                   }
-                               })
-                           case .background:
-                               print("App is in background state in PhoneView.")
-                               HassWebSocket.shared.disconnect()
-                           case .inactive:
-                               print("App is in inactive state.")
-                           @unknown default:
-                               print("Unknown scene phase.")
-                           }
-                       }
+                .environmentObject(watchConnectivityHandler)
+                .environmentObject(GarageSocketManager.shared)
+                .onChange(of: scenePhase) { newScenePhase in
+                    print("Scene phase changed: \(newScenePhase)")
+                    switch newScenePhase {
+                    case .active:
+                        watchConnectivityHandler.appDidBecomeActive()
+                    case .background:
+                        watchConnectivityHandler.appDidEnterBackground()
+                    default:
+                        break
+                    }
+                }
+        }
+    }
+}
+
+extension GarageHassApp: AppStateUpdateDelegate {
+    func appDidBecomeActive() {
+        print("App is now active - Reconnecting WebSocket and subscribing to events")
+        // Logic for app becoming active
+        HassWebSocket.shared.connect { success in
+            if success {
+                print("WebSocket successfully reconnected")
+                HassWebSocket.shared.subscribeToEvents()
+            } else {
+                print("Failed to reconnect WebSocket")
+            }
         }
     }
 
-//    private func setupWebSocketEventHandlers() {
-//        // WebSocket event handlers setup
-//    }
-//
-//    private func setupNotificationCenterObservers() {
-//        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
-//            .sink { _ in
-//                HassWebSocket.shared.attemptReconnection()
-//                HassWebSocket.shared.updateConnectionStatus()
-//                self.logger.debug("App became active, attempting WebSocket reconnection")
-//            }
-//            .store(in: &SubscriptionManager.cancellables)
-//
-//        NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
-//            .sink { _ in
-//                HassWebSocket.shared.disconnect()
-//                HassWebSocket.shared.updateConnectionStatus()
-//                self.logger.debug("App is moving to the background, disconnecting WebSocket")
-//            }
-//            .store(in: &SubscriptionManager.cancellables)
-//    }
+    func appDidEnterBackground() {
+        print("App is now in background - Disconnecting WebSocket")
+        // Logic for app entering background
+        HassWebSocket.shared.disconnect()
+    }
 }
+

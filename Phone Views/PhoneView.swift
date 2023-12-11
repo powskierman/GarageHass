@@ -11,8 +11,7 @@ struct PhoneView: View {
     var body: some View {
         VStack {
             // Display the connection status bar at the top of the view.
-            ConnectionStatusBar(message: "Connection Status", connectionState: $garageSocketManager.connectionState)
-                .id(garageSocketManager.connectionState) // The id here is used to force the view to update when the connection state changes.
+            ConnectionStatusBar(message: "Connection Status")
             
             // Vertical stack for the buttons with spacing.
             VStack(spacing: 50) {
