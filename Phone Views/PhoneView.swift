@@ -73,8 +73,7 @@ struct PhoneView: View {
             
             // Force UI refresh after a delay
              DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                 self.forceRefresh.toggle()
-             }
+                }
         }
     }
     private func setupInitialDataFetch() {
