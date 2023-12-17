@@ -1,9 +1,10 @@
 import SwiftUI
 import HassFramework  // Import the SwiftUI for UI components and HassFramework for Home Assistant support.
+import Combine
 
 struct PhoneView: View {
     @EnvironmentObject var garageSocketManager: GarageSocketManager
-    
+    @State private var cancellable: AnyCancellable?
     // A state variable to control the display of the alarm confirmation dialog.
     @State private var showingAlarmConfirmation = false
     @State private var showingErrorAlert = false
@@ -68,8 +69,26 @@ struct PhoneView: View {
         }
         .onAppear() {
             garageSocketManager.establishConnectionIfNeeded()
+            setupInitialDataFetch()
+            
+            // Force UI refresh after a delay
+             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                 self.forceRefresh.toggle()
+             }
         }
     }
+    private func setupInitialDataFetch() {
+        cancellable = HassWebSocket.shared.$isSubscribedToStateChanges
+             .receive(on: DispatchQueue.main)
+             .sink { isSubscribed in
+                 if isSubscribed {
+                     print("WebSocket has subscribed to state changes. Fetching initial state.")
+                     garageSocketManager.fetchInitialState()
+                     print("State of left door is: \(garageSocketManager.leftDoorClosed)")
+                 }
+             }
+     }
+ 
 }
 
 // Define a view for the garage door button.

@@ -154,6 +154,7 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
             DispatchQueue.main.async {
                 if success {
                     self?.websocket.subscribeToEvents()
+                    print("At websocket.connect")
                     self?.error = nil
                     completion(true)
                 } else {
@@ -254,6 +255,44 @@ extension GarageSocketManager {
             (entityId == "binary_sensor.alarm_sensor") {
             print("Received event message - Entity ID: \(entityId), New State: \(newState)")
             processStateChange(entityId: entityId, newState: newState)
+        }
+    }
+}
+extension GarageSocketManager {
+    func fetchInitialState() {
+        print("Fetching initial state for garage doors and alarm.")
+
+        // Ensure the WebSocket is connected before fetching the initial state
+        establishConnectionIfNeeded { [weak self] success in
+            guard success else {
+                print("Failed to establish WebSocket connection for initial state fetching.")
+                return
+            }
+            print("WebSocket connection established for initial state fetching.")
+
+            // Fetch the initial state for the left garage door
+            self?.websocket.fetchState(for: "binary_sensor.left_door_sensor") { state in
+                DispatchQueue.main.async {
+                    self?.leftDoorClosed = (state == "off")
+                    print("Initial state for left garage door fetched: \(state ?? "nil")")
+                }
+            }
+
+            // Fetch the initial state for the right garage door
+            self?.websocket.fetchState(for: "binary_sensor.right_door_sensor") { state in
+                DispatchQueue.main.async {
+                    self?.rightDoorClosed = (state == "off")
+                    print("Initial state for right garage door fetched: \(state ?? "nil")")
+                }
+            }
+
+            // Fetch the initial state for the alarm
+            self?.websocket.fetchState(for: "binary_sensor.alarm_sensor") { state in
+                DispatchQueue.main.async {
+                    self?.alarmOff = (state == "off")
+                    print("Initial state for alarm fetched: \(state ?? "nil")")
+                }
+            }
         }
     }
 }
