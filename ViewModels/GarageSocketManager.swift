@@ -237,8 +237,7 @@ class GarageSocketManager: ObservableObject, EventMessageHandler {
 
 extension GarageSocketManager {
     public func handleEventMessage(_ eventDetail: HAEventData.EventDetail) {
-        print("At handleEventMessage!")
-
+       
         // Encoding the eventDetail
         guard let messageData = try? JSONEncoder().encode(eventDetail),
               let messageJSON = try? JSONSerialization.jsonObject(with: messageData, options: []) as? [String: Any],
@@ -249,8 +248,12 @@ extension GarageSocketManager {
             print("Error parsing HAEventData")
             return
         }
-
-        print("Received event message - Entity ID: \(entityId), New State: \(newState)")
-        processStateChange(entityId: entityId, newState: newState)
+        
+        if (entityId == "binary_sensor.left_door_sensor") ||
+            (entityId == "binary_sensor.right_door_sensor") ||
+            (entityId == "binary_sensor.alarm_sensor") {
+            print("Received event message - Entity ID: \(entityId), New State: \(newState)")
+            processStateChange(entityId: entityId, newState: newState)
+        }
     }
 }
