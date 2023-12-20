@@ -26,7 +26,7 @@ struct GarageHassApp: App {
         WindowGroup {
             PhoneView()
                 .environmentObject(watchConnectivityHandler)
-                .environmentObject(GarageSocketManager.shared)
+                .environmentObject(garageSocketManager)
                 .onChange(of: scenePhase) { newScenePhase in
                     print("Scene phase changed: \(newScenePhase)")
                     switch newScenePhase {
