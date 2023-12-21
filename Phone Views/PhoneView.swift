@@ -57,7 +57,15 @@ struct PhoneView: View {
         }
         .alert("Connection Error", isPresented: $showingErrorAlert, actions: {
             Button("Retry") {
-                garageSocketManager.establishConnectionIfNeeded()
+                garageSocketManager.establishConnectionIfNeeded { success in
+                    if success {
+                        // Handle successful connection
+                        print("Connection successful")
+                    } else {
+                        // Handle connection failure
+                        print("Connection failed")
+                    }
+                }
             }
         }, message: {
             if let error = garageSocketManager.error {
@@ -68,7 +76,16 @@ struct PhoneView: View {
             showingErrorAlert = garageSocketManager.hasErrorOccurred
         }
         .onAppear() {
-            garageSocketManager.establishConnectionIfNeeded()
+            garageSocketManager.establishConnectionIfNeeded { success in
+                if success {
+                    // Handle successful connection
+                    print("Connection successful")
+                } else {
+                    // Handle connection failure
+                    print("Connection failed")
+                }
+            }
+            
             setupInitialDataFetch()
             
             // Force UI refresh after a delay
