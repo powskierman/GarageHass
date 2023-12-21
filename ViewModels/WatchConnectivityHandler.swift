@@ -100,4 +100,25 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
                 handleReceivedMessage(message)
             }
         }
-}
+    
+//    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+//        print("Received message from watch: \(message)")
+//        if let requestType = message["request"] as? String, requestType == "initialState" {
+//            // Fetch the initial state
+//            let initialState: [String: Any] = [
+//                "leftDoorClosed": webSocketManager.leftDoorClosed,
+//                "rightDoorClosed": webSocketManager.rightDoorClosed,
+//                "alarmOff": webSocketManager.alarmOff
+//            ]
+//            
+//            // Send the initial state back to the watch
+//            replyHandler(initialState)
+//        }
+//        replyHandler(initialState)
+//    } else {
+//        // Handle other messages if needed
+//        handleReceivedMessage(message)
+//    }
+    }
+
+
