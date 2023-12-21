@@ -19,7 +19,7 @@ struct GarageHassApp: App {
 
     init() {
         watchConnectivityHandler.stateDelegate = self
-        print("GarageHassApp initialized")
+        // print("GarageHassApp initialized")
     }
 
     var body: some Scene {
@@ -28,7 +28,7 @@ struct GarageHassApp: App {
                 .environmentObject(watchConnectivityHandler)
                 .environmentObject(garageSocketManager)
                 .onChange(of: scenePhase) { newScenePhase in
-                    print("Scene phase changed: \(newScenePhase)")
+                    // print("Scene phase changed: \(newScenePhase)")
                     switch newScenePhase {
                     case .active:
                         watchConnectivityHandler.appDidBecomeActive()
@@ -44,20 +44,20 @@ struct GarageHassApp: App {
 
 extension GarageHassApp: AppStateUpdateDelegate {
     func appDidBecomeActive() {
-        print("App is now active - Reconnecting WebSocket and subscribing to events")
+        // print("App is now active - Reconnecting WebSocket and subscribing to events")
         // Logic for app becoming active
         HassWebSocket.shared.connect { success in
             if success {
-                print("WebSocket successfully reconnected")
+                // print("WebSocket successfully reconnected")
                 HassWebSocket.shared.subscribeToEvents()
             } else {
-                print("Failed to reconnect WebSocket")
+                // print("Failed to reconnect WebSocket")
             }
         }
     }
 
     func appDidEnterBackground() {
-        print("App is now in background - Disconnecting WebSocket")
+        // print("App is now in background - Disconnecting WebSocket")
         // Logic for app entering background
         HassWebSocket.shared.disconnect()
     }

@@ -53,11 +53,6 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
         print("WCSession reachability changed. Is now reachable: \(session.isReachable)")
     }
 
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        print("Received message from watch: \(message)")
-        handleReceivedMessage(message)
-    }
-
     func handleReceivedMessage(_ message: [String: Any]) {
         print("Handling received message: \(message)")
         if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
@@ -78,11 +73,9 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
 
     func appDidBecomeActive() {
         print("App did become active - handling as needed")
-        // Handle app becoming active
     }
 
     func appDidEnterBackground() {
         print("App did enter background - handling as needed")
-        // Handle app entering background
     }
 }

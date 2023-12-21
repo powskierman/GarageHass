@@ -19,7 +19,6 @@ struct ConnectionStatusBar: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20)
                 .foregroundColor(garageSocketManager.connectionState == .connected ? Color.teal : Color.pink)
-  //          Text("isConnected: \(garageSocketManager.leftDoorClosed ? "True" : "False")")
             Text(message)
                 .font(.footnote)
                 .foregroundColor(garageSocketManager.connectionState == .connected ? Color.teal : Color.pink)

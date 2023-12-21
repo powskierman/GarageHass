@@ -45,7 +45,7 @@ struct PhoneView: View {
                     let entityIdToToggle = garageSocketManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
                     let command = "{\"entity_id\": \"\(entityIdToToggle)\"}" // Construct your command string
                     garageSocketManager.handleEntityAction(entityId: entityIdToToggle)
-                    print("Alarm toggle command sent!")
+                    // print("Alarm toggle command sent!")
                 }
             }
             
@@ -81,9 +81,9 @@ struct PhoneView: View {
              .receive(on: DispatchQueue.main)
              .sink { isSubscribed in
                  if isSubscribed {
-                     print("WebSocket has subscribed to state changes. Fetching initial state.")
+                     // print("WebSocket has subscribed to state changes. Fetching initial state.")
                      garageSocketManager.fetchInitialState()
-                     print("State of left door is: \(garageSocketManager.leftDoorClosed)")
+                     // print("State of left door is: \(garageSocketManager.leftDoorClosed)")
                  }
              }
      }
@@ -175,7 +175,7 @@ struct AlarmButton: View {
                 // Use appState for logging
                 self.appState.logger.debug("App became active, attempting WebSocket reconnection")
 
-                print("Reconnecting...")
+                // print("Reconnecting...")
             }
             .store(in: &appState.cancellables)
     }

@@ -5,7 +5,7 @@ import HassFramework
 public extension HassWebSocket {
     func setEntityState(entityId: String, newState: String) {
         guard isConnected() else {
-            print("WebSocket is not connected.")
+            // print("WebSocket is not connected.")
             return
         }
 
@@ -13,7 +13,7 @@ public extension HassWebSocket {
         messageId += 1
 
         // Log the action of setting the state with the entity ID and the new state.
-        print("Setting entity state for entityId:", entityId, ", newState:", newState)
+        // print("Setting entity state for entityId:", entityId, ", newState:", newState)
 
         // Determine domain and service based on entityId
         let (domain, service) = determineDomainAndService(entityId: entityId, newState: newState)
@@ -42,13 +42,13 @@ public extension HassWebSocket {
         do {
             let data = try JSONSerialization.data(withJSONObject: command, options: [])
             if let jsonString = String(data: data, encoding: .utf8) {
-                print("Sending JSON command:", jsonString)
+                // print("Sending JSON command:", jsonString)
                 sendTextMessage(jsonString)
             } else {
-                print("Failed to convert data to string.")
+                // print("Failed to convert data to string.")
             }
         } catch {
-            print("Failed to encode message:", error)
+            // print("Failed to encode message:", error)
         }
     }
 }
