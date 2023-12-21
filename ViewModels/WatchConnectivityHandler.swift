@@ -40,6 +40,14 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
         print("WCSession activation did complete. State: \(activationState), Error: \(String(describing: error))")
     }
 
+    func appDidBecomeActive() {
+        print("App did become active - handling as needed")
+    }
+
+    func appDidEnterBackground() {
+        print("App did enter background - handling as needed")
+    }
+    
     func sessionDidBecomeInactive(_ session: WCSession) {
         print("WCSession became inactive.")
     }
@@ -70,12 +78,26 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
             }
         }
     }
+ 
+    // Handle incoming messages from the watch
+        func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+            print("Received message from watch: \(message)")
+            
+            // Check if the message is a request for initial state
+            if message["request"] as? String == "initialState" {
+                // Fetch the current states
+                let leftDoorClosed = webSocketManager.leftDoorClosed
+                let rightDoorClosed = webSocketManager.rightDoorClosed
+                let alarmOff = webSocketManager.alarmOff
 
-    func appDidBecomeActive() {
-        print("App did become active - handling as needed")
-    }
-
-    func appDidEnterBackground() {
-        print("App did enter background - handling as needed")
-    }
+                // Prepare and send the response
+                let response = ["leftDoorClosed": leftDoorClosed,
+                                "rightDoorClosed": rightDoorClosed,
+                                "alarmOff": alarmOff]
+                replyHandler(response)
+            } else {
+                // Handle other messages if needed
+                handleReceivedMessage(message)
+            }
+        }
 }
