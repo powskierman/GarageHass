@@ -13,11 +13,11 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
 
     override init() {
         super.init()
+        print("[WatchConnectivityHandler] Initializing and setting up WatchConnectivity")
         setupWatchConnectivity()
         setupWebSocketManagerListener()
-        print("WatchConnectivityHandler initialized")
     }
-
+    
     private func setupWebSocketManagerListener() {
         GarageSocketManager.shared.onStateChange = { [weak self] entityId, newState in
             self?.updateStateAndNotifyWatch(entityId: entityId, newState: newState)
@@ -70,19 +70,24 @@ class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDelegate {
     }
 
     func updateStateAndNotifyWatch(entityId: String, newState: String) {
-        if WCSession.default.isReachable {
-            print("Sending state to watch")
-            let message = ["entityId": entityId, "newState": newState]
-            WCSession.default.sendMessage(message, replyHandler: nil) { error in
-                print("Error sending state update to watch: \(error.localizedDescription)")
-            }
+        let session = WCSession.default
+        print("[WatchConnectivityHandler] Preparing to send state update to watch. WCSession isReachable: \(session.isReachable), isActivated: \(session.activationState == .activated)")
+
+        guard session.isReachable else {
+            print("[WatchConnectivityHandler] WCSession is not reachable. State update not sent.")
+            return
+        }
+
+        print("[WatchConnectivityHandler] Sending state update to watch: entityId = \(entityId), newState = \(newState)")
+        let message = ["entityId": entityId, "newState": newState]
+        session.sendMessage(message, replyHandler: nil) { error in
+            print("[WatchConnectivityHandler] Error sending state update to watch: \(error.localizedDescription)")
         }
     }
  
     // Handle incoming messages from the watch
         func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-            print("Received message from watch: \(message)")
-            
+            print("[WatchConnectivityHandler] Received message from watch: \(message)")
             // Check if the message is a request for initial state
             if message["request"] as? String == "initialState" {
                 // Fetch the current states

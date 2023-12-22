@@ -9,13 +9,14 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
     
     override init() {
         super.init()
-        print("Running setupWatchConnectivity")
+        print("[WatchViewModel] Initializing and setting up WatchConnectivity")
         setupWatchConnectivity()
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        // When the session is activated, fetch the initial state
+        print("[WatchViewModel] WCSession activation did complete. State: \(activationState), Error: \(String(describing: error))")
         if activationState == .activated {
+            print("[WatchViewModel] Session activated, requesting initial state.")
             requestInitialState()
         }
     }
@@ -91,53 +92,74 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
             print("Watch Connectivity not supported on this device.")
         }
     }
+
+    func sendCommandToPhone(entityId: String, newState: String) {
+        print("[WatchViewModel] Attempting to send command to iPhone: \(entityId), newState: \(newState)")
+
+        let session = WCSession.default
+        guard session.isReachable else {
+            print("[WatchViewModel] WCSession is not reachable. Command not sent.")
+            return
+        }
+
+        let message = ["entityId": entityId, "newState": newState]
+        print("entityId: \(entityId), newState: \(newState)")
+        session.sendMessage(message, replyHandler: nil) { error in
+            print("[WatchViewModel] Error sending command to phone: \(error.localizedDescription)")
+        }
+    }
     
     func sendCommandToPhone(entityId: String, newState: String) {
-        print("Attempting to send command to iPhone: \(entityId), newState: \(newState)")
-        if WCSession.default.isReachable {
-            print("WCSession is reachable. Sending message.")
-            let message = ["entityId": entityId, "newState": newState]
-            WCSession.default.sendMessage(message, replyHandler: nil) { error in
-                print("Error sending message to phone: \(error.localizedDescription)")
-            }
-        } else {
-            print("WCSession is not reachable at the moment.")
-        }
-    }
-    
+          print("Attempting to send command to iPhone: \(entityId), newState: \(newState)")
+          if WCSession.default.isReachable {
+              print("WCSession is reachable. Sending message.")
+              let message = ["entityId": entityId, "newState": newState]
+              WCSession.default.sendMessage(message, replyHandler: nil) { error in
+                  print("Error sending message to phone: \(error.localizedDescription)")
+              }
+          } else {
+              print("WCSession is not reachable at the moment.")
+          }
+      }
+
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print("[Watch] Received message from phone:", message)
+        print("[WatchViewModel] Received message from phone: \(message)")
         DispatchQueue.main.async {
-            if let isInitialState = message["isInitialState"] as? Bool, isInitialState {
-                print("[Watch] Processing as initial state message")
-                self.processInitialStateResponse(message)
-            } else if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
-                print("[Watch] Processing as regular update message")
-                print("[Watch] Entity ID from message: \(entityId), New State from message: \(newState)")
-                self.updateStateBasedOnMessage(entityId: entityId, newState: newState)
-            }
-        }
-    }
-    
-    private func updateStateBasedOnMessage(entityId: String, newState: String) {
-        print("[Watch] Updating state based on message - Entity ID: \(entityId), New State: \(newState)")
-        DispatchQueue.main.async {
-            switch entityId {
-            case "binary_sensor.left_door_sensor":
-                print("[Watch] Updating Left Door Sensor State (Current: \(self.leftDoorClosed), New: \(newState == "closed"))")
-                self.leftDoorClosed = (newState == "closed")
-            case "binary_sensor.right_door_sensor":
-                print("[Watch] Updating Right Door Sensor State (Current: \(self.rightDoorClosed), New: \(newState == "closed"))")
-                self.rightDoorClosed = (newState == "closed")
-            case "binary_sensor.alarm_sensor":
-                print("[Watch] Updating Alarm Sensor State (Current: \(self.alarmOff), New: \(newState == "off"))")
-                self.alarmOff = (newState == "off")
-            default:
-                print("[Watch] Unknown entity ID: \(entityId)")
-            }
+            self.processReceivedMessage(message)
         }
     }
 
+    private func processReceivedMessage(_ message: [String: Any]) {
+        print("[WatchViewModel] Processing received message: \(message)")
+
+        if let isInitialState = message["isInitialState"] as? Bool, isInitialState {
+            print("[WatchViewModel] Processing as initial state message")
+            self.processInitialStateResponse(message)
+        } else if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
+            print("[WatchViewModel] Processing as regular update message")
+            print("[WatchViewModel] Entity ID from message: \(entityId), New State from message: \(newState)")
+            self.updateStateBasedOnMessage(entityId: entityId, newState: newState)
+        }
+    }
+
+    private func updateStateBasedOnMessage(entityId: String, newState: String) {
+        print("[WatchViewModel] Updating state based on message - Entity ID: \(entityId), New State: \(newState)")
+        DispatchQueue.main.async {
+            switch entityId {
+            case "binary_sensor.left_door_sensor":
+                print("[WatchViewModel] Updating Left Door Sensor State (Current: \(self.leftDoorClosed), New: \(newState == "closed"))")
+                self.leftDoorClosed = (newState == "closed")
+            case "binary_sensor.right_door_sensor":
+                print("[WatchViewModel] Updating Right Door Sensor State (Current: \(self.rightDoorClosed), New: \(newState == "closed"))")
+                self.rightDoorClosed = (newState == "closed")
+            case "binary_sensor.alarm_sensor":
+                print("[WatchViewModel] Updating Alarm Sensor State (Current: \(self.alarmOff), New: \(newState == "off"))")
+                self.alarmOff = (newState == "off")
+            default:
+                print("[WatchViewModel] Unknown entity ID: \(entityId)")
+            }
+        }
+    }
     
     func sessionReachabilityDidChange(_ session: WCSession) {
         print("[Watch] WCSession reachability changed. Is now reachable: \(session.isReachable)")
