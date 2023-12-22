@@ -3,4 +3,54 @@
    uuid = "D4C5005B-C52D-4260-BA5B-C33C9B1188AC"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "91C4C721-74AF-4458-A5C3-72E1D783525F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewModels/WatchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "processReceivedMessage(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "91C4C721-74AF-4458-A5C3-72E1D783525F - 36d7e96ebc244c1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WatchGarageHass_Watch_App.WatchViewModel.sendCommandToPhone(entityId: Swift.String, newState: Swift.String) -&gt; ()"
+                  moduleName = "WatchGarageHass Watch App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/michel/Documents/SwiftUI%20Projects/GarageHass/ViewModels/WatchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "107"
+                  endingLineNumber = "107"
+                  offsetFromSymbolStart = "2896">
+               </Location>
+               <Location
+                  uuid = "91C4C721-74AF-4458-A5C3-72E1D783525F - 8f96ea1918210a39"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Error) -&gt; () in WatchGarageHass_Watch_App.WatchViewModel.sendCommandToPhone(entityId: Swift.String, newState: Swift.String) -&gt; ()"
+                  moduleName = "WatchGarageHass Watch App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/michel/Documents/SwiftUI%20Projects/GarageHass/ViewModels/WatchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

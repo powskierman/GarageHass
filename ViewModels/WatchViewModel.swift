@@ -92,7 +92,7 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
             print("Watch Connectivity not supported on this device.")
         }
     }
-
+    
     func sendCommandToPhone(entityId: String, newState: String) {
         print("[WatchViewModel] Attempting to send command to iPhone: \(entityId), newState: \(newState)")
 
@@ -103,25 +103,31 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
 
         let message = ["entityId": entityId, "newState": newState]
-        print("entityId: \(entityId), newState: \(newState)")
-        session.sendMessage(message, replyHandler: nil) { error in
+        session.sendMessage(message, replyHandler: { response in
+            // Handle the response here if needed
+            print("[WatchViewModel] Received reply from phone: \(response)")
+        }, errorHandler: { error in
             print("[WatchViewModel] Error sending command to phone: \(error.localizedDescription)")
-        }
+        })
     }
-    
-    func sendCommandToPhone(entityId: String, newState: String) {
-          print("Attempting to send command to iPhone: \(entityId), newState: \(newState)")
-          if WCSession.default.isReachable {
-              print("WCSession is reachable. Sending message.")
-              let message = ["entityId": entityId, "newState": newState]
-              WCSession.default.sendMessage(message, replyHandler: nil) { error in
-                  print("Error sending message to phone: \(error.localizedDescription)")
-              }
-          } else {
-              print("WCSession is not reachable at the moment.")
-          }
-      }
 
+
+//    func sendCommandToPhone(entityId: String, newState: String) {
+//        print("[WatchViewModel] Attempting to send command to iPhone: \(entityId), newState: \(newState)")
+//
+//        let session = WCSession.default
+//        guard session.isReachable else {
+//            print("[WatchViewModel] WCSession is not reachable. Command not sent.")
+//            return
+//        }
+//
+//        let message = ["entityId": entityId, "newState": newState]
+//        print("entityId: \(entityId), newState: \(newState)")
+//        session.sendMessage(message, replyHandler: (([String : Any]) -> Void)?) { error in
+//            print("[WatchViewModel] Error sending command to phone: \(error.localizedDescription)")
+//        }
+//    }
+    
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("[WatchViewModel] Received message from phone: \(message)")
         DispatchQueue.main.async {
