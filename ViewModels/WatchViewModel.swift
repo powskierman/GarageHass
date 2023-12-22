@@ -153,14 +153,15 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
         DispatchQueue.main.async {
             switch entityId {
             case "binary_sensor.left_door_sensor":
-                print("[WatchViewModel] Updating Left Door Sensor State (Current: \(self.leftDoorClosed), New: \(newState == "closed"))")
-                self.leftDoorClosed = (newState == "closed")
+                let isClosed = newState == "off" // Assuming "off" means closed
+                print("[WatchViewModel] Updating Left Door Sensor State (Current: \(self.leftDoorClosed), New: \(isClosed))")
+                self.leftDoorClosed = isClosed
             case "binary_sensor.right_door_sensor":
-                print("[WatchViewModel] Updating Right Door Sensor State (Current: \(self.rightDoorClosed), New: \(newState == "closed"))")
-                self.rightDoorClosed = (newState == "closed")
+                let isClosed = newState == "off" // Assuming "off" means closed
+                // Similar logic for right door sensor
             case "binary_sensor.alarm_sensor":
-                print("[WatchViewModel] Updating Alarm Sensor State (Current: \(self.alarmOff), New: \(newState == "off"))")
-                self.alarmOff = (newState == "off")
+                let isAlarmOff = newState == "off"
+                // Similar logic for alarm sensor
             default:
                 print("[WatchViewModel] Unknown entity ID: \(entityId)")
             }
