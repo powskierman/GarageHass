@@ -148,25 +148,39 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    private func updateLeftDoorState(newState: String) {
+        let isClosed = newState == "off"
+        print("[WatchViewModel] Updating Left Door Sensor State (Current: \(leftDoorClosed), New: \(isClosed))")
+        leftDoorClosed = isClosed
+    }
+
+    private func updateRightDoorState(newState: String) {
+        let isClosed = newState == "off"
+        print("[WatchViewModel] Updating Right Door Sensor State (Current: \(rightDoorClosed), New: \(isClosed))")
+        rightDoorClosed = isClosed
+    }
+
+    private func updateAlarmState(newState: String) {
+        let isAlarmOff = newState == "off"
+        print("[WatchViewModel] Updating Alarm State (Current: \(alarmOff), New: \(isAlarmOff))")
+        alarmOff = isAlarmOff
+    }
+
     private func updateStateBasedOnMessage(entityId: String, newState: String) {
-        print("[WatchViewModel] Updating state based on message - Entity ID: \(entityId), New State: \(newState)")
         DispatchQueue.main.async {
             switch entityId {
             case "binary_sensor.left_door_sensor":
-                let isClosed = newState == "off" // Assuming "off" means closed
-                print("[WatchViewModel] Updating Left Door Sensor State (Current: \(self.leftDoorClosed), New: \(isClosed))")
-                self.leftDoorClosed = isClosed
+                self.updateLeftDoorState(newState: newState)
             case "binary_sensor.right_door_sensor":
-                let isClosed = newState == "off" // Assuming "off" means closed
-                // Similar logic for right door sensor
+                self.updateRightDoorState(newState: newState)
             case "binary_sensor.alarm_sensor":
-                let isAlarmOff = newState == "off"
-                // Similar logic for alarm sensor
+                self.updateAlarmState(newState: newState)
             default:
                 print("[WatchViewModel] Unknown entity ID: \(entityId)")
             }
         }
     }
+
     
     func sessionReachabilityDidChange(_ session: WCSession) {
         print("[Watch] WCSession reachability changed. Is now reachable: \(session.isReachable)")

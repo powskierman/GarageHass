@@ -3,6 +3,7 @@ import SwiftUI
 struct WatchEntityView: View {
     @ObservedObject var viewModel: WatchViewModel
     let entityType: EntityType
+    @State private var showingAlarmConfirmation = false // State for controlling the display of the confirmation dialog
 
     var body: some View {
         Button(action: handleButtonPress) {
@@ -13,6 +14,12 @@ struct WatchEntityView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(entityBackgroundColor)
+        .confirmationDialog("Confirm Alarm Change", isPresented: $showingAlarmConfirmation) {
+            Button("Confirm", role: .destructive) {
+                toggleAlarmState()
+            }
+            Button("Cancel", role: .cancel) {}
+        }
     }
 
     private var entityImage: some View {
@@ -49,14 +56,19 @@ struct WatchEntityView: View {
     }
 
     private func handleButtonPress() {
-        switch entityType {
-        case .door(let doorType):
-            let entityId = doorType == .left ? "switch.left_garage_door" : "switch.right_garage_door"
-            viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
-        case .alarm:
-            let entityId = "switch.alarm"
-            let newState = viewModel.alarmOff ? "on" : "off"
-            viewModel.sendCommandToPhone(entityId: entityId, newState: newState)
-        }
-    }
+         switch entityType {
+         case .door(let doorType):
+             let entityId = doorType == .left ? "switch.left_garage_door" : "switch.right_garage_door"
+             viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
+         case .alarm:
+             // Instead of directly toggling, show confirmation dialog
+             showingAlarmConfirmation = true
+         }
+     }
+
+     private func toggleAlarmState() {
+         let entityId = "switch.alarm"
+         let newState = viewModel.alarmOff ? "on" : "off"
+         viewModel.sendCommandToPhone(entityId: entityId, newState: newState)
+     }
 }

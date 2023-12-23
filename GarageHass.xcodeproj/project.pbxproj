@@ -25,9 +25,11 @@
 		D0D83C342B0D2D6100A583E5 /* WatchEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D83C332B0D2D6100A583E5 /* WatchEntityView.swift */; };
 		D0DA56032B252A0F0035980B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA56022B252A0F0035980B /* AppState.swift */; };
 		D0E410BB2B06DE0C00F7C128 /* WatchGarageHass Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */; };
+		D0E410C02B06DE2F00F7C128 /* AppleWatchGarage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410882B06DD0200F7C128 /* AppleWatchGarage.swift */; };
 		D0E410C22B06DF0100F7C128 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410772B06D5F300F7C128 /* WatchView.swift */; };
 		D0E410C42B06DF3000F7C128 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E410802B06D7E500F7C128 /* WatchViewModel.swift */; };
+		D0EB9A8F2B36660100CA7A43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E4108C2B06DD0400F7C128 /* Assets.xcassets */; };
+		D0EB9A902B3666EE00CA7A43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0E4108C2B06DD0400F7C128 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +87,7 @@
 		D0DA56022B252A0F0035980B /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D0E410772B06D5F300F7C128 /* WatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
 		D0E410802B06D7E500F7C128 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
-		D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGarageHassApp.swift; sourceTree = "<group>"; };
+		D0E410882B06DD0200F7C128 /* AppleWatchGarage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchGarage.swift; sourceTree = "<group>"; };
 		D0E4108C2B06DD0400F7C128 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0E4108F2B06DD0400F7C128 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D0E410AE2B06DE0B00F7C128 /* WatchGarageHass Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchGarageHass Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,7 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				D0B813B32AD319B500B3FB70 /* GarageHass.swift */,
-				D0E410882B06DD0200F7C128 /* WatchGarageHassApp.swift */,
+				D0E410882B06DD0200F7C128 /* AppleWatchGarage.swift */,
 			);
 			path = "Main apps";
 			sourceTree = "<group>";
@@ -321,6 +323,7 @@
 			files = (
 				D0B813C02AD319B500B3FB70 /* Preview Assets.xcassets in Resources */,
 				D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */,
+				D0EB9A8F2B36660100CA7A43 /* Assets.xcassets in Resources */,
 				D0B813BF2AD319B500B3FB70 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0EB9A902B3666EE00CA7A43 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D83C342B0D2D6100A583E5 /* WatchEntityView.swift in Sources */,
-				D0E410C02B06DE2F00F7C128 /* WatchGarageHassApp.swift in Sources */,
+				D0E410C02B06DE2F00F7C128 /* AppleWatchGarage.swift in Sources */,
 				D0990CA42B12933200858A65 /* Enums.swift in Sources */,
 				D0E410C22B06DF0100F7C128 /* WatchView.swift in Sources */,
 				D0E410C42B06DF3000F7C128 /* WatchViewModel.swift in Sources */,
@@ -577,7 +581,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WatchGarageHass-Watch-App-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = WatchGarageHass;
+				INFOPLIST_KEY_CFBundleDisplayName = AccessGarage;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.powskierman.GarageHass;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -612,7 +616,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WatchGarageHass-Watch-App-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = WatchGarageHass;
+				INFOPLIST_KEY_CFBundleDisplayName = AccessGarage;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.powskierman.GarageHass;
 				LD_RUNPATH_SEARCH_PATHS = (

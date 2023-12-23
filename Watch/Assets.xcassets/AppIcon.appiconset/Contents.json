@@ -1,8 +1,9 @@
 {
   "images" : [
     {
+      "filename" : "garageIcon.jpg",
       "idiom" : "universal",
-      "platform" : "ios",
+      "platform" : "watchos",
       "size" : "1024x1024"
     }
   ],
