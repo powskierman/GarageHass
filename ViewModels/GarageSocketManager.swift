@@ -13,7 +13,7 @@ class GarageSocketManager: ObservableObject {
     @Published var error: Error?
     @Published var hasErrorOccurred: Bool = false
 
-    private let websocket: HassWebSocket
+    public let websocket: HassWebSocket
     private var cancellables = Set<AnyCancellable>()
     var onStateChange: ((String, String) -> Void)?
 
@@ -24,24 +24,36 @@ class GarageSocketManager: ObservableObject {
     }
 
     func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void) {
-       guard !websocket.isConnected() else {
-           completion(true)
-           return
-       }
-       
-       websocket.connect { success in
-           DispatchQueue.main.async {
-               if success {
-                   self.websocket.subscribeToEvents()
-                   self.error = nil
-                   completion(true)
-               } else {
-                   self.error = NSError(domain: "WebSocket", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to establish WebSocket connection."])
-                   completion(false)
-               }
-           }
-       }
-   }
+        if !websocket.isConnected() {
+            websocket.connect { success in
+                print("[GarageSocketManager] WebSocket connection status: \(success)")
+                completion(success)
+            }
+        } else {
+            print("[GarageSocketManager] WebSocket already connected.")
+            completion(true)
+        }
+    }
+    
+//    func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void) {
+//       guard !websocket.isConnected() else {
+//           completion(true)
+//           return
+//       }
+//       
+//       websocket.connect { success in
+//           DispatchQueue.main.async {
+//               if success {
+//                   self.websocket.subscribeToEvents()
+//                   self.error = nil
+//                   completion(true)
+//               } else {
+//                   self.error = NSError(domain: "WebSocket", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to establish WebSocket connection."])
+//                   completion(false)
+//               }
+//           }
+//       }
+//   }
     
     private func setupBindings() {
         websocket.$connectionState
@@ -89,7 +101,7 @@ class GarageSocketManager: ObservableObject {
             hasErrorOccurred = true
             return
         }
-
+        print("[GarageSocketManager] Handling entity action: \(entityId), newState: \(String(describing: newState))")
         let service = newState ?? "toggle"
         let command = [
             "id": websocket.getNextMessageId(),
@@ -131,6 +143,7 @@ extension GarageSocketManager: EventMessageHandler {
     }
 
     private func processStateChange(entityId: String, newState: String) {
+        print("[GarageSocketManager] Processing state change: \(entityId), newState: \(newState)")
         let previousState: Bool
         switch entityId {
         case "binary_sensor.left_door_sensor":
@@ -160,4 +173,6 @@ extension GarageSocketManager: EventMessageHandler {
             }
         }
     }
-}
+    }
+
+

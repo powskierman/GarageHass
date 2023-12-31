@@ -6,6 +6,7 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
     @Published var leftDoorClosed: Bool = true
     @Published var rightDoorClosed: Bool = true
     @Published var alarmOff: Bool = true
+    @Published var errorMessage: String?
     
     override init() {
         super.init()
@@ -20,26 +21,6 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
             requestInitialState()
         }
     }
-
-     private func updateStateBasedOnMessage(_ message: [String: Any]) {
-         if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
-             DispatchQueue.main.async {
-                 switch entityId {
-                 case "binary_sensor.left_door_sensor":
-                     // Update the state of the left door sensor
-                     self.leftDoorClosed = (newState == "off")
-                 case "binary_sensor.right_door_sensor":
-                     // Update the state of the right door sensor
-                     self.rightDoorClosed = (newState == "off")
-                 case "binary_sensor.alarm_sensor":
-                     // Update the state of the alarm sensor
-                     self.alarmOff = (newState == "off")
-                 default:
-                     print("Unknown entity ID: \(entityId)")
-                 }
-             }
-         }
-     }
     
     private func requestInitialState() {
         // Check if the session is reachable before sending a message
@@ -111,23 +92,6 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
         })
     }
 
-
-//    func sendCommandToPhone(entityId: String, newState: String) {
-//        print("[WatchViewModel] Attempting to send command to iPhone: \(entityId), newState: \(newState)")
-//
-//        let session = WCSession.default
-//        guard session.isReachable else {
-//            print("[WatchViewModel] WCSession is not reachable. Command not sent.")
-//            return
-//        }
-//
-//        let message = ["entityId": entityId, "newState": newState]
-//        print("entityId: \(entityId), newState: \(newState)")
-//        session.sendMessage(message, replyHandler: (([String : Any]) -> Void)?) { error in
-//            print("[WatchViewModel] Error sending command to phone: \(error.localizedDescription)")
-//        }
-//    }
-    
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("[WatchViewModel] Received message from phone: \(message)")
         DispatchQueue.main.async {
@@ -143,10 +107,13 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
             self.processInitialStateResponse(message)
         } else if let entityId = message["entityId"] as? String, let newState = message["newState"] as? String {
             print("[WatchViewModel] Processing as regular update message")
-            print("[WatchViewModel] Entity ID from message: \(entityId), New State from message: \(newState)")
             self.updateStateBasedOnMessage(entityId: entityId, newState: newState)
+        } else if message["request"] as? String == "initialState" {
+            print("[WatchViewModel] Processing as initialState request")
+            self.processInitialStateResponse(message)
         }
     }
+
 
     private func updateLeftDoorState(newState: String) {
         let isClosed = newState == "off"
@@ -167,7 +134,6 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
     }
 
     private func updateStateBasedOnMessage(entityId: String, newState: String) {
-        DispatchQueue.main.async {
             switch entityId {
             case "binary_sensor.left_door_sensor":
                 self.updateLeftDoorState(newState: newState)
@@ -179,13 +145,51 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 print("[WatchViewModel] Unknown entity ID: \(entityId)")
             }
         }
-    }
-
     
+
     func sessionReachabilityDidChange(_ session: WCSession) {
         print("[Watch] WCSession reachability changed. Is now reachable: \(session.isReachable)")
         if session.isReachable {
             requestInitialState() // Attempt to request initial state when session becomes reachable
         }
     }
+    
+    func checkiPhoneAppStatus(performAction action: @escaping () -> Void) {
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(["request": "appStatus"], replyHandler: { response in
+                if let appStatus = response["appStatus"] as? Bool, appStatus {
+                    self.checkWebSocketConnection(performAction: action)
+                } else {
+                    self.displayErrorMessage("iPhone app is not running")
+                }
+            }, errorHandler: { error in
+                self.displayErrorMessage("Error communicating with iPhone: \(error.localizedDescription)")
+            })
+        } else {
+            self.displayErrorMessage("iPhone is not reachable")
+        }
+    }
+
+    func checkWebSocketConnection(performAction action: @escaping () -> Void) {
+        WCSession.default.sendMessage(["request": "webSocketStatus"], replyHandler: { response in
+            if let webSocketStatus = response["webSocketStatus"] as? Bool, webSocketStatus {
+                action() // Perform the defined action
+            } else {
+                self.displayErrorMessage("WebSocket is not connected")
+            }
+        }, errorHandler: { error in
+            self.displayErrorMessage("Error communicating with iPhone: \(error.localizedDescription)")
+        })
+    }
+
+    
+    func displayErrorMessage(_ message: String) {
+            DispatchQueue.main.async {
+                self.errorMessage = message
+                // Reset the error message after a certain duration
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // 5 seconds delay
+                self.errorMessage = nil
+                }
+            }
+        }
 }

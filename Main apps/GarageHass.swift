@@ -27,13 +27,17 @@ struct GarageHassApp: App {
             PhoneView()
                 .environmentObject(watchConnectivityHandler)
                 .environmentObject(garageSocketManager)
-                .onChange(of: scenePhase) { newScenePhase in
-                    // print("Scene phase changed: \(newScenePhase)")
-                    switch newScenePhase {
+                .onChange(of: scenePhase) {
+                    // Your existing switch statement
+                    switch scenePhase {
                     case .active:
-                        watchConnectivityHandler.appDidBecomeActive()
+                        watchConnectivityHandler.isAppActive = true
+                        appDidBecomeActive()
+                    case .inactive:
+                        watchConnectivityHandler.isAppActive = false
+                        appDidEnterBackground()
                     case .background:
-                        watchConnectivityHandler.appDidEnterBackground()
+                        appDidEnterBackground()
                     default:
                         break
                     }
@@ -44,20 +48,20 @@ struct GarageHassApp: App {
 
 extension GarageHassApp: AppStateUpdateDelegate {
     func appDidBecomeActive() {
-        // print("App is now active - Reconnecting WebSocket and subscribing to events")
+        print("App is now active - Reconnecting WebSocket and subscribing to events")
         // Logic for app becoming active
         HassWebSocket.shared.connect { success in
             if success {
                 // print("WebSocket successfully reconnected")
                 HassWebSocket.shared.subscribeToEvents()
             } else {
-                // print("Failed to reconnect WebSocket")
+                print("Failed to reconnect WebSocket")
             }
         }
     }
 
     func appDidEnterBackground() {
-        // print("App is now in background - Disconnecting WebSocket")
+        print("App is now in background - Disconnecting WebSocket")
         // Logic for app entering background
         HassWebSocket.shared.disconnect()
     }

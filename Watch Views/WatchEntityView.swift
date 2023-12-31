@@ -8,6 +8,11 @@ struct WatchEntityView: View {
     var body: some View {
         Button(action: handleButtonPress) {
             VStack {
+                if let errorMessage = viewModel.errorMessage {
+                      Text(errorMessage)
+                          .foregroundColor(.red)
+                          .padding()
+                  }
                 entityImage
                 Text(entityLabel)
             }
@@ -56,19 +61,23 @@ struct WatchEntityView: View {
     }
 
     private func handleButtonPress() {
-         switch entityType {
-         case .door(let doorType):
-             let entityId = doorType == .left ? "switch.left_garage_door" : "switch.right_garage_door"
-             viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
-         case .alarm:
-             // Instead of directly toggling, show confirmation dialog
-             showingAlarmConfirmation = true
-         }
-     }
+        viewModel.checkWebSocketConnection {
+            switch self.entityType {
+            case .door(let doorType):
+                let entityId = doorType == .left ? "switch.left_garage_door" : "switch.right_garage_door"
+                self.viewModel.sendCommandToPhone(entityId: entityId, newState: "toggle")
+            case .alarm:
+                // Instead of directly toggling, show confirmation dialog
+                self.showingAlarmConfirmation = true
+            }
+        }
+    }
 
      private func toggleAlarmState() {
-         let entityId = "switch.alarm"
-         let newState = viewModel.alarmOff ? "on" : "off"
-         viewModel.sendCommandToPhone(entityId: entityId, newState: newState)
+         viewModel.checkWebSocketConnection {
+             let entityId = "switch.alarm"
+             let newState = viewModel.alarmOff ? "on" : "off"
+             viewModel.sendCommandToPhone(entityId: entityId, newState: newState)
+         }
      }
 }
