@@ -52,3 +52,38 @@ public extension HassWebSocket {
         }
     }
 }
+import Foundation
+import HassFramework
+
+public extension HassRestClient {
+    func setEntityState(entityId: String, newState: String) {
+        // Determine domain and service based on entityId
+        let (domain, service) = determineDomainAndService(entityId: entityId, newState: newState)
+
+        // Construct and send the command using REST API
+        let command = DeviceCommand(service: service, entityId: entityId)
+        sendCommandToDevice(deviceId: entityId, command: command) { result in
+            // Handle result: success or error
+        }
+    }
+
+    private func determineDomainAndService(entityId: String, newState: String) -> (String, String) {
+        if entityId.starts(with: "switch.") {
+            return ("switch", newState)
+        } else {
+            return ("homeassistant", "turn_\(newState)")
+        }
+    }
+}
+
+// Update DeviceCommand struct to match the Home Assistant API
+//public struct DeviceCommand: Encodable {
+//    public let service: String
+//    public let entityId: String
+//    
+//    public init(service: String, entityId: String) {
+//          self.service = service
+//          self.entityId = entityId
+//      }
+    // Add other properties as needed for the Home Assistant command
+//}
