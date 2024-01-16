@@ -116,9 +116,9 @@ struct GarageDoorButton: View {
         Button(action: {
             switch door {
             case .left:
-                webSocketManager.handleEntityAction(entityId: "switch.left_garage_door")
+                webSocketManager.handleEntityAction(entityId: "script.toggle_left_door")
             case .right:
-                webSocketManager.handleEntityAction(entityId: "switch.right_garage_door")
+                webSocketManager.handleEntityAction(entityId: "script.toggle_right_door")
             }
         }) {
             Image(systemName: doorStateImage)

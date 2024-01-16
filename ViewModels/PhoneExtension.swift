@@ -75,15 +75,3 @@ public extension HassRestClient {
         }
     }
 }
-
-// Update DeviceCommand struct to match the Home Assistant API
-//public struct DeviceCommand: Encodable {
-//    public let service: String
-//    public let entityId: String
-//    
-//    public init(service: String, entityId: String) {
-//          self.service = service
-//          self.entityId = entityId
-//      }
-    // Add other properties as needed for the Home Assistant command
-//}
