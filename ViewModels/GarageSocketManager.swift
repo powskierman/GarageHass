@@ -35,26 +35,6 @@ class GarageSocketManager: ObservableObject {
         }
     }
     
-//    func establishConnectionIfNeeded(completion: @escaping (Bool) -> Void) {
-//       guard !websocket.isConnected() else {
-//           completion(true)
-//           return
-//       }
-//       
-//       websocket.connect { success in
-//           DispatchQueue.main.async {
-//               if success {
-//                   self.websocket.subscribeToEvents()
-//                   self.error = nil
-//                   completion(true)
-//               } else {
-//                   self.error = NSError(domain: "WebSocket", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to establish WebSocket connection."])
-//                   completion(false)
-//               }
-//           }
-//       }
-//   }
-    
     private func setupBindings() {
         websocket.$connectionState
             .receive(on: DispatchQueue.main)
@@ -173,6 +153,6 @@ extension GarageSocketManager: EventMessageHandler {
             }
         }
     }
-    }
+}
 
 

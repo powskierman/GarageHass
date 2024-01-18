@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
 		D02511042B19156800F93198 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D02511032B19156800F93198 /* Starscream */; };
+		D08BCA872B59C56B00960589 /* GarageRestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BCA862B59C56B00960589 /* GarageRestManager.swift */; };
 		D09894E52B07D632002F273F /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09894E42B07D632002F273F /* WatchKit.framework */; };
 		D0990C992B127D3B00858A65 /* GarageSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C982B127D3B00858A65 /* GarageSocketManager.swift */; };
 		D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		D02198EA290479C1006CB906 /* GarageHass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarageHass.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D08BCA862B59C56B00960589 /* GarageRestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageRestManager.swift; sourceTree = "<group>"; };
 		D09894E22B07D03A002F273F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D09894E42B07D632002F273F /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.0.sdk/System/Library/Frameworks/WatchKit.framework; sourceTree = DEVELOPER_DIR; };
 		D0990C982B127D3B00858A65 /* GarageSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageSocketManager.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				D0E410802B06D7E500F7C128 /* WatchViewModel.swift */,
 				D0990C9A2B127D6F00858A65 /* WatchConnectivityHandler.swift */,
 				D0DA56022B252A0F0035980B /* AppState.swift */,
+				D08BCA862B59C56B00960589 /* GarageRestManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */,
+				D08BCA872B59C56B00960589 /* GarageRestManager.swift in Sources */,
 				D0990C9B2B127D6F00858A65 /* WatchConnectivityHandler.swift in Sources */,
 				D0990C992B127D3B00858A65 /* GarageSocketManager.swift in Sources */,
 				D0DA56032B252A0F0035980B /* AppState.swift in Sources */,
