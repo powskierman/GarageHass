@@ -68,9 +68,9 @@ struct GarageDoorButton: View {
 
     var body: some View {
         Button(action: {
-            let newState = "toggle" // Define the new state for the door
-            let entityIdToToggle = door == .left ? "switch.left_garage_door" : "switch.right_garage_door" // Replace with actual entity IDs
-            garageRestManager.handleEntityAction(entityId: entityIdToToggle, newState: newState)
+            // The script entity ID should match what is configured in Home Assistant
+            let scriptEntityId = door == .left ? "script.toggle_left_door" : "script.toggle_right_door"
+            garageRestManager.handleScriptAction(entityId: scriptEntityId)
         }) {
             Image(systemName: doorStateImage)
                 .resizable()

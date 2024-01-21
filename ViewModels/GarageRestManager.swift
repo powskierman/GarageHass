@@ -86,4 +86,23 @@ class GarageRestManager: ObservableObject {
             }
         }
     }
+    
+    func handleScriptAction(entityId: String) {
+        print("[GarageRestManager] Handling script action for \(entityId)")
+        lastCallStatus = .pending
+        restClient.callScript(entityId: entityId) { [weak self] (result: Result<Void, Error>) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success():
+                    print("[GarageRestManager] Script executed successfully")
+                    self?.lastCallStatus = .success
+                case .failure(let error):
+                    print("[GarageRestManager] Error executing script \(entityId): \(error)")
+                    self?.lastCallStatus = .failure
+                    self?.error = error
+                    self?.hasErrorOccurred = true
+                }
+            }
+        }
+    }
 }
