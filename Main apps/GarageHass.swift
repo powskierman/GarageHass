@@ -15,7 +15,7 @@ import SwiftUI
 struct GarageHassApp: App {
     @Environment(\.scenePhase) private var scenePhase
     let watchConnectivityHandler = WatchConnectivityHandler()
-    let garageSocketManager = GarageSocketManager.shared // Ensure this instance is created
+//    let garageSocketManager = GarageSocketManager.shared // Ensure this instance is created
 
     init() {
         watchConnectivityHandler.stateDelegate = self
@@ -26,7 +26,8 @@ struct GarageHassApp: App {
         WindowGroup {
             PhoneView()
                 .environmentObject(watchConnectivityHandler)
-                .environmentObject(garageSocketManager)
+//                .environmentObject(garageSocketManager)
+                .environmentObject(GarageRestManager.shared)
                 .onChange(of: scenePhase) {
                     // Your existing switch statement
                     switch scenePhase {
@@ -48,22 +49,23 @@ struct GarageHassApp: App {
 
 extension GarageHassApp: AppStateUpdateDelegate {
     func appDidBecomeActive() {
-        print("App is now active - Reconnecting WebSocket and subscribing to events")
-        // Logic for app becoming active
-        HassWebSocket.shared.connect { success in
-            if success {
-                // print("WebSocket successfully reconnected")
-                HassWebSocket.shared.subscribeToEvents()
-            } else {
-                print("Failed to reconnect WebSocket")
-            }
-        }
+        print("App is now active - Refreshing data from RESTful API")
+        // Logic for refreshing data using RESTful API
+//        GarageRestManager.shared.refreshData { success in
+//            if success {
+//                print("Data successfully refreshed from RESTful API")
+//            } else {
+//                print("Failed to refresh data from RESTful API")
+//            }
+//        }
     }
 
     func appDidEnterBackground() {
-        print("App is now in background - Disconnecting WebSocket")
-        // Logic for app entering background
-        HassWebSocket.shared.disconnect()
+        print("App is now in background")
+        // Any necessary clean-up for REST API
+        // For example, cancelling ongoing requests
+//        GarageRestManager.shared.cancelOngoingRequests()
     }
 }
+
 

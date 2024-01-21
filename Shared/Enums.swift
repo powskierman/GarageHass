@@ -13,7 +13,13 @@ enum EntityType {
 }
 
 enum Door {
-        case left
-        case right
+    case left
+    case right
 }
 
+// Enum to represent the status of a REST API call
+enum CallStatus {
+    case success
+    case failure
+    case pending
+}

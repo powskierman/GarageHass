@@ -58,7 +58,7 @@ import HassFramework
 public extension HassRestClient {
     func setEntityState(entityId: String, newState: String) {
         // Determine domain and service based on entityId
-        let (domain, service) = determineDomainAndService(entityId: entityId, newState: newState)
+        let (_, service) = determineDomainAndService(entityId: entityId, newState: newState)
 
         // Construct and send the command using REST API
         let command = DeviceCommand(service: service, entityId: entityId)
