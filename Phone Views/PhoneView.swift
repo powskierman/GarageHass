@@ -25,9 +25,10 @@ struct PhoneView: View {
                 }) {
                     Image(systemName: garageRestManager.alarmOff ? "alarm" : "alarm.waves.left.and.right.fill")
                         .resizable()
-                        .frame(width: 150.0, height: 150.0)
+                        .aspectRatio(contentMode: .fit)
                         .foregroundColor(garageRestManager.alarmOff ? .teal : .pink)
                 }
+                .frame(width: 250.0, height: 150.0)
                 .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7))
             }
             .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
@@ -69,8 +70,8 @@ struct GarageDoorButton: View {
     var body: some View {
         Button(action: {
             // The script entity ID should match what is configured in Home Assistant
-            let scriptEntityId = door == .left ? "script.toggle_left_door" : "script.toggle_right_door"
-            garageRestManager.handleScriptAction(entityId: scriptEntityId)
+            let scriptEntityId = door == .left ? "switch.toggle_left_door" : "switch.toggle_right_door"
+            garageRestManager.handleEntityAction(entityId: scriptEntityId, newState: "On")
         }) {
             Image(systemName: doorStateImage)
                 .resizable()
