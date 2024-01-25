@@ -19,11 +19,18 @@ class GarageRestManager: ObservableObject {
     @Published var hasErrorOccurred: Bool = false
     @Published var lastCallStatus: CallStatus = .pending
 
-    private var restClient: HassRestClient
+    private var restClient: HassRestClient?
     private var cancellables = Set<AnyCancellable>()
+    private var initializationFailed = false
 
-    init(restClient: HassRestClient = HassRestClient()) {
-        self.restClient = restClient
+    init() {
+         if let client = HassRestClient() {
+             self.restClient = client
+             print("[GarageRestManager] Initialized with REST client.")
+         } else {
+             print("[GarageRestManager] Failed to initialize REST client.")
+             initializationFailed = true
+         }
         print("[GarageRestManager] Initialized with REST client.")
     }
 
@@ -32,7 +39,7 @@ class GarageRestManager: ObservableObject {
         lastCallStatus = .pending
         let doorSensors = ["binary_sensor.left_door_sensor", "binary_sensor.right_door_sensor", "binary_sensor.alarm_sensor"]
         doorSensors.forEach { entityId in
-            restClient.fetchState(entityId: entityId) { [weak self] result in
+            restClient?.fetchState(entityId: entityId) { [weak self] result in
                 DispatchQueue.main.async {
                     print("[GarageRestManager] REST call completed for entityId: \(entityId).")
                     switch result {
@@ -69,7 +76,7 @@ class GarageRestManager: ObservableObject {
     func handleEntityAction(entityId: String, newState: String) {
         print("[GarageRestManager] Handling entity action for \(entityId), new state: \(newState)")
         lastCallStatus = .pending
-        restClient.changeState(entityId: entityId, newState: newState) { [weak self] result in
+        restClient?.changeState(entityId: entityId, newState: newState) { [weak self] result in
             DispatchQueue.main.async {
                 print("[GarageRestManager] REST call completed for entity action: \(entityId).")
                 switch result {
@@ -90,7 +97,7 @@ class GarageRestManager: ObservableObject {
     func handleScriptAction(entityId: String) {
         print("[GarageRestManager] Handling script action for \(entityId)")
         lastCallStatus = .pending
-        restClient.callScript(entityId: entityId) { [weak self] (result: Result<Void, Error>) in
+        restClient?.callScript(entityId: entityId) { [weak self] (result: Result<Void, Error>) in
             DispatchQueue.main.async {
                 switch result {
                 case .success():
