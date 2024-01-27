@@ -24,16 +24,10 @@ class GarageRestManager: ObservableObject {
     private var initializationFailed = false
 
     init() {
-         if let client = HassRestClient() {
-             self.restClient = client
-             print("[GarageRestManager] Initialized with REST client.")
-         } else {
-             print("[GarageRestManager] Failed to initialize REST client.")
-             initializationFailed = true
-         }
+        self.restClient = HassRestClient()
         print("[GarageRestManager] Initialized with REST client.")
     }
-
+    
     func fetchInitialState() {
         print("[GarageRestManager] Fetching initial state.")
         lastCallStatus = .pending
