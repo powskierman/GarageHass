@@ -63,20 +63,27 @@ struct PhoneView: View {
     struct GarageDoorButton: View {
         @EnvironmentObject var garageRestManager: GarageRestManager
         var door: Door
+        @State private var isPressed = false // New state variable for color change
         
         var body: some View {
             Button(action: {
-                // The script entity ID should match what is configured in Home Assistant
-                let scriptEntityId = door == .left ? "script.toggle_left_door" : "script.toggle_right_door"
-                garageRestManager.handleScriptAction(entityId: scriptEntityId)
-            }) {
-                Image(systemName: doorStateImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(doorStateColor)
-            }
-            .frame(width: 170.0, height: 170.0)
-        }
+                 // Change color to yellow
+                 isPressed = true
+                 // Action to toggle door
+                 let scriptEntityId = door == .left ? "script.toggle_left_door" : "script.toggle_right_door"
+                 garageRestManager.handleScriptAction(entityId: scriptEntityId)
+                 // Revert color back after 500ms
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                     isPressed = false
+                 }
+             }) {
+                 Image(systemName: doorStateImage)
+                     .resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .foregroundColor(isPressed ? .yellow : doorStateColor)
+             }
+             .frame(width: 170.0, height: 170.0)
+         }
         
         private var doorStateImage: String {
             switch door {
