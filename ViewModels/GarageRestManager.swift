@@ -24,7 +24,17 @@ class GarageRestManager: ObservableObject {
     private var initializationFailed = false
 
     init() {
-        self.restClient = HassRestClient()
+        // Load baseURL and authToken from Secrets.plist
+        guard let secretsPath = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let secrets = NSDictionary(contentsOfFile: secretsPath) as? [String: Any],
+              let serverURLString = secrets["RESTURL"] as? String,
+              let authToken = secrets["authToken"] as? String,
+              let baseURL = URL(string: serverURLString) else {
+            fatalError("Invalid or missing configuration in Secrets.plist.")
+        }
+
+        // Initialize HassRestClient with the baseURL and authToken
+        self.restClient = HassRestClient(baseURL: baseURL, authToken: authToken)
         print("[GarageRestManager] Initialized with REST client.")
     }
     
