@@ -34,7 +34,7 @@ class GarageRestManager: ObservableObject {
         }
 
         // Initialize HassRestClient with the baseURL and authToken
-        self.restClient = HassRestClient(baseURL: baseURL, authToken: authToken)
+        self.restClient = HassRestClient.shared
         print("[GarageRestManager] Initialized with REST client.")
     }
     
@@ -77,7 +77,7 @@ class GarageRestManager: ObservableObject {
         }
     }
 
-    func handleEntityAction(entityId: String, newState: String) {
+    func handleEntityAction(entityId: String, newState: Int) {
         print("[GarageRestManager] Handling entity action for \(entityId), new state: \(newState)")
         lastCallStatus = .pending
         restClient?.changeState(entityId: entityId, newState: newState) { [weak self] result in
