@@ -34,7 +34,7 @@ struct PhoneView: View {
                     Button("Confirm", role: .destructive) {
                         let entityId = garageRestManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
                         garageRestManager.toggleSwitch(entityId: entityId)
-                        garageRestManager.checkStates()
+                        garageRestManager.fetchInitialState()
                     }
                 }              
                 if let error = garageRestManager.error {
