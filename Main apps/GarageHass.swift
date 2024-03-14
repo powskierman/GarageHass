@@ -14,6 +14,7 @@ import SwiftUI
 @main
 struct GarageHassApp: App {
     @Environment(\.scenePhase) private var scenePhase
+    let garageRestManager = GarageRestManager.shared // Reference GarageRestManager.shared for easier access
  
     init() {
      }
@@ -36,6 +37,7 @@ struct GarageHassApp: App {
       }
     func appDidBecomeActive() {
         print("App is now active - Refreshing data from RESTful API")
+        garageRestManager.fetchInitialState()
     }
 
     func appDidEnterBackground() {

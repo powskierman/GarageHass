@@ -147,7 +147,7 @@ extension GarageSocketManager: EventMessageHandler {
 
     private func updateWatchState(entityId: String, newState: String) {
         if WCSession.default.isReachable {
-            let message = ["entityId": entityId, "newState": newState]
+            let message = ["entity_id": entityId, "newState": newState]
             WCSession.default.sendMessage(message, replyHandler: nil) { error in
                 print("Error sending state update to watch: \(error.localizedDescription)")
             }

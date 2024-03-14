@@ -32,8 +32,9 @@ struct PhoneView: View {
                 
                 .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
                     Button("Confirm", role: .destructive) {
-                        let scriptEntityId = garageRestManager.alarmOff ? "script.toggle_alarm_on" : "script.toggle_alarm_off"
-                        garageRestManager.handleScriptAction(entityId: scriptEntityId)
+                        let entityId = garageRestManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
+                        garageRestManager.toggleSwitch(entityId: entityId)
+                        garageRestManager.checkStates()
                     }
                 }              
                 if let error = garageRestManager.error {
@@ -67,23 +68,26 @@ struct PhoneView: View {
         
         var body: some View {
             Button(action: {
-                 // Change color to yellow
-                 isPressed = true
-                 // Action to toggle door
-                 let scriptEntityId = door == .left ? "script.toggle_left_door" : "script.toggle_right_door"
-                 garageRestManager.handleScriptAction(entityId: scriptEntityId)
-                 // Revert color back after 500ms
-                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                     isPressed = false
-                 }
-             }) {
-                 Image(systemName: doorStateImage)
-                     .resizable()
-                     .aspectRatio(contentMode: .fit)
-                     .foregroundColor(isPressed ? .yellow : doorStateColor)
-             }
-             .frame(width: 170.0, height: 170.0)
-         }
+                // Change color to yellow
+                isPressed = true
+                
+                // Action to toggle door
+                let entityId = door == .left ? "switch.left_garage_door" : "switch.right_garage_door"
+                garageRestManager.toggleSwitch(entityId: entityId)
+                
+                // Delay for 500ms before fetching initial state and resetting the color
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    isPressed = false
+                    garageRestManager.fetchInitialState()
+                }
+            }) {
+                Image(systemName: doorStateImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(isPressed ? .yellow : doorStateColor)
+            }
+            .frame(width: 170.0, height: 170.0)
+        }
         
         private var doorStateImage: String {
             switch door {
