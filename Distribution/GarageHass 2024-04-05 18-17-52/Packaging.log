@@ -1,0 +1,186 @@
+2024-04-06 00:17:47 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x1279a8b70; archive(resolved)="<IDEArchive: 0x60000b209860>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	Chain (16, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x1279a8b70; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionProcessingPipelineContext: 0x32abe3760; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x125212430; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x32bd67d40; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x1255c75f0; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x1279e13d0; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x32af8cdd0; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x32af95f90; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x32af8c8a0; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x6000008baa00; teamID='G3337N7QRS', teamName='Michel Lapointe', teamType='Individual', username='mlapoint99@hotmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x32af8b7e0; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="(null)">
+	<IDEDistributionContext: 0x32af8bf20; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="(null)">
+	<IDEDistributionContext: 0x32af8c380; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="(null)">
+	<IDEDistributionContext: 0x32af89280; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="<IDEDistributionMethodiOSAdHoc: 0x600009581530>", team="(null)">
+	<IDEDistributionContext: 0x12764ae90; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="(null)", team="(null)">
+	<IDEDistributionContext: 0x123d08740; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="(null)", team="(null)">
+	<IDEDistributionContext: 0x137637980; archive = "<IDEArchive: 0x60000b209860>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x1279a8b70>
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCreateDestRootStep
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCopyItemStep
+2024-04-06 00:17:47 +0000  Running /usr/bin/ditto '-V' '/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app'
+2024-04-06 00:17:47 +0000  >>> Copying /Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app 
+2024-04-06 00:17:47 +0000  copying file ./_CodeSignature/CodeResources ... 
+2024-04-06 00:17:47 +0000  4415 bytes for ./_CodeSignature/CodeResources
+2024-04-06 00:17:47 +0000  copying file ./Secrets.plist ... 
+2024-04-06 00:17:47 +0000  337 bytes for ./Secrets.plist
+2024-04-06 00:17:47 +0000  copying file ./AppIcon60x60@2x.png ... 
+2024-04-06 00:17:47 +0000  6377 bytes for ./AppIcon60x60@2x.png
+2024-04-06 00:17:47 +0000  copying file ./Assets.car ... 
+2024-04-06 00:17:47 +0000  115384 bytes for ./Assets.car
+2024-04-06 00:17:47 +0000  copying file ./GarageHass ... 
+2024-04-06 00:17:47 +0000  770544 bytes for ./GarageHass
+2024-04-06 00:17:47 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
+2024-04-06 00:17:47 +0000  8411 bytes for ./AppIcon76x76@2x~ipad.png
+2024-04-06 00:17:47 +0000  copying file ./Frameworks/HassFramework.framework/_CodeSignature/CodeResources ... 
+2024-04-06 00:17:47 +0000  2224 bytes for ./Frameworks/HassFramework.framework/_CodeSignature/CodeResources
+2024-04-06 00:17:47 +0000  copying file ./Frameworks/HassFramework.framework/Secrets.plist ... 
+2024-04-06 00:17:47 +0000  338 bytes for ./Frameworks/HassFramework.framework/Secrets.plist
+2024-04-06 00:17:47 +0000  copying file ./Frameworks/HassFramework.framework/HassFramework ... 
+2024-04-06 00:17:47 +0000  35104 bytes for ./Frameworks/HassFramework.framework/HassFramework
+2024-04-06 00:17:47 +0000  copying file ./Frameworks/HassFramework.framework/.gitignore ... 
+2024-04-06 00:17:47 +0000  196 bytes for ./Frameworks/HassFramework.framework/.gitignore
+2024-04-06 00:17:47 +0000  copying file ./Frameworks/HassFramework.framework/Info.plist ... 
+2024-04-06 00:17:47 +0000  767 bytes for ./Frameworks/HassFramework.framework/Info.plist
+2024-04-06 00:17:47 +0000  copying file ./embedded.mobileprovision ... 
+2024-04-06 00:17:47 +0000  12813 bytes for ./embedded.mobileprovision
+2024-04-06 00:17:47 +0000  copying file ./Info.plist ... 
+2024-04-06 00:17:47 +0000  1403 bytes for ./Info.plist
+2024-04-06 00:17:47 +0000  copying file ./PkgInfo ... 
+2024-04-06 00:17:47 +0000  8 bytes for ./PkgInfo
+2024-04-06 00:17:47 +0000  /usr/bin/ditto exited with 0
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionEmbedProfileStep
+2024-04-06 00:17:47 +0000  Skipping profile for item: <IDEDistributionItem: 0x60000bdc91a0; bundleID='com.powskierman.HassFramework', path='<DVTFilePath:0x60000783cd00:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d450; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x600002259500; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='(null)', teamID='G3337N7QRS', identifier='com.powskierman.HassFramework', executablePath='<DVTFilePath:0x60000783cd80:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework/HassFramework'>', hardenedRuntime='0'>'>
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionInfoPlistStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCompileBitcodeStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCodeSlimmingStep
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCopyBCSymbolMapsStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionSymbolsStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionAppThinningStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionArchThinningStep
+2024-04-06 00:17:47 +0000  Item /Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2024-04-06 00:17:47 +0000  Archs to thin for item /Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework are ["arm64e"]
+2024-04-06 00:17:47 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app/Frameworks/HassFramework.framework/HassFramework' '-verify_arch' 'arm64e'
+2024-04-06 00:17:47 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2024-04-06 00:17:47 +0000  Skipping architecture thinning for item "HassFramework" because arch "arm64e" wasn't found
+2024-04-06 00:17:47 +0000  Item /Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2024-04-06 00:17:47 +0000  Archs to thin for item /Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app are ["arm64e"]
+2024-04-06 00:17:47 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app/GarageHass' '-verify_arch' 'arm64e'
+2024-04-06 00:17:47 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2024-04-06 00:17:47 +0000  Skipping architecture thinning for item "GarageHass" because arch "arm64e" wasn't found
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionODRStep
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionStripXattrsStep
+2024-04-06 00:17:47 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2024-04-06 00:17:47 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCodesignStep
+2024-04-06 00:17:47 +0000  Entitlements for <IDEDistributionItem: 0x60000bdc91a0; bundleID='com.powskierman.HassFramework', path='<DVTFilePath:0x60000783cd00:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d450; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000227ccc0; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='(null)', teamID='G3337N7QRS', identifier='com.powskierman.HassFramework', executablePath='<DVTFilePath:0x60000783cd80:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework/HassFramework'>', hardenedRuntime='0'>'>: {
+}
+2024-04-06 00:17:47 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2024-04-06 00:17:47 +0000  Entitlements for <IDEDistributionItem: 0x60000bdc91a0; bundleID='com.powskierman.HassFramework', path='<DVTFilePath:0x60000783cd00:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d450; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000227dc80; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='(null)', teamID='G3337N7QRS', identifier='com.powskierman.HassFramework', executablePath='<DVTFilePath:0x60000783cd80:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework/HassFramework'>', hardenedRuntime='0'>'> are: {
+}
+2024-04-06 00:17:47 +0000  Writing entitlements for <IDEDistributionItem: 0x60000bdc91a0; bundleID='com.powskierman.HassFramework', path='<DVTFilePath:0x60000783cd00:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d450; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000227f900; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='(null)', teamID='G3337N7QRS', identifier='com.powskierman.HassFramework', executablePath='<DVTFilePath:0x60000783cd80:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/Frameworks/HassFramework.framework/HassFramework'>', hardenedRuntime='0'>'> to: /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/entitlements~~~PCLtsM
+2024-04-06 00:17:47 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '8C571C0EE592F9EF3436485890B605478C8857A0' '--entitlements' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/entitlements~~~PCLtsM' '--generate-entitlement-der' '--strip-disallowed-xattrs' '--preserve-metadata=identifier,flags,runtime' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app/Frameworks/HassFramework.framework'
+2024-04-06 00:17:47 +0000  /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app/Frameworks/HassFramework.framework: replacing existing signature
+2024-04-06 00:17:47 +0000  /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app/Frameworks/HassFramework.framework: signed bundle with Mach-O thin (arm64) [com.powskierman.HassFramework]
+2024-04-06 00:17:47 +0000  /usr/bin/codesign exited with 0
+2024-04-06 00:17:47 +0000  Entitlements for <IDEDistributionItem: 0x60000bdccf60; bundleID='com.powskierman.GarageHass', path='<DVTFilePath:0x60000783c200:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d7c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000227ccc0; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='{
+    "application-identifier" = "G3337N7QRS.com.powskierman.GarageHass";
+    "com.apple.developer.team-identifier" = G3337N7QRS;
+    "get-task-allow" = 0;
+}', teamID='G3337N7QRS', identifier='com.powskierman.GarageHass', executablePath='<DVTFilePath:0x60000783d380:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/GarageHass'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "G3337N7QRS.com.powskierman.GarageHass";
+    "com.apple.developer.team-identifier" = G3337N7QRS;
+    "get-task-allow" = 0;
+}
+2024-04-06 00:17:47 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2024-04-06 00:17:47 +0000  Entitlements for <IDEDistributionItem: 0x60000bdccf60; bundleID='com.powskierman.GarageHass', path='<DVTFilePath:0x60000783c200:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d7c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000227f900; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='{
+    "application-identifier" = "G3337N7QRS.com.powskierman.GarageHass";
+    "com.apple.developer.team-identifier" = G3337N7QRS;
+    "get-task-allow" = 0;
+}', teamID='G3337N7QRS', identifier='com.powskierman.GarageHass', executablePath='<DVTFilePath:0x60000783d380:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/GarageHass'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "G3337N7QRS.com.powskierman.GarageHass";
+    "com.apple.developer.team-identifier" = G3337N7QRS;
+    "get-task-allow" = 0;
+}
+2024-04-06 00:17:47 +0000  Writing entitlements for <IDEDistributionItem: 0x60000bdccf60; bundleID='com.powskierman.GarageHass', path='<DVTFilePath:0x60000783c200:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001377d7c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000227e040; name='Apple Distribution: Michel Lapointe (G3337N7QRS)', hash='8C571C0EE592F9EF3436485890B605478C8857A0', serialNumber='407906866FC7D36E5C7ED5D32394FF99', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2024-04-05 20:21:52 +0000''>', entitlements='{
+    "application-identifier" = "G3337N7QRS.com.powskierman.GarageHass";
+    "com.apple.developer.team-identifier" = G3337N7QRS;
+    "get-task-allow" = 0;
+}', teamID='G3337N7QRS', identifier='com.powskierman.GarageHass', executablePath='<DVTFilePath:0x60000783d380:'/Users/michel/Library/Developer/Xcode/Archives/2024-04-05/GarageHass 2024-04-05, 6.10 PM.xcarchive/Products/Applications/GarageHass.app/GarageHass'>', hardenedRuntime='0'>'> to: /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/entitlements~~~W3Ky3H
+2024-04-06 00:17:47 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '8C571C0EE592F9EF3436485890B605478C8857A0' '--entitlements' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/entitlements~~~W3Ky3H' '--generate-entitlement-der' '--strip-disallowed-xattrs' '--preserve-metadata=identifier,flags,runtime' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app'
+2024-04-06 00:17:47 +0000  /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app: replacing existing signature
+2024-04-06 00:17:47 +0000  /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app: signed app bundle with Mach-O thin (arm64) [com.powskierman.GarageHass]
+2024-04-06 00:17:47 +0000  /usr/bin/codesign exited with 0
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionZipODRItemStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCreateIPAStep
+2024-04-06 00:17:47 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root' '/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Packages/GarageHass.ipa'
+2024-04-06 00:17:47 +0000  >>> Copying /var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root 
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/_CodeSignature/CodeResources ... 
+2024-04-06 00:17:47 +0000  4415 bytes for ./Payload/GarageHass.app/_CodeSignature/CodeResources
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Secrets.plist ... 
+2024-04-06 00:17:47 +0000  337 bytes for ./Payload/GarageHass.app/Secrets.plist
+copying file ./Payload/GarageHass.app/AppIcon60x60@2x.png ... 
+2024-04-06 00:17:47 +0000  6377 bytes for ./Payload/GarageHass.app/AppIcon60x60@2x.png
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Assets.car ... 
+2024-04-06 00:17:47 +0000  115384 bytes for ./Payload/GarageHass.app/Assets.car
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/GarageHass ... 
+2024-04-06 00:17:47 +0000  770544 bytes for ./Payload/GarageHass.app/GarageHass
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/AppIcon76x76@2x~ipad.png ... 
+2024-04-06 00:17:47 +0000  8411 bytes for ./Payload/GarageHass.app/AppIcon76x76@2x~ipad.png
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Frameworks/HassFramework.framework/_CodeSignature/CodeResources ... 
+2024-04-06 00:17:47 +0000  2224 bytes for ./Payload/GarageHass.app/Frameworks/HassFramework.framework/_CodeSignature/CodeResources
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Frameworks/HassFramework.framework/Secrets.plist ... 
+2024-04-06 00:17:47 +0000  338 bytes for ./Payload/GarageHass.app/Frameworks/HassFramework.framework/Secrets.plist
+copying file ./Payload/GarageHass.app/Frameworks/HassFramework.framework/HassFramework ... 
+2024-04-06 00:17:47 +0000  35360 bytes for ./Payload/GarageHass.app/Frameworks/HassFramework.framework/HassFramework
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Frameworks/HassFramework.framework/.gitignore ... 
+196 bytes for ./Payload/GarageHass.app/Frameworks/HassFramework.framework/.gitignore
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Frameworks/HassFramework.framework/Info.plist ... 
+2024-04-06 00:17:47 +0000  767 bytes for ./Payload/GarageHass.app/Frameworks/HassFramework.framework/Info.plist
+copying file ./Payload/GarageHass.app/embedded.mobileprovision ... 
+2024-04-06 00:17:47 +0000  15318 bytes for ./Payload/GarageHass.app/embedded.mobileprovision
+2024-04-06 00:17:47 +0000  copying file ./Payload/GarageHass.app/Info.plist ... 
+2024-04-06 00:17:47 +0000  1403 bytes for ./Payload/GarageHass.app/Info.plist
+copying file ./Payload/GarageHass.app/PkgInfo ... 
+2024-04-06 00:17:47 +0000  8 bytes for ./Payload/GarageHass.app/PkgInfo
+2024-04-06 00:17:47 +0000  /usr/bin/ditto exited with 0
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionAppStoreInformationStep
+2024-04-06 00:17:47 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
+2024-04-06 00:17:47 +0000  IDEDistributionItem init <DVTFilePath:0x600007b42800:'/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app/Frameworks/HassFramework.framework'>
+2024-04-06 00:17:47 +0000  IDEDistributionItem init <DVTFilePath:0x600007b5f680:'/var/folders/tr/37bkknrx6lz6mx2d3x0mm_100000gn/T/XcodeDistPipeline.~~~vHEZrz/Root/Payload/GarageHass.app'>
+2024-04-06 00:17:47 +0000  Processing step: IDEDistributionCreateManifestStep

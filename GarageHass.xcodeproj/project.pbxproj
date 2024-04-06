@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
+		D072A0472BC0CA2500AAB3E6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D072A0462BC0CA2500AAB3E6 /* Starscream */; };
 		D08BCA872B59C56B00960589 /* GarageRestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BCA862B59C56B00960589 /* GarageRestManager.swift */; };
 		D0990CA32B1292FD00858A65 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990CA22B1292FD00858A65 /* Enums.swift */; };
 		D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */; };
@@ -15,7 +16,6 @@
 		D0B813BF2AD319B500B3FB70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B52AD319B500B3FB70 /* Assets.xcassets */; };
 		D0B813C02AD319B500B3FB70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */; };
 		D0B813C42AD319B500B3FB70 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813BB2AD319B500B3FB70 /* PhoneView.swift */; };
-		D0B8F65F2B9E5E18008ACF0A /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D0B8F65E2B9E5E18008ACF0A /* Starscream */; };
 		D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0BEB7A32AD32D730068CA1C /* Secrets.plist */; };
 		D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
 		D0CD57742B1B9F11006946C4 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -68,7 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */,
-				D0B8F65F2B9E5E18008ACF0A /* Starscream in Frameworks */,
+				D072A0472BC0CA2500AAB3E6 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,7 +177,7 @@
 			);
 			name = GarageHass;
 			packageProductDependencies = (
-				D0B8F65E2B9E5E18008ACF0A /* Starscream */,
+				D072A0462BC0CA2500AAB3E6 /* Starscream */,
 			);
 			productName = GarageNew;
 			productReference = D02198EA290479C1006CB906 /* GarageHass.app */;
@@ -374,10 +374,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = G3337N7QRS;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G3337N7QRS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -386,6 +388,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -398,6 +401,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powskierman.GarageHass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GarageHass Profile";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -410,10 +415,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = G3337N7QRS;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G3337N7QRS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -422,6 +429,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -434,6 +442,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.powskierman.GarageHass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GarageHass Profile";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -476,7 +486,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D0B8F65E2B9E5E18008ACF0A /* Starscream */ = {
+		D072A0462BC0CA2500AAB3E6 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0BEB7A02AD32D5A0068CA1C /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
