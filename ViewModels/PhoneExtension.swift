@@ -4,22 +4,39 @@ import HassFramework
 
 public extension HassWebSocket {
     func setEntityState(entityId: String, newState: String) {
-         var restClient: HassRestClient?
-         // Determine domain and service based on entityId
-         let (_, service) = determineDomainAndService(entityId: entityId, newState: newState)
+        // Ensure the baseURL and authToken are correctly initialized and used
+        guard let secretsPath = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let secrets = NSDictionary(contentsOfFile: secretsPath) as? [String: Any],
+              let serverURLString = secrets["RESTURL"] as? String,
+              let authToken = secrets["authToken"] as? String,
+              let baseURL = URL(string: serverURLString) else {
+            print("Invalid or missing configuration in Secrets.plist.")
+            return
+        }
 
-         // Assuming the command's data requires just the entity_id for this operation
-         let commandData = ["entity_id": entityId]
+        // Initialize restClient with the loaded secrets
+        let restClient = HassRestClient(baseURL: baseURL, authToken: authToken)
+        
+        // Determine domain and service based on entityId
+        let (_, service) = determineDomainAndService(entityId: entityId, newState: newState)
 
-         // Create an instance of DeviceCommand, including the data parameter
-         // Note: Ensure the data parameter matches the expected format for the command
-         // If your DeviceCommand's data property expects an Encodable or specifically formatted type, adjust accordingly
+        // Assuming the command's data requires just the entity_id for this operation
+        let commandData = ["entity_id": entityId]
+
+        // Create an instance of DeviceCommand, including the data parameter
         let command = HassRestClient.DeviceCommand(service: service, entityId: entityId, data: commandData)
 
-        restClient?.sendCommandToDevice(deviceId: entityId, command: command) { result in
-             // Handle result: success or error
-         }
-     }
+        // Use restClient to send the command
+        restClient.sendCommandToDevice(deviceId: entityId, command: command) { result in
+            // Handle result: success or error
+            switch result {
+            case .success:
+                print("State set successfully")
+            case .failure(let error):
+                print("Failed to set state: \(error.localizedDescription)")
+            }
+        }
+    }
 
      private func determineDomainAndService(entityId: String, newState: String) -> (String, String) {
          // Implementation to determine the domain and service based on entityId and newState

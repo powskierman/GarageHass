@@ -22,7 +22,11 @@ class GarageRestManager: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var initializationFailed = false
 
-    init() {
+    // Properties for baseURL and authToken
+    private let baseURL: URL
+    private let authToken: String
+
+    private init() {
         // Load baseURL and authToken from Secrets.plist
         guard let secretsPath = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
               let secrets = NSDictionary(contentsOfFile: secretsPath) as? [String: Any],
@@ -31,6 +35,10 @@ class GarageRestManager: ObservableObject {
               let baseURL = URL(string: serverURLString) else {
             fatalError("Invalid or missing configuration in Secrets.plist.")
         }
+        
+        self.baseURL = baseURL
+        self.authToken = authToken
+
         print("[GarageRestManager] Initialized with REST client.")
     }
     
@@ -39,7 +47,7 @@ class GarageRestManager: ObservableObject {
         lastCallStatus = .pending
         let doorSensors = ["binary_sensor.left_door_sensor", "binary_sensor.right_door_sensor", "binary_sensor.alarm_sensor"]
         doorSensors.forEach { entityId in
-            HassRestClient.shared.fetchState(entityId: entityId) { [weak self] result in
+            HassRestClient(baseURL: baseURL, authToken: authToken).fetchState(entityId: entityId) { [weak self] result in
                 DispatchQueue.main.async {
                     print("[GarageRestManager] REST call completed for entityId: \(entityId).")
                     switch result {
@@ -76,7 +84,7 @@ class GarageRestManager: ObservableObject {
     func handleEntityAction(entityId: String, newState: String) {
         print("[GarageRestManager] Handling entity action for \(entityId), new state: \(newState)")
         lastCallStatus = .pending
-        HassRestClient.shared.changeState(entityId: entityId, newState: newState) { [weak self] result in
+        HassRestClient(baseURL: baseURL, authToken: authToken).changeState(entityId: entityId, newState: newState) { [weak self] result in
             DispatchQueue.main.async {
                 print("[GarageRestManager] REST call completed for entity action: \(entityId).")
                 switch result {
@@ -97,7 +105,7 @@ class GarageRestManager: ObservableObject {
     func handleScriptAction(entityId: String) {
         print("[GarageRestManager] Handling script action for \(entityId)")
         lastCallStatus = .pending
-        HassRestClient.shared.callScript(entityId: entityId) { [weak self] (result: Result<Void, Error>) in
+        HassRestClient(baseURL: baseURL, authToken: authToken).callScript(entityId: entityId) { [weak self] (result: Result<Void, Error>) in
             DispatchQueue.main.async {
                 switch result {
                 case .success():
@@ -116,7 +124,7 @@ class GarageRestManager: ObservableObject {
     func toggleSwitch(entityId: String) {
         print("[GarageRestManager] Toggling switch for \(entityId)")
         lastCallStatus = .pending
-        HassRestClient.shared.callService(domain: "switch", service: "toggle", entityId: entityId) { [weak self] result in
+        HassRestClient(baseURL: baseURL, authToken: authToken).callService(domain: "switch", service: "toggle", entityId: entityId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success():
