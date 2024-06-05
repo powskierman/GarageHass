@@ -1,10 +1,3 @@
-//
-//  GarageRestManager.swift
-//  GarageHass
-//
-//  Created by Michel Lapointe on 2024-01-18.
-//
-
 import Foundation
 import Combine
 import HassFramework
@@ -55,6 +48,8 @@ class GarageRestManager: ObservableObject {
                         print("[GarageRestManager] Success fetching state for \(entityId): \(entity)")
                         self?.lastCallStatus = .success
                         self?.processState(entity)
+                        self?.error = nil
+                        self?.hasErrorOccurred = false
                     case .failure(let error):
                         print("[GarageRestManager] Failure fetching state for \(entityId): \(error)")
                         self?.lastCallStatus = .failure
@@ -92,6 +87,8 @@ class GarageRestManager: ObservableObject {
                     print("[GarageRestManager] Success changing state for \(entityId): \(entity)")
                     self?.lastCallStatus = .success
                     self?.processState(entity)
+                    self?.error = nil
+                    self?.hasErrorOccurred = false
                 case .failure(let error):
                     print("[GarageRestManager] Failure changing state for \(entityId): \(error)")
                     self?.lastCallStatus = .failure
@@ -111,6 +108,8 @@ class GarageRestManager: ObservableObject {
                 case .success():
                     print("[GarageRestManager] Script executed successfully")
                     self?.lastCallStatus = .success
+                    self?.error = nil
+                    self?.hasErrorOccurred = false
                 case .failure(let error):
                     print("[GarageRestManager] Error executing script \(entityId): \(error)")
                     self?.lastCallStatus = .failure
@@ -130,6 +129,8 @@ class GarageRestManager: ObservableObject {
                 case .success():
                     print("[GarageRestManager] Successfully toggled switch \(entityId)")
                     self?.lastCallStatus = .success
+                    self?.error = nil
+                    self?.hasErrorOccurred = false
                     // Optionally fetch state if needed to update UI or confirm change
                     self?.fetchInitialState()
                 case .failure(let error):

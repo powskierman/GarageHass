@@ -36,7 +36,7 @@ struct PhoneView: View {
                         garageRestManager.toggleSwitch(entityId: entityId)
                         garageRestManager.fetchInitialState()
                     }
-                }              
+                }
                 if let error = garageRestManager.error {
                     Text("Error: \(error.localizedDescription)")
                         .foregroundColor(.red)
@@ -52,12 +52,24 @@ struct PhoneView: View {
                     Text(error.localizedDescription)
                 }
             })
-            .onChange(of: garageRestManager.hasErrorOccurred) { _, _ in
-                showingErrorAlert = garageRestManager.hasErrorOccurred
+            .onChange(of: garageRestManager.hasErrorOccurred) { _, newValue in
+                showingErrorAlert = newValue
+                if !newValue {
+                    // Clear the error message when connection is reestablished
+                    garageRestManager.error = nil
+                }
+                print(garageRestManager.error ?? "No error") // Log error state after fetch
             }
             .onAppear() {
                 garageRestManager.fetchInitialState()
+                showingErrorAlert = false  // Reset showingErrorAlert on successful fetch
             }
+        }
+    }
+    
+    private func stateCheckDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            garageRestManager.fetchInitialState()
         }
     }
     
@@ -76,7 +88,12 @@ struct PhoneView: View {
                 garageRestManager.toggleSwitch(entityId: entityId)
                 
                 // Delay for 500ms before fetching initial state and resetting the color
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    isPressed = false
+                    garageRestManager.fetchInitialState()
+                }
+                // Delay for 10 seconds and check again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {
                     isPressed = false
                     garageRestManager.fetchInitialState()
                 }
