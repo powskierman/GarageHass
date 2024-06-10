@@ -1,0 +1,208 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-watchos10.2 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -enable-bare-slash-regex -module-name HassWatchFramework
+import Combine
+import Foundation
+@_exported import HassWatchFramework
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum ConnectionState {
+  case disconnected
+  case connecting
+  case connected
+  public static func == (a: HassWatchFramework.ConnectionState, b: HassWatchFramework.ConnectionState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum HassError : Swift.Error {
+  case invalidURL
+  case noData
+  case encodingError
+  case entityNotFound
+  case unexpectedResponseType
+  case invalidResponse
+  case unexpectedStatusCode(Swift.Int)
+  case unknownError(Swift.String)
+  case badRequest
+  case notFound
+}
+public enum MessageType : Swift.String, Swift.Decodable {
+  case event
+  case result
+  case command
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class HassRestClient {
+  public static let shared: HassWatchFramework.HassRestClient
+  public init(baseURL: Foundation.URL, authToken: Swift.String, session: Foundation.URLSession = URLSession(configuration: .default))
+  public func performRequest<T>(endpoint: Swift.String, method: Swift.String = "GET", body: Foundation.Data? = nil, expectingResponse: Swift.Bool = true, completion: @escaping (Swift.Result<T, any Swift.Error>) -> Swift.Void) where T : Swift.Decodable
+  public func fetchDeviceState(deviceId: Swift.String, completion: @escaping (Swift.Result<HassWatchFramework.HassRestClient.DeviceState, any Swift.Error>) -> Swift.Void)
+  public func sendCommandToDevice(deviceId: Swift.String, command: HassWatchFramework.HassRestClient.DeviceCommand, completion: @escaping (Swift.Result<HassWatchFramework.HassRestClient.CommandResponse, any Swift.Error>) -> Swift.Void)
+  public func callService(domain: Swift.String, service: Swift.String, entityId: Swift.String, completion: @escaping (Swift.Result<Swift.Void, any Swift.Error>) -> Swift.Void)
+  public func callScript(entityId: Swift.String, completion: @escaping (Swift.Result<Swift.Void, any Swift.Error>) -> Swift.Void)
+  public struct DeviceState : Swift.Decodable {
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public struct DeviceCommand : HassWatchFramework.HassCommand, Swift.Encodable {
+    public var endpoint: Swift.String {
+      get
+    }
+    public var method: Swift.String {
+      get
+    }
+    public var body: Foundation.Data? {
+      get
+    }
+    public var service: Swift.String
+    public var entityId: Swift.String
+    public var data: HassWatchFramework.HassRestClient.AnyEncodable
+    public init<T>(service: Swift.String, entityId: Swift.String, data: T) where T : Swift.Encodable
+    public func encode(to encoder: any Swift.Encoder) throws
+  }
+  public struct AnyEncodable : Swift.Encodable {
+    public init<T>(_ encodable: T) where T : Swift.Encodable
+    public func encode(to encoder: any Swift.Encoder) throws
+  }
+  public struct CommandResponse : Swift.Decodable {
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public func changeState<EntityState>(entityId: Swift.String, newState: EntityState, completion: @escaping (Swift.Result<HassWatchFramework.HAEntity, any Swift.Error>) -> Swift.Void) where EntityState : Swift.Encodable
+  @objc deinit
+}
+extension HassWatchFramework.HassRestClient {
+  public func fetchState(entityId: Swift.String, completion: @escaping (Swift.Result<HassWatchFramework.HAEntity, any Swift.Error>) -> Swift.Void)
+}
+public struct HAMessage : Swift.Decodable {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol HassWebSocketDelegate : AnyObject {
+  func websocketDidDisconnect()
+}
+public protocol EventMessageHandler {
+  func handleEventMessage(_ eventDetail: HassWatchFramework.HAEventData.EventDetail)
+  func handleResultMessage(_ text: Swift.String)
+}
+public protocol WebSocketProvider {
+  var connectionState: Combine.Published<HassWatchFramework.ConnectionState>.Publisher { get }
+  var onConnected: (() -> Swift.Void)? { get set }
+  var onDisconnected: (() -> Swift.Void)? { get set }
+  var onEventReceived: ((Swift.String) -> Swift.Void)? { get set }
+  func connect()
+  func disconnect()
+  func subscribeToEvents()
+}
+public protocol HassCommand {
+  var endpoint: Swift.String { get }
+  var method: Swift.String { get }
+  var body: Foundation.Data? { get }
+}
+public struct HAContext : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HAAttributes : Swift.Codable {
+  public var friendlyName: Swift.String?
+  public var additionalAttributes: [Swift.String : Any]
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct HAEventData : Swift.Codable {
+  public let type: Swift.String
+  public let id: Swift.Int?
+  public let event: HassWatchFramework.HAEventData.EventDetail
+  public struct EventDetail : Swift.Codable {
+    public let eventType: Swift.String
+    public let data: HassWatchFramework.HAData
+    public let origin: Swift.String?
+    public let timeFired: Swift.String?
+    public let context: HassWatchFramework.HAContext?
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HAResultData : Swift.Codable {
+  public let type: Swift.String
+  public let id: Swift.Int?
+  public let success: Swift.Bool
+  public let result: [HassWatchFramework.HAState]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HAData : Swift.Codable {
+  public let entityId: Swift.String
+  public let oldState: HassWatchFramework.HAState?
+  public let newState: HassWatchFramework.HAState?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HAState : Swift.Codable {
+  public let entityId: Swift.String
+  public let state: Swift.String
+  public let attributes: HassWatchFramework.HAAttributes
+  public let lastChanged: Swift.String?
+  public let lastUpdated: Swift.String?
+  public let context: HassWatchFramework.HAContext?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct AnyCodable : Swift.Codable {
+  public var value: (any Swift.Decodable & Swift.Encodable)?
+  public init<T>(_ value: T?) where T : Swift.Decodable, T : Swift.Encodable
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct HAEventWrapper : Swift.Codable {
+  public let type: Swift.String
+  public let id: Swift.Int?
+  public let event: HassWatchFramework.HAEventWrapper.HAEventDetail?
+  public struct HAEventDetail : Swift.Codable {
+    public let eventType: Swift.String
+    public let data: HassWatchFramework.HAData
+    public let origin: Swift.String
+    public let timeFired: Swift.String
+    public let context: HassWatchFramework.HAContext
+    public func encode(to encoder: any Swift.Encoder) throws
+    public init(from decoder: any Swift.Decoder) throws
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HAEntity : Swift.Codable {
+  public var entityId: Swift.String
+  public var state: Swift.String
+  public var attributes: HassWatchFramework.HAAttributes
+  public var lastChanged: Swift.String?
+  public var lastUpdated: Swift.String?
+  public var context: HassWatchFramework.HAContext?
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct ScriptResponse : Swift.Decodable {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ToggleServiceRequest : Swift.Encodable {
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct EmptyResponse : Swift.Decodable {
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension HassWatchFramework.HassError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+extension HassWatchFramework.ConnectionState : Swift.Equatable {}
+extension HassWatchFramework.ConnectionState : Swift.Hashable {}
+extension HassWatchFramework.MessageType : Swift.Equatable {}
+extension HassWatchFramework.MessageType : Swift.Hashable {}
+extension HassWatchFramework.MessageType : Swift.RawRepresentable {}

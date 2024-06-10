@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
-		D072A0472BC0CA2500AAB3E6 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D072A0462BC0CA2500AAB3E6 /* Starscream */; };
+		D02CAFD32C176DA30035B91E /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D02CAFD22C176DA30035B91E /* HassFramework.xcframework */; };
+		D067AD702C176370008BA3B3 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D067AD6F2C176370008BA3B3 /* Starscream */; };
 		D08BCA872B59C56B00960589 /* GarageRestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BCA862B59C56B00960589 /* GarageRestManager.swift */; };
 		D0990CA32B1292FD00858A65 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990CA22B1292FD00858A65 /* Enums.swift */; };
 		D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */; };
@@ -17,19 +18,16 @@
 		D0B813C02AD319B500B3FB70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */; };
 		D0B813C42AD319B500B3FB70 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813BB2AD319B500B3FB70 /* PhoneView.swift */; };
 		D0BEB7A42AD32D740068CA1C /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0BEB7A32AD32D730068CA1C /* Secrets.plist */; };
-		D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; };
-		D0CD57742B1B9F11006946C4 /* HassFramework.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D0DA56032B252A0F0035980B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA56022B252A0F0035980B /* AppState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D0CD57752B1B9F11006946C4 /* Embed Frameworks */ = {
+		D067AD802C1767F0008BA3B3 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D0CD57742B1B9F11006946C4 /* HassFramework.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		D02198EA290479C1006CB906 /* GarageHass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarageHass.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D02CAFD22C176DA30035B91E /* HassFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = HassFramework.xcframework; sourceTree = "<group>"; };
 		D08BCA862B59C56B00960589 /* GarageRestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageRestManager.swift; sourceTree = "<group>"; };
 		D09894E22B07D03A002F273F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0990CA22B1292FD00858A65 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -58,7 +57,6 @@
 		D0B813B72AD319B500B3FB70 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D0B813BB2AD319B500B3FB70 /* PhoneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
 		D0BEB7A32AD32D730068CA1C /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
-		D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HassFramework.xcframework; path = ../Frameworks/HassFramework/HassFramework.xcframework; sourceTree = "<group>"; };
 		D0DA56022B252A0F0035980B /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,8 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0CD57732B1B9F11006946C4 /* HassFramework.xcframework in Frameworks */,
-				D072A0472BC0CA2500AAB3E6 /* Starscream in Frameworks */,
+				D067AD702C176370008BA3B3 /* Starscream in Frameworks */,
+				D02CAFD32C176DA30035B91E /* HassFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +76,7 @@
 		64FD5292DC945FC6B106BCF9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D0D83C2A2B0C1DB200A583E5 /* HassFramework.xcframework */,
+				D02CAFD22C176DA30035B91E /* HassFramework.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,7 +167,7 @@
 				D02198E8290479C1006CB906 /* Resources */,
 				D0BEB79E2AD32C870068CA1C /* Frameworks */,
 				D0E410BF2B06DE0C00F7C128 /* Embed Watch Content */,
-				D0CD57752B1B9F11006946C4 /* Embed Frameworks */,
+				D067AD802C1767F0008BA3B3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -177,7 +175,7 @@
 			);
 			name = GarageHass;
 			packageProductDependencies = (
-				D072A0462BC0CA2500AAB3E6 /* Starscream */,
+				D067AD6F2C176370008BA3B3 /* Starscream */,
 			);
 			productName = GarageNew;
 			productReference = D02198EA290479C1006CB906 /* GarageHass.app */;
@@ -371,7 +369,6 @@
 		D02198F9290479C2006CB906 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -383,7 +380,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/GarageHass",
+					"$(PROJECT_DIR)/HassFramework/Debug-iphoneos",
+					"$(PROJECT_DIR)/HassFramework/Debug-iphonesimulator",
+					"$(PROJECT_DIR)/HassFramework/Debug-watchos",
+					"$(PROJECT_DIR)/HassFramework/Debug-watchsimulator",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -410,7 +410,6 @@
 		D02198FA290479C2006CB906 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -422,7 +421,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/GarageHass",
+					"$(PROJECT_DIR)/HassFramework/Debug-iphoneos",
+					"$(PROJECT_DIR)/HassFramework/Debug-iphonesimulator",
+					"$(PROJECT_DIR)/HassFramework/Debug-watchos",
+					"$(PROJECT_DIR)/HassFramework/Debug-watchsimulator",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -482,7 +484,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D072A0462BC0CA2500AAB3E6 /* Starscream */ = {
+		D067AD6F2C176370008BA3B3 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0BEB7A02AD32D5A0068CA1C /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;

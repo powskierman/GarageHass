@@ -1,6 +1,0 @@
-framework module HassFramework {
-  umbrella header "HassFramework.h"
-  export *
-
-  module * { export * }
-}

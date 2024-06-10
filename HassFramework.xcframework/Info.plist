@@ -6,6 +6,21 @@
 	<array>
 		<dict>
 			<key>BinaryPath</key>
+			<string>HassWatchFramework.framework/HassWatchFramework</string>
+			<key>LibraryIdentifier</key>
+			<string>watchos-arm64_arm64_32</string>
+			<key>LibraryPath</key>
+			<string>HassWatchFramework.framework</string>
+			<key>SupportedArchitectures</key>
+			<array>
+				<string>arm64</string>
+				<string>arm64_32</string>
+			</array>
+			<key>SupportedPlatform</key>
+			<string>watchos</string>
+		</dict>
+		<dict>
+			<key>BinaryPath</key>
 			<string>HassFramework.framework/HassFramework</string>
 			<key>LibraryIdentifier</key>
 			<string>ios-arm64</string>
@@ -17,23 +32,6 @@
 			</array>
 			<key>SupportedPlatform</key>
 			<string>ios</string>
-		</dict>
-		<dict>
-			<key>BinaryPath</key>
-			<string>HassFramework.framework/HassFramework</string>
-			<key>LibraryIdentifier</key>
-			<string>watchos-arm64_x86_64-simulator</string>
-			<key>LibraryPath</key>
-			<string>HassFramework.framework</string>
-			<key>SupportedArchitectures</key>
-			<array>
-				<string>arm64</string>
-				<string>x86_64</string>
-			</array>
-			<key>SupportedPlatform</key>
-			<string>watchos</string>
-			<key>SupportedPlatformVariant</key>
-			<string>simulator</string>
 		</dict>
 		<dict>
 			<key>BinaryPath</key>
@@ -54,18 +52,20 @@
 		</dict>
 		<dict>
 			<key>BinaryPath</key>
-			<string>HassFramework.framework/HassFramework</string>
+			<string>HassWatchFramework.framework/HassWatchFramework</string>
 			<key>LibraryIdentifier</key>
-			<string>watchos-arm64_arm64_32</string>
+			<string>watchos-arm64_x86_64-simulator</string>
 			<key>LibraryPath</key>
-			<string>HassFramework.framework</string>
+			<string>HassWatchFramework.framework</string>
 			<key>SupportedArchitectures</key>
 			<array>
 				<string>arm64</string>
-				<string>arm64_32</string>
+				<string>x86_64</string>
 			</array>
 			<key>SupportedPlatform</key>
 			<string>watchos</string>
+			<key>SupportedPlatformVariant</key>
+			<string>simulator</string>
 		</dict>
 	</array>
 	<key>CFBundlePackageType</key>

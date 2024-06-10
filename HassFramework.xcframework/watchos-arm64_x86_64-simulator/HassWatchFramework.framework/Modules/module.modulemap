@@ -1,0 +1,11 @@
+framework module HassWatchFramework {
+  umbrella header "HassWatchFramework.h"
+  export *
+
+  module * { export * }
+}
+
+module HassWatchFramework.Swift {
+  header "HassWatchFramework-Swift.h"
+  requires objc
+}
