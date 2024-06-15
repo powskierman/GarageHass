@@ -13,6 +13,7 @@ import SwiftUI
 
 @main
 struct GarageHassApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var scenePhase
     let garageRestManager = GarageRestManager.shared // Reference GarageRestManager.shared for easier access
  

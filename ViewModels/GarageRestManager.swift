@@ -38,8 +38,8 @@ class GarageRestManager: ObservableObject {
     func fetchInitialState() {
         print("[GarageRestManager] Fetching initial state.")
         lastCallStatus = .pending
-        let doorSensors = ["binary_sensor.left_door_sensor", "binary_sensor.right_door_sensor", "binary_sensor.alarm_sensor"]
-        doorSensors.forEach { entityId in
+        let sensors = ["binary_sensor.left_door_sensor", "binary_sensor.right_door_sensor", "binary_sensor.alarm_sensor"]
+        sensors.forEach { entityId in
             HassRestClient(baseURL: baseURL, authToken: authToken).fetchState(entityId: entityId) { [weak self] result in
                 DispatchQueue.main.async {
                     print("[GarageRestManager] REST call completed for entityId: \(entityId).")
@@ -76,28 +76,28 @@ class GarageRestManager: ObservableObject {
         }
     }
 
-    func handleEntityAction(entityId: String, newState: String) {
-        print("[GarageRestManager] Handling entity action for \(entityId), new state: \(newState)")
-        lastCallStatus = .pending
-        HassRestClient(baseURL: baseURL, authToken: authToken).changeState(entityId: entityId, newState: newState) { [weak self] result in
-            DispatchQueue.main.async {
-                print("[GarageRestManager] REST call completed for entity action: \(entityId).")
-                switch result {
-                case .success(let entity):
-                    print("[GarageRestManager] Success changing state for \(entityId): \(entity)")
-                    self?.lastCallStatus = .success
-                    self?.processState(entity)
-                    self?.error = nil
-                    self?.hasErrorOccurred = false
-                case .failure(let error):
-                    print("[GarageRestManager] Failure changing state for \(entityId): \(error)")
-                    self?.lastCallStatus = .failure
-                    self?.error = error
-                    self?.hasErrorOccurred = true
-                }
-            }
-        }
-    }
+//    func handleEntityAction(entityId: String, newState: String) {
+//        print("[GarageRestManager] Handling entity action for \(entityId), new state: \(newState)")
+//        lastCallStatus = .pending
+//        HassRestClient(baseURL: baseURL, authToken: authToken).changeState(entityId: entityId, newState: newState) { [weak self] result in
+//            DispatchQueue.main.async {
+//                print("[GarageRestManager] REST call completed for entity action: \(entityId).")
+//                switch result {
+//                case .success(let entity):
+//                    print("[GarageRestManager] Success changing state for \(entityId): \(entity)")
+//                    self?.lastCallStatus = .success
+//                    self?.processState(entity)
+//                    self?.error = nil
+//                    self?.hasErrorOccurred = false
+//                case .failure(let error):
+//                    print("[GarageRestManager] Failure changing state for \(entityId): \(error)")
+//                    self?.lastCallStatus = .failure
+//                    self?.error = error
+//                    self?.hasErrorOccurred = true
+//                }
+//            }
+//        }
+//    }
     
     func handleScriptAction(entityId: String) {
         print("[GarageRestManager] Handling script action for \(entityId)")
@@ -132,7 +132,8 @@ class GarageRestManager: ObservableObject {
                     self?.error = nil
                     self?.hasErrorOccurred = false
                     // Optionally fetch state if needed to update UI or confirm change
-                    self?.fetchInitialState()
+                    self?.stateCheckDelay(delayLength: 3.0)
+                    //self?.fetchInitialState()
                 case .failure(let error):
                     print("[GarageRestManager] Error toggling switch \(entityId): \(error)")
                     self?.lastCallStatus = .failure
@@ -140,6 +141,12 @@ class GarageRestManager: ObservableObject {
                     self?.hasErrorOccurred = true
                 }
             }
+        }
+    }
+    
+    func stateCheckDelay(delayLength: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayLength) {
+            self.fetchInitialState()
         }
     }
 }

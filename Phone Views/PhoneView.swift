@@ -67,12 +67,6 @@ struct PhoneView: View {
         }
     }
     
-    private func stateCheckDelay() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            garageRestManager.fetchInitialState()
-        }
-    }
-    
     struct GarageDoorButton: View {
         @EnvironmentObject var garageRestManager: GarageRestManager
         var door: Door
@@ -87,16 +81,15 @@ struct PhoneView: View {
                 let entityId = door == .left ? "switch.left_garage_door" : "switch.right_garage_door"
                 garageRestManager.toggleSwitch(entityId: entityId)
                 
-                // Delay for 500ms before fetching initial state and resetting the color
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                // Delay for 2 seconds before fetching initial state and resetting the color
+                 garageRestManager.stateCheckDelay(delayLength: 2.0)
+                    isPressed = false
+
+                // Delay for 14 seconds and check again
+                garageRestManager.stateCheckDelay(delayLength: 14.0)
                     isPressed = false
                     garageRestManager.fetchInitialState()
-                }
-                // Delay for 10 seconds and check again
-                DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {
-                    isPressed = false
-                    garageRestManager.fetchInitialState()
-                }
+                
             }) {
                 Image(systemName: doorStateImage)
                     .resizable()

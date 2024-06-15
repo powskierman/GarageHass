@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D00142E82B15057E00AC22DC /* GarageHass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B813B32AD319B500B3FB70 /* GarageHass.swift */; };
 		D02CAFD32C176DA30035B91E /* HassFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D02CAFD22C176DA30035B91E /* HassFramework.xcframework */; };
+		D02CAFD52C1788F10035B91E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02CAFD42C1788F10035B91E /* AppDelegate.swift */; };
 		D067AD702C176370008BA3B3 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D067AD6F2C176370008BA3B3 /* Starscream */; };
 		D08BCA872B59C56B00960589 /* GarageRestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BCA862B59C56B00960589 /* GarageRestManager.swift */; };
 		D0990CA32B1292FD00858A65 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0990CA22B1292FD00858A65 /* Enums.swift */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		D02198EA290479C1006CB906 /* GarageHass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarageHass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D02CAFD22C176DA30035B91E /* HassFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = HassFramework.xcframework; sourceTree = "<group>"; };
+		D02CAFD42C1788F10035B91E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D08BCA862B59C56B00960589 /* GarageRestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageRestManager.swift; sourceTree = "<group>"; };
 		D09894E22B07D03A002F273F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0990CA22B1292FD00858A65 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				D09E26FE2AD98AF60012A82C /* PhoneExtension.swift */,
 				D0DA56022B252A0F0035980B /* AppState.swift */,
 				D08BCA862B59C56B00960589 /* GarageRestManager.swift */,
+				D02CAFD42C1788F10035B91E /* AppDelegate.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D02CAFD52C1788F10035B91E /* AppDelegate.swift in Sources */,
 				D09E26FF2AD98AF60012A82C /* PhoneExtension.swift in Sources */,
 				D08BCA872B59C56B00960589 /* GarageRestManager.swift in Sources */,
 				D0DA56032B252A0F0035980B /* AppState.swift in Sources */,
@@ -377,20 +381,14 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = G3337N7QRS;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/HassFramework/Debug-iphoneos",
-					"$(PROJECT_DIR)/HassFramework/Debug-iphonesimulator",
-					"$(PROJECT_DIR)/HassFramework/Debug-watchos",
-					"$(PROJECT_DIR)/HassFramework/Debug-watchsimulator",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -418,20 +416,14 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = G3337N7QRS;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/HassFramework/Debug-iphoneos",
-					"$(PROJECT_DIR)/HassFramework/Debug-iphonesimulator",
-					"$(PROJECT_DIR)/HassFramework/Debug-watchos",
-					"$(PROJECT_DIR)/HassFramework/Debug-watchsimulator",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
