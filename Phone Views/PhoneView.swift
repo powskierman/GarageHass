@@ -3,10 +3,10 @@ import Combine
 
 struct PhoneView: View {
     @EnvironmentObject var garageRestManager: GarageRestManager
-    @State private var cancellable: AnyCancellable?
     @State private var showingAlarmConfirmation = false
     @State private var showingErrorAlert = false
-    
+    @State private var isPressed = false // New state variable for color change
+
     var body: some View {
         VStack {
             ConnectionStatusBar(message: "Connection Status")
@@ -21,7 +21,14 @@ struct PhoneView: View {
                 }
                 Button(action: {
                     self.showingAlarmConfirmation = true
-                }) {
+                    // Delay for 5 seconds before fetching initial state and resetting the color
+                     garageRestManager.stateCheckDelay(delayLength: 5.0)
+                        isPressed = false
+
+                    // Delay for 8 seconds and check again
+                    garageRestManager.stateCheckDelay(delayLength: 8.0)
+                        isPressed = false
+                 }) {
                     Image(systemName: garageRestManager.alarmOff ? "alarm" : "alarm.waves.left.and.right.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -29,12 +36,10 @@ struct PhoneView: View {
                 }
                 .frame(width: 250.0, height: 150.0)
                 .padding(EdgeInsets(top: 100, leading: 7, bottom: 0, trailing: 7))
-                
                 .confirmationDialog("Toggle Alarm", isPresented: $showingAlarmConfirmation) {
                     Button("Confirm", role: .destructive) {
                         let entityId = garageRestManager.alarmOff ? "switch.alarm_on" : "switch.alarm_off"
                         garageRestManager.toggleSwitch(entityId: entityId)
-                        garageRestManager.fetchInitialState()
                     }
                 }
                 if let error = garageRestManager.error {
@@ -60,12 +65,17 @@ struct PhoneView: View {
                 }
                 print(garageRestManager.error ?? "No error") // Log error state after fetch
             }
+            .onReceive(garageRestManager.$alarmOff) { newValue in
+                // This will be called whenever the alarmOff state changes
+                print("Alarm state changed: \(newValue ? "Off" : "On")")
+            }
             .onAppear() {
                 garageRestManager.fetchInitialState()
                 showingErrorAlert = false  // Reset showingErrorAlert on successful fetch
             }
         }
     }
+
     
     struct GarageDoorButton: View {
         @EnvironmentObject var garageRestManager: GarageRestManager
@@ -86,10 +96,10 @@ struct PhoneView: View {
                     isPressed = false
 
                 // Delay for 14 seconds and check again
-                garageRestManager.stateCheckDelay(delayLength: 14.0)
+               garageRestManager.stateCheckDelay(delayLength: 14.0)
                     isPressed = false
                     garageRestManager.fetchInitialState()
-                
+ 
             }) {
                 Image(systemName: doorStateImage)
                     .resizable()
