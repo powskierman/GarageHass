@@ -1,10 +1,3 @@
-//
-//  ConnectionStatusBar.swift
-//  GarageNew
-//
-//  Created by Michel Lapointe on 2022-10-24.
-//
-
 import SwiftUI
 import HassFramework
 
@@ -14,15 +7,33 @@ struct ConnectionStatusBar: View {
 
     var body: some View {
         HStack(spacing: 10) {
+            // Status icon
             Image(systemName: statusImageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 20, height: 20)
                 .foregroundColor(statusColor)
+            
+            // Status message
             Text(message)
                 .font(.footnote)
                 .foregroundColor(statusColor)
+            
+            Spacer()
+            
+            // Refresh button
+            Button(action: {
+                garageRestManager.fetchInitialState()
+            }) {
+                Image(systemName: "arrow.clockwise")
+                    .foregroundColor(.blue)
+                    .font(.system(size: 16, weight: .medium))
+            }
+            .disabled(garageRestManager.lastCallStatus == .pending)
+            .opacity(garageRestManager.lastCallStatus == .pending ? 0.5 : 1.0)
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
     }
 
     private var statusImageName: String {
@@ -33,8 +44,6 @@ struct ConnectionStatusBar: View {
             return "xmark.octagon"
         case .pending:
             return "hourglass"
-//        default:
-//            return "questionmark.circle"
         }
     }
 
@@ -46,8 +55,6 @@ struct ConnectionStatusBar: View {
             return Color.red
         case .pending:
             return Color.orange
-//        default:
-//            return Color.gray
         }
     }
 }
@@ -55,6 +62,6 @@ struct ConnectionStatusBar: View {
 struct ConnectionStatusBar_Previews: PreviewProvider {
     static var previews: some View {
         ConnectionStatusBar(message: "API Call Status")
-            .environmentObject(GarageRestManager.shared) // Provide a sample object for previews
+            .environmentObject(GarageRestManager.shared)
     }
 }

@@ -39,19 +39,34 @@ class GarageRestManager: ObservableObject {
         print("[GarageRestManager] Fetching initial state.")
         lastCallStatus = .pending
         let sensors = ["binary_sensor.left_door_sensor", "binary_sensor.right_door_sensor", "binary_sensor.reversed_sensor"]
+        
+        // Keep track of completed calls
+        var completedCalls = 0
+        let totalCalls = sensors.count
+        var hasError = false
+        
+        // Call all sensors at the same time (concurrent calls) with retry logic
         sensors.forEach { entityId in
-            HassRestClient(baseURL: baseURL, authToken: authToken).fetchState(entityId: entityId) { [weak self] result in
+            fetchStateWithRetry(entityId: entityId) { [weak self] result in
                 DispatchQueue.main.async {
-                    print("[GarageRestManager] REST call completed for entityId: \(entityId).")
+                    completedCalls += 1
+                    print("[GarageRestManager] REST call completed for entityId: \(entityId). (\(completedCalls)/\(totalCalls))")
+                    
                     switch result {
                     case .success(let entity):
                         print("[GarageRestManager] Success fetching state for \(entityId): \(entity)")
-                        self?.lastCallStatus = .success
                         self?.processState(entity)
-                        self?.error = nil
-                        self?.hasErrorOccurred = false
+                        
+                        // Only set success if this is the last call and no errors occurred
+                        if completedCalls == totalCalls && !hasError {
+                            self?.lastCallStatus = .success
+                            self?.error = nil
+                            self?.hasErrorOccurred = false
+                        }
+                        
                     case .failure(let error):
                         print("[GarageRestManager] Failure fetching state for \(entityId): \(error)")
+                        hasError = true
                         self?.lastCallStatus = .failure
                         self?.error = error
                         self?.hasErrorOccurred = true
@@ -76,6 +91,30 @@ class GarageRestManager: ObservableObject {
         }
     }
 
+    private func fetchStateWithRetry(entityId: String, attempt: Int = 1, completion: @escaping (Result<HAEntity, Error>) -> Void) {
+        let maxRetries = 3
+        let baseDelay = 1.0 // seconds
+        
+        HassRestClient(baseURL: baseURL, authToken: authToken).fetchState(entityId: entityId) { result in
+            switch result {
+            case .success(let entity):
+                completion(.success(entity))
+                
+            case .failure(let error):
+                if attempt < maxRetries {
+                    let delay = baseDelay * Double(attempt) // 1s, 2s, 3s delays
+                    print("[GarageRestManager] Retry \(attempt)/\(maxRetries) for \(entityId) in \(delay)s")
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                        self.fetchStateWithRetry(entityId: entityId, attempt: attempt + 1, completion: completion)
+                    }
+                } else {
+                    print("[GarageRestManager] Failed after \(maxRetries) attempts for \(entityId)")
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
     
     func handleScriptAction(entityId: String) {
         print("[GarageRestManager] Handling script action for \(entityId)")
