@@ -88,7 +88,7 @@ struct PhoneView: View {
                 isPressed = true
                 
                 // Action to toggle door
-                let entityId = door == .left ? "switch.left_garage_door" : "switch.right_garage_door"
+                let entityId = door == .left ? "cover.leftdoor_left_garage_door" : "cover.rightdoor_right_garage_door"
                 garageRestManager.toggleSwitch(entityId: entityId)
                 
                 // Delay for 2 seconds before fetching initial state and resetting the color
