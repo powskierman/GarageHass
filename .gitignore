@@ -1,0 +1,7 @@
+# Xcode user-specific files
+*.xcuserstate
+xcuserdata/
+
+# Swift Package Manager
+Package.resolved
+*.xcworkspace/xcshareddata/swiftpm/Package.resolved
