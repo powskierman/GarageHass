@@ -20,9 +20,15 @@ class GarageSocketManager: ObservableObject {
     // Constants - matching GarageRestManager for consistency
     private struct Constants {
         static let entityIds = [
+<<<<<<< HEAD
             "cover.leftdoor_left_garage_door",
             "cover.rightdoor_right_garage_door", 
             "binary_sensor.reversed_sensor"
+=======
+            "binary_sensor.left_door_sensor",
+            "binary_sensor.right_door_sensor", 
+            "binary_sensor.reversed_sensor"  // Fixed: was alarm_sensor
+>>>>>>> refs/remotes/origin/claude
         ]
         static let maxRetries = 3
         static let baseDelay = 2.0
@@ -107,11 +113,19 @@ class GarageSocketManager: ObservableObject {
     
     private func updateEntityState(entityId: String, newState: String) {
         switch entityId {
+<<<<<<< HEAD
         case "cover.leftdoor_left_garage_door":
             leftDoorClosed = newState == "closed"
         case "cover.rightdoor_right_garage_door":
             rightDoorClosed = newState == "closed"
         case "binary_sensor.reversed_sensor":
+=======
+        case "binary_sensor.left_door_sensor":
+            leftDoorClosed = newState == "off"
+        case "binary_sensor.right_door_sensor":
+            rightDoorClosed = newState == "off"
+        case "binary_sensor.reversed_sensor":  // Fixed: was alarm_sensor
+>>>>>>> refs/remotes/origin/claude
             alarmOff = newState == "off"
         default:
             print("[GarageSocketManager] Unknown entity: \(entityId)")
@@ -159,8 +173,11 @@ class GarageSocketManager: ObservableObject {
             return "script"
         case "light":
             return "light"
+<<<<<<< HEAD
         case "cover":
             return "cover"
+=======
+>>>>>>> refs/remotes/origin/claude
         default:
             return "homeassistant"
         }
@@ -207,9 +224,15 @@ extension GarageSocketManager: EventMessageHandler {
     
     private func getCurrentState(for entityId: String) -> Bool {
         switch entityId {
+<<<<<<< HEAD
         case "cover.leftdoor_left_garage_door":
             return leftDoorClosed
         case "cover.rightdoor_right_garage_door":
+=======
+        case "binary_sensor.left_door_sensor":
+            return leftDoorClosed
+        case "binary_sensor.right_door_sensor":
+>>>>>>> refs/remotes/origin/claude
             return rightDoorClosed
         case "binary_sensor.reversed_sensor":
             return alarmOff

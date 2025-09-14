@@ -37,7 +37,7 @@ class GarageRestManager: ObservableObject {
         static let baseDelay = 1.0
         static let entityIds = [
             "cover.leftdoor_left_garage_door",
-            "cover.rightdoor_right_garage_door", 
+            "cover.rightdoor_right_garage_door",
             "binary_sensor.reversed_sensor"
         ]
     }
@@ -214,7 +214,7 @@ class GarageRestManager: ObservableObject {
             domain = "cover"
             service = "toggle"
         } else if entityId.starts(with: "switch.") {
-            domain = "switch" 
+            domain = "switch"
             service = "toggle"
         } else {
             // Fallback to switch for backwards compatibility
